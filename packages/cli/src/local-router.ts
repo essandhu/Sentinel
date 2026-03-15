@@ -31,6 +31,22 @@ export const localRouter = t.router({
         orderBy: (p, { desc }) => [desc(p.createdAt)],
       });
     }),
+    create: t.procedure
+      .input(z.object({
+        name: z.string().min(1),
+        repositoryUrl: z.string().optional(),
+      }))
+      .mutation(({ ctx, input }) => {
+        const id = crypto.randomUUID();
+        const now = Date.now();
+        (ctx.db as any).$client.prepare(`
+          INSERT INTO projects (id, name, boundary_testing_enabled, created_at)
+          VALUES (?, ?, 0, ?)
+        `).run(id, input.name, now);
+        return (ctx.db as any).$client.prepare(
+          `SELECT id, name, boundary_testing_enabled AS boundaryTestingEnabled, created_at AS createdAt FROM projects WHERE id = ?`,
+        ).get(id);
+      }),
   }),
 
   runs: t.router({
@@ -124,7 +140,8 @@ export const localRouter = t.router({
                     user_email AS userEmail, reason, created_at AS createdAt
              FROM approval_decisions WHERE diff_report_id = ? ORDER BY created_at DESC`,
           );
-          return stmt.all(input.diffReportId);
+          const rows = stmt.all(input.diffReportId) as any[];
+          return rows.map((r: any) => ({ ...r, jiraIssueKey: null }));
         }
         if (input.runId) {
           const stmt = (ctx.db as any).$client.prepare(
@@ -135,7 +152,8 @@ export const localRouter = t.router({
              INNER JOIN snapshots s ON s.id = d.snapshot_id
              WHERE s.run_id = ? ORDER BY a.created_at DESC`,
           );
-          return stmt.all(input.runId);
+          const rows = stmt.all(input.runId) as any[];
+          return rows.map((r: any) => ({ ...r, jiraIssueKey: null }));
         }
         return [];
       }),
@@ -799,6 +817,118 @@ export const localRouter = t.router({
           approverEmail: r.approverEmail ?? null,
         }));
       }),
+  }),
+
+  settings: t.router({
+    get: t.procedure.query(() => {
+      return {
+        jiraHost: null,
+        jiraEmail: null,
+        jiraProjectKey: null,
+        jiraApiToken: null,
+        slackWebhookUrl: null,
+        figma: null,
+        penpot: null,
+        zeroheight: null,
+      };
+    }),
+    update: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => {
+        return { success: true };
+      }),
+  }),
+
+  schedules: t.router({
+    list: t.procedure.query(() => []),
+    history: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .query(() => []),
+    create: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ id: 'local-unsupported' })),
+    toggle: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+    delete: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+  }),
+
+  apiKeys: t.router({
+    list: t.procedure.query(() => []),
+    create: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ key: '', id: 'local-unsupported' })),
+    revoke: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+  }),
+
+  designSources: t.router({
+    status: t.procedure.query(() => ({
+      figma: null,
+      penpot: null,
+      zeroheight: null,
+    })),
+    connectFigma: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+    disconnectFigma: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .mutation(() => ({ success: true })),
+    connectPenpot: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+    disconnectPenpot: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .mutation(() => ({ success: true })),
+    connectZeroheight: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+    disconnectZeroheight: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .mutation(() => ({ success: true })),
+    syncZeroheight: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .mutation(() => ({ success: true })),
+    exportPenpot: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .mutation(() => ({ success: true })),
+  }),
+
+  notificationPreferences: t.router({
+    get: t.procedure.query(() => ({
+      emailOnFailure: false,
+      slackOnFailure: false,
+    })),
+    update: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
+  }),
+
+  environments: t.router({
+    list: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .query(() => []),
+    listRoutes: t.procedure
+      .input(z.object({}).passthrough().optional())
+      .query(() => []),
+    compareDiff: t.procedure
+      .input(z.object({}).passthrough())
+      .query(() => ({ status: 'unavailable' as const, diff: null, missingEnv: null })),
+  }),
+
+  approvalChains: t.router({
+    getProgress: t.procedure
+      .input(z.object({}).passthrough())
+      .query(() => ({ currentStep: null, totalSteps: 0, approvals: [] })),
+    getChain: t.procedure
+      .input(z.object({}).passthrough())
+      .query(() => null),
+    upsertChain: t.procedure
+      .input(z.object({}).passthrough())
+      .mutation(() => ({ success: true })),
   }),
 });
 

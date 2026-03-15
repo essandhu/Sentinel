@@ -1,0 +1,24 @@
+project: sentinel-demo
+baseUrl: http://localhost:4444
+
+browsers:
+  - chromium
+
+capture:
+  viewports:
+    - 1280x720
+    - 375x667
+  routes:
+    - path: /
+      name: home
+    - path: /pricing.html
+      name: pricing
+    - path: /about.html
+      name: about
+
+thresholds:
+  pixelDiffPercent: 0.1
+  ssimMin: 0.99
+
+accessibility:
+  enabled: true
