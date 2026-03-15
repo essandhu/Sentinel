@@ -1,0 +1,27 @@
+# Capture worker Dockerfile -- uses Playwright base image with all three browser engines.
+#
+# NOTE: WebKit captures on Linux use the GTK WebKit port, which does NOT
+# exactly match Safari on macOS. Font rendering and some CSS features differ.
+# Recommend using looser browserThresholds for webkit in sentinel.yml.
+#
+# IMPORTANT: The Playwright image version MUST match the playwright version
+# in package.json. A mismatch causes "Executable doesn't exist" errors at runtime.
+
+# Stage 1: Install and build (same pattern as Dockerfile.api)
+FROM node:22-slim AS builder
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
+WORKDIR /app
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
+COPY packages/ ./packages/
+COPY apps/api/ ./apps/api/
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build --filter=@sentinel/api...
+
+# Stage 2: Capture worker runtime with all Playwright browsers
+# The Playwright image includes Chromium, Firefox, and WebKit pre-installed.
+# Do NOT install browsers at runtime -- it's slow and unreliable.
+FROM mcr.microsoft.com/playwright:v1.58.2-noble AS runner
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
+WORKDIR /app
+COPY --from=builder /app/ /app/
+CMD ["node", "apps/api/dist/worker-entrypoint.js"]

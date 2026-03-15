@@ -1,0 +1,16 @@
+{
+  "extends": "@sentinel/config/tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "references": [
+    { "path": "../types" },
+    { "path": "../db" },
+    { "path": "../storage" },
+    { "path": "../adapters" }
+  ],
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
+}

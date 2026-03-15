@@ -1,0 +1,202 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1772571973697,
+      "tag": "0000_jazzy_thor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772581980244,
+      "tag": "0001_majestic_phil_sheldon",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772649060000,
+      "tag": "0002_add_workspace_id",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1772651594000,
+      "tag": "0003_add_approval_tables",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1772659133397,
+      "tag": "0004_add_workspace_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1772659500000,
+      "tag": "0005_add_jira_issue_key",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1772700000000,
+      "tag": "0006_add_components",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1772710000000,
+      "tag": "0007_add_capture_schedules",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772720000000,
+      "tag": "0008_add_health_scores",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1772730000000,
+      "tag": "0009_add_design_source_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1772740000000,
+      "tag": "0010_add_notification_preferences",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1772750000000,
+      "tag": "0011_add_api_keys",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1772823377000,
+      "tag": "0012_add_browser_column",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1772825000000,
+      "tag": "0013_add_a11y_violations",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1772829583828,
+      "tag": "0014_add_diff_classifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1772840000000,
+      "tag": "0015_add_breakpoint_presets",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1772850000000,
+      "tag": "0016_add_shard_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1772860000000,
+      "tag": "0017_add_lighthouse_scores",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1772870000000,
+      "tag": "0018_add_auto_approve_threshold",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1772880000000,
+      "tag": "0019_add_performance_budgets",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1772890000000,
+      "tag": "0020_add_test_suites_and_plans",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1772900000000,
+      "tag": "0021_add_approval_chain_tables",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1772910000000,
+      "tag": "0022_add_branch_baselines",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1772920000000,
+      "tag": "0023_add_environments",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1772930000000,
+      "tag": "0055_per_region_classification",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1772940000000,
+      "tag": "0056_ml_calibration_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1772950000000,
+      "tag": "0024_add_boundary_testing_enabled",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1772960000000,
+      "tag": "0025_add_missing_columns",
+      "breakpoints": true
+    }
+  ]
+}

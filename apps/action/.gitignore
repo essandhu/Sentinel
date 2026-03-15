@@ -1,0 +1,2 @@
+# GitHub Actions dist must be committed — negate the workspace-level dist/ exclusion
+!dist/

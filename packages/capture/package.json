@@ -1,0 +1,42 @@
+{
+  "name": "@sentinel/capture",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "export-training-data": "tsx scripts/export-training-data.ts"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@sentinel/adapters": "workspace:*",
+    "@sentinel/db": "workspace:*",
+    "@sentinel/storage": "workspace:*",
+    "@sentinel/types": "workspace:*",
+    "drizzle-orm": "^0.45.0",
+    "is-docker": "^3.0.0",
+    "lighthouse": "^12.8.0",
+    "onnxruntime-node": "^1.24.3",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.50.0",
+    "sharp": "^0.34.5",
+    "ssim.js": "^3.5.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@sentinel/config": "workspace:*",
+    "@types/node": "^25.3.3",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

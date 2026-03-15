@@ -1,0 +1,59 @@
+{
+  "name": "@sentinel/api",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./router": {
+      "types": "./dist/routers/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@aws-sdk/s3-request-presigner": "^3.0.0",
+    "@clerk/backend": "^3.0.1",
+    "@clerk/fastify": "^2.0.0",
+    "@fastify/cors": "^10.0.0",
+    "@fastify/multipart": "^9.4.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.5",
+    "@fastify/websocket": "^11.2.0",
+    "@sentinel/adapters": "workspace:*",
+    "@sentinel/capture": "workspace:*",
+    "@sentinel/db": "workspace:*",
+    "@sentinel/storage": "workspace:*",
+    "@sentinel/types": "workspace:*",
+    "@slack/webhook": "^7.0.7",
+    "@trpc/server": "^11.0.0",
+    "bullmq": "^5.70.0",
+    "cron-parser": "^5.5.0",
+    "cronstrue": "^3.13.0",
+    "drizzle-orm": "^0.45.0",
+    "fastify": "^5.0.0",
+    "graphql": "^16.13.1",
+    "ioredis": "^5.0.0",
+    "jira.js": "^5.3.1",
+    "mercurius": "^16.8.0",
+    "pino": "^9.0.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@sentinel/config": "workspace:*",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.18.1",
+    "dotenv": "^16.0.0",
+    "pino-pretty": "^13.0.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

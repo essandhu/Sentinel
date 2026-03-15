@@ -1,0 +1,53 @@
+name: Docker Compose Validation
+
+on:
+  # Manual trigger only — this tests the cloud deployment path,
+  # not the local open-source experience. Run when Docker/infra changes.
+  workflow_dispatch:
+  # Also run when Docker-related files change on main
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile.*'
+      - 'docker-compose.yml'
+      - 'nginx.conf'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate compose config
+        run: docker compose config --quiet
+
+      - name: Build images
+        run: docker compose build
+
+      - name: Start stack
+        run: docker compose up -d --wait --wait-timeout 180
+
+      - name: Verify all services healthy
+        run: |
+          docker compose ps
+          docker compose ps --format json | jq -se '
+            [.[] | select(.Health != "" and .Health != "healthy")] | length == 0
+          '
+
+      - name: Show service status on failure
+        if: failure()
+        run: docker compose ps -a
+
+      - name: Show API logs on failure
+        if: failure()
+        run: docker compose logs api --tail=100
+
+      - name: Show all logs on failure
+        if: failure()
+        run: docker compose logs --tail=50
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v

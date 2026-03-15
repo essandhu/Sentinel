@@ -1,0 +1,25 @@
+{
+  "name": "sentinel",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test:e2e": "vitest run --project e2e"
+  },
+  "devDependencies": {
+    "turbo": "^2.8.12",
+    "typescript": "^5.8.2",
+    "vitest": "^4.0.0",
+    "@vitest/coverage-v8": "^4.0.0",
+    "tsx": "^4.19.2",
+    "jsdom": "^25.0.0"
+  }
+}

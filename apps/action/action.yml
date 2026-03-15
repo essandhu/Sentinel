@@ -1,0 +1,30 @@
+name: "Sentinel Visual Diff"
+description: "Capture screenshots and compare visual diffs on pull requests"
+
+inputs:
+  github-token:
+    description: "GitHub token for posting status checks and PR comments"
+    required: true
+    default: ${{ github.token }}
+  config:
+    description: "Path to sentinel config file"
+    required: false
+    default: "sentinel.config.yml"
+  dashboard-url:
+    description: "URL of the Sentinel dashboard for linking thumbnails"
+    required: false
+    default: ""
+  exclude-unstable-from-blocking:
+    description: "When true, failures from unstable/flaky routes do not block the visual-diff check"
+    required: false
+    default: "false"
+
+outputs:
+  passed:
+    description: "Whether all visual diffs passed (true/false)"
+  failed-count:
+    description: "Number of routes that failed the visual diff threshold"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

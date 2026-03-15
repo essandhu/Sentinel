@@ -1,0 +1,40 @@
+{
+  "name": "@sentinel/adapters",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@sentinel/db": "workspace:*",
+    "@sentinel/storage": "workspace:*",
+    "@sentinel/types": "workspace:*",
+    "@types/adm-zip": "^0.5.7",
+    "adm-zip": "^0.5.16",
+    "colorjs.io": "^0.5.2",
+    "drizzle-orm": "^0.45.0",
+    "fast-glob": "^3.3.3",
+    "p-limit": "^6.2.0",
+    "p-retry": "^6.2.1",
+    "sketch-constructor": "^1.26.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@sentinel/config": "workspace:*",
+    "@types/node": "^25.3.3",
+    "dotenv": "^16.0.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

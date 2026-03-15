@@ -1,0 +1,62 @@
+---
+title: Welcome to Sentinel
+description: Visual regression testing that bridges the gap between design intent and production reality.
+template: splash
+hero:
+  tagline: Catch visual regressions before your users do. Sentinel monitors every route, viewport, and component for pixel-level changes.
+  actions:
+    - text: Get Started
+      link: /guides/installation/
+      icon: right-arrow
+      variant: primary
+    - text: API Reference
+      link: /reference/api/
+      variant: minimal
+---
+
+## What is Sentinel?
+
+Sentinel is a visual regression testing platform that captures screenshots of your web application, compares them against approved baselines, and reports meaningful differences. It combines pixel-level diffing with SSIM structural similarity analysis and ML-powered semantic classification to distinguish real regressions from rendering noise.
+
+Unlike simple screenshot-compare tools, Sentinel understands **what** changed. A shifted button gets classified differently from a color change or a layout break. This means fewer false positives and faster triage.
+
+## Quick Start
+
+```bash
+# 1. Install the CLI
+pnpm add -D @sentinel/cli
+
+# 2. Initialize your project
+sentinel init
+
+# 3. Run your first capture
+sentinel capture --config sentinel.config.yml
+```
+
+The `init` wizard auto-detects your framework (Next.js, Vite, Angular) and scaffolds a `sentinel.config.yml` with sensible defaults.
+
+## Key Features
+
+- **Multi-viewport capture** -- Test across desktop, tablet, and mobile breakpoints simultaneously
+- **Multi-browser support** -- Chromium, Firefox, and WebKit via Playwright
+- **Intelligent diffing** -- Pixel diff, SSIM, and ML-powered semantic classification
+- **Dynamic content masking** -- Hide timestamps, ads, and user-generated content before comparison
+- **Plugin system** -- Extend with custom adapters, diff algorithms, and notification channels
+- **CI/CD integration** -- GitHub Action with PR comments showing visual changes
+- **REST and tRPC APIs** -- Programmatic access to all platform capabilities
+- **Health scores** -- Track visual stability over time per project and component
+- **Accessibility auditing** -- WCAG compliance checks alongside visual regression
+
+## Architecture
+
+Sentinel runs as a monorepo with these key packages:
+
+| Package | Purpose |
+|---------|---------|
+| `@sentinel/cli` | Command-line interface for captures |
+| `@sentinel/capture` | Screenshot engine, config loading, diff pipeline |
+| `@sentinel/db` | Drizzle ORM schema and database queries |
+| `@sentinel/storage` | S3-compatible object storage for screenshots |
+| `@sentinel/types` | Shared TypeScript interfaces |
+| `apps/api` | Fastify REST API + tRPC + GraphQL |
+| `apps/dashboard` | React dashboard for reviewing diffs |

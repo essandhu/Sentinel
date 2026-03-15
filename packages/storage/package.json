@@ -1,0 +1,29 @@
+{
+  "name": "@sentinel/storage",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@sentinel/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@sentinel/config": "workspace:*",
+    "@types/node": "^25.3.3",
+    "dotenv": "^16.0.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

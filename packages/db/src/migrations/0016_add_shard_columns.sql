@@ -1,0 +1,2 @@
+ALTER TABLE capture_runs ADD COLUMN IF NOT EXISTS shard_count INTEGER;
+ALTER TABLE capture_runs ADD COLUMN IF NOT EXISTS total_routes INTEGER;

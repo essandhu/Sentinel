@@ -1,0 +1,22 @@
+node_modules/
+dist/
+.turbo/
+coverage/
+.env
+.env.local
+*.tsbuildinfo
+.next/
+.DS_Store
+.claude/
+.astro/
+
+# Sentinel local data
+.sentinel/
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# Planning docs
+.planning/
+docs/plans/

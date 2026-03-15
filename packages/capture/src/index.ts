@@ -1,0 +1,16 @@
+export * from './config/config-schema.js';
+export * from './config/config-loader.js';
+export * from './diff/pixel-diff.js';
+export * from './diff/ssim-diff.js';
+export * from './diff/diff-engine.js';
+export * from './capture/capture-engine.js';
+export * from './capture/dom-hash.js';
+export * from './worker/capture-worker.js';
+export * from './adapters/adapter-registry.js';
+export * from './config/breakpoint-templates.js';
+export * from './config/parameter-expansion.js';
+export { expandBoundaryViewports, type BoundaryViewport, type BoundaryExpansionResult, type BoundaryMode } from './config/boundary-expansion.js';
+export * from './capture/lighthouse-audit.js';
+export * from './plugins/plugin-loader.js';
+export * from './plugins/plugin-hooks.js';
+export { computeCalibrationMetrics, compareModels, buildABReport, type CalibrationMetrics, type ABTestResult } from './classify/ab-testing.js';

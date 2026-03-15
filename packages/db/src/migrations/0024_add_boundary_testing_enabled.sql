@@ -1,0 +1,1 @@
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS boundary_testing_enabled INTEGER NOT NULL DEFAULT 0;

@@ -1,0 +1,87 @@
+{
+  "name": "sentinel-vscode",
+  "displayName": "Sentinel",
+  "description": "Visual regression monitoring for VS Code",
+  "version": "0.1.0",
+  "publisher": "sentinel",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Testing", "Other"],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sentinel",
+          "title": "Sentinel",
+          "icon": "resources/sentinel.svg"
+        }
+      ]
+    },
+    "views": {
+      "sentinel": [
+        {
+          "id": "sentinelDiffs",
+          "name": "Diffs",
+          "icon": "resources/sentinel.svg"
+        }
+      ]
+    },
+    "commands": [
+      { "command": "sentinel.refreshDiffs", "title": "Sentinel: Refresh Diffs", "icon": "$(refresh)" },
+      { "command": "sentinel.triggerCapture", "title": "Sentinel: Trigger Capture" },
+      { "command": "sentinel.approveDiff", "title": "Sentinel: Approve Diff" },
+      { "command": "sentinel.rejectDiff", "title": "Sentinel: Reject Diff" },
+      { "command": "sentinel.viewDiff", "title": "Sentinel: View Diff" },
+      { "command": "sentinel.configure", "title": "Sentinel: Configure" }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sentinel.refreshDiffs",
+          "when": "view == sentinelDiffs",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        { "command": "sentinel.viewDiff", "when": "viewItem == diff" },
+        { "command": "sentinel.approveDiff", "when": "viewItem == diff" },
+        { "command": "sentinel.rejectDiff", "when": "viewItem == diff" }
+      ]
+    },
+    "configuration": {
+      "title": "Sentinel",
+      "properties": {
+        "sentinel.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:3000",
+          "description": "Sentinel API server URL"
+        },
+        "sentinel.projectId": {
+          "type": "string",
+          "default": "",
+          "description": "Sentinel project ID to monitor"
+        },
+        "sentinel.pollInterval": {
+          "type": "number",
+          "default": 60,
+          "description": "Health score polling interval in seconds"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "test": "vitest run",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
+}
