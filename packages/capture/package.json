@@ -8,6 +8,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./thresholds": {
+      "import": "./dist/thresholds/adaptive-threshold-engine.js",
+      "types": "./dist/thresholds/adaptive-threshold-engine.d.ts"
     }
   },
   "scripts": {
