@@ -100,9 +100,11 @@ export function DiffPage() {
     ? [...new Set((diffs as DiffItem[]).map((d) => d.browser))].sort()
     : [];
 
+  const diffList = (diffs as DiffItem[] | undefined) ?? [];
+
   const browserFiltered = browserFilter
-    ? (diffs as DiffItem[]).filter((d) => d.browser === browserFilter)
-    : (diffs as DiffItem[]);
+    ? diffList.filter((d) => d.browser === browserFilter)
+    : diffList;
 
   const breakpointFiltered = breakpointFilter
     ? breakpointFilter === BREAKPOINT_OTHER
@@ -162,9 +164,7 @@ export function DiffPage() {
     activeTab === 'diffs' && !!diffs && diffs.length > 0,
   );
 
-  const selectedDiff = diffs
-    ? (diffs as DiffItem[]).find((d) => d.id === selectedDiffId) ?? null
-    : null;
+  const selectedDiff = diffList.find((d) => d.id === selectedDiffId) ?? null;
 
   const { data: layoutShiftsData } = useQuery({
     ...trpc.classifications.layoutShifts.queryOptions({
