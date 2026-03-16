@@ -602,6 +602,39 @@ describe('adaptiveThresholds config', () => {
   });
 });
 
+describe('components config', () => {
+  it('accepts components with storybook source', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      components: { source: 'storybook' },
+    });
+    expect(config.components?.source).toBe('storybook');
+  });
+
+  it('accepts components with url, include, exclude, viewports', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      components: {
+        source: 'storybook', url: 'http://localhost:6006',
+        include: ['Button/**'], exclude: ['**/*Deprecated*'],
+        viewports: ['400x300'],
+      },
+    });
+    expect(config.components?.url).toBe('http://localhost:6006');
+    expect(config.components?.include).toEqual(['Button/**']);
+  });
+
+  it('defaults components to undefined', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+    });
+    expect(config.components).toBeUndefined();
+  });
+});
+
 describe('BREAKPOINT_TEMPLATES', () => {
   it('has tailwind template with 5 entries', () => {
     expect(BREAKPOINT_TEMPLATES.tailwind).toHaveLength(5);

@@ -150,6 +150,14 @@ export const AdaptiveThresholdsSchema = z.object({
   minRuns: z.number().int().min(1).default(5),
 });
 
+export const ComponentsSchema = z.object({
+  source: z.enum(['storybook', 'ladle', 'histoire']),
+  url: z.string().url().optional(),
+  include: z.array(z.string()).optional(),
+  exclude: z.array(z.string()).optional(),
+  viewports: z.array(ViewportSchema).optional(),
+});
+
 export const SentinelConfigSchema = z
   .object({
     project: z.string(),
@@ -175,6 +183,7 @@ export const SentinelConfigSchema = z
     discovery: DiscoverySchema.optional(),
     autoMasking: AutoMaskingSchema.optional(),
     adaptiveThresholds: AdaptiveThresholdsSchema.optional(),
+    components: ComponentsSchema.optional(),
   })
   .superRefine((data, ctx) => {
     const isAutoDiscovery = data.discovery?.mode === 'auto';
