@@ -184,6 +184,7 @@ export const SentinelConfigSchema = z
     autoMasking: AutoMaskingSchema.optional(),
     adaptiveThresholds: AdaptiveThresholdsSchema.optional(),
     components: ComponentsSchema.optional(),
+    crossBrowserBaselines: z.boolean().default(false),
   })
   .superRefine((data, ctx) => {
     const isAutoDiscovery = data.discovery?.mode === 'auto';

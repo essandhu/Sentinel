@@ -635,6 +635,27 @@ describe('components config', () => {
   });
 });
 
+describe('crossBrowserBaselines config', () => {
+  it('accepts crossBrowserBaselines boolean', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      crossBrowserBaselines: true,
+    });
+    expect(config.crossBrowserBaselines).toBe(true);
+  });
+
+  it('defaults crossBrowserBaselines to false', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+    });
+    expect(config.crossBrowserBaselines).toBe(false);
+  });
+});
+
 describe('BREAKPOINT_TEMPLATES', () => {
   it('has tailwind template with 5 entries', () => {
     expect(BREAKPOINT_TEMPLATES.tailwind).toHaveLength(5);

@@ -85,6 +85,16 @@ program
   .description('Clear .sentinel/ directory and start fresh')
   .action(resetCommand);
 
+program
+  .command('prune')
+  .description('Remove orphaned baselines not matching current config routes')
+  .option('-c, --config <path>', 'Path to sentinel config file', 'sentinel.config.yml')
+  .option('--confirm', 'Actually delete orphaned baselines (default is dry-run)')
+  .action(async (opts) => {
+    const { pruneCommand } = await import('./commands/prune.js');
+    await pruneCommand(opts);
+  });
+
 export { program };
 
 await program.parseAsync(process.argv);
