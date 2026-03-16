@@ -116,10 +116,12 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
   if (options.suite) {
     const { filterRoutesBySuite } = await import('./capture-remote.js');
     const filteredConfig = filterRoutesBySuite(config, options.suite);
+    // Strip suites and testPlans — they reference routes that may have been filtered out
+    const { suites, testPlans, ...configWithoutSuites } = filteredConfig as any;
     // Write filtered config to a temp file for processCaptureLocal
     tempConfigDir = mkdtempSync(join(tmpdir(), 'sentinel-suite-'));
     effectiveConfigPath = join(tempConfigDir, 'sentinel.config.yaml');
-    writeFileSync(effectiveConfigPath, yamlStringify(filteredConfig), 'utf-8');
+    writeFileSync(effectiveConfigPath, yamlStringify(configWithoutSuites), 'utf-8');
   }
 
   // Ensure browsers are available before starting the capture run
