@@ -110,6 +110,7 @@ export const diffReports = pgTable('diff_reports', {
   // Stored as 0-10000 (0.0000 - 1.0000 SSIM score * 10000)
   ssimScore: integer('ssim_score'),
   passed: text('passed').notNull().default('pending'),
+  source: text('source').notNull().default('regression'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 

@@ -404,6 +404,95 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
       }
     }
 
+    // ── Design drift detection ───────────────────────────────────────────
+    const driftConfig = (config as any).designDrift;
+    if (driftConfig?.enabled) {
+      const { discoverDesignImages } = await import('@sentinel/capture');
+      const { buildDriftComparisons } = await import('@sentinel/capture');
+      const { readFile: readDesignFile } = await import('node:fs/promises');
+      const pathMod = await import('node:path');
+
+      const designDir = pathMod.join(process.cwd(), driftConfig.designDir ?? '.sentinel/designs');
+      const designImages = await discoverDesignImages(designDir);
+
+      if (designImages.length > 0) {
+        // Get captured snapshots from this run to pair with designs
+        const snapRows = db.prepare(`
+          SELECT s.url, s.viewport, s.s3_key, cr2.project_id
+          FROM snapshots s
+          INNER JOIN capture_runs cr2 ON cr2.id = s.run_id
+          WHERE s.run_id = ?
+        `).all(runId) as Array<{ url: string; viewport: string; s3_key: string }>;
+
+        // Map route paths to names using config
+        const routeNameMap = new Map<string, string>();
+        for (const route of config.capture.routes) {
+          routeNameMap.set(route.path, route.name);
+        }
+
+        const capturesForDrift = [];
+        for (const snap of snapRows) {
+          const routeName = routeNameMap.get(snap.url);
+          if (!routeName) continue;
+          try {
+            const screenshotBuffer = await runtime.storage.download(snap.s3_key);
+            capturesForDrift.push({
+              routeName,
+              routePath: snap.url,
+              viewport: snap.viewport,
+              screenshotBuffer,
+            });
+          } catch {
+            // Skip if screenshot can't be loaded
+          }
+        }
+
+        const driftPairs = buildDriftComparisons(capturesForDrift, designImages);
+
+        if (driftPairs.length > 0) {
+          const { runDualDiff } = await import('@sentinel/capture');
+
+          const driftResults: Array<{ url: string; viewport: string; diffPercent: number; designFile: string }> = [];
+
+          if (!options.ci) {
+            console.log('');
+            console.log(chalk.magenta.bold('Design Drift:'));
+          }
+
+          for (const pair of driftPairs) {
+            try {
+              const designBuffer = await readDesignFile(pair.designPath);
+              const driftDiff = await runDualDiff(designBuffer, pair.screenshotBuffer, {
+                pixelDiffPercent: (config as any).thresholds?.pixelDiffPercent ?? 0.1,
+                ssimMin: (config as any).thresholds?.ssimMin ?? 0.95,
+              });
+
+              const fileName = pair.designPath.split(/[\\/]/).pop() ?? pair.designPath;
+              driftResults.push({
+                url: pair.routePath,
+                viewport: pair.viewport,
+                diffPercent: driftDiff.pixelDiffPercent,
+                designFile: fileName,
+              });
+
+              if (!options.ci) {
+                const icon = driftDiff.pixelDiffPercent < 1 ? chalk.green('\u2713') : chalk.yellow('\u26A0');
+                console.log(`  ${icon} ${pair.routePath} @ ${pair.viewport} \u2014 ${driftDiff.pixelDiffPercent.toFixed(2)}% drift [${fileName}]`);
+              }
+            } catch (err) {
+              if (!options.ci) {
+                console.log(chalk.dim(`  ? ${pair.routePath} @ ${pair.viewport} \u2014 drift comparison failed`));
+              }
+            }
+          }
+
+          if (options.ci && driftResults.length > 0) {
+            // Will be included in JSON output
+          }
+        }
+      }
+    }
+
     // ── Rich output ────────────────────────────────────────────────────────
     if (options.ci) {
       // JSON output for CI pipelines

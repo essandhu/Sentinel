@@ -158,6 +158,18 @@ export const ComponentsSchema = z.object({
   viewports: z.array(ViewportSchema).optional(),
 });
 
+export const DesignDriftMappingSchema = z.object({
+  design: z.string().min(1),
+  route: z.string().startsWith('/'),
+  viewport: ViewportSchema,
+});
+
+export const DesignDriftSchema = z.object({
+  enabled: z.boolean().default(false),
+  designDir: z.string().default('.sentinel/designs'),
+  mappings: z.array(DesignDriftMappingSchema).optional(),
+});
+
 export const SentinelConfigSchema = z
   .object({
     project: z.string(),
@@ -185,6 +197,7 @@ export const SentinelConfigSchema = z
     adaptiveThresholds: AdaptiveThresholdsSchema.optional(),
     components: ComponentsSchema.optional(),
     crossBrowserBaselines: z.boolean().default(false),
+    designDrift: DesignDriftSchema.optional(),
   })
   .superRefine((data, ctx) => {
     const isAutoDiscovery = data.discovery?.mode === 'auto';

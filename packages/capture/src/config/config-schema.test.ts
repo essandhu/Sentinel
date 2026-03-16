@@ -656,6 +656,40 @@ describe('crossBrowserBaselines config', () => {
   });
 });
 
+describe('designDrift config', () => {
+  it('accepts designDrift with enabled flag', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      designDrift: { enabled: true },
+    });
+    expect(config.designDrift?.enabled).toBe(true);
+  });
+  it('defaults designDir to .sentinel/designs', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      designDrift: { enabled: true },
+    });
+    expect(config.designDrift?.designDir).toBe('.sentinel/designs');
+  });
+  it('accepts explicit mappings', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      designDrift: { enabled: true, mappings: [{ design: 'homepage.png', route: '/', viewport: '1280x720' }] },
+    });
+    expect(config.designDrift?.mappings).toHaveLength(1);
+  });
+  it('defaults designDrift to undefined', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+    });
+    expect(config.designDrift).toBeUndefined();
+  });
+});
+
 describe('BREAKPOINT_TEMPLATES', () => {
   it('has tailwind template with 5 entries', () => {
     expect(BREAKPOINT_TEMPLATES.tailwind).toHaveLength(5);

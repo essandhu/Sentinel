@@ -109,6 +109,7 @@ function createTablesIfNeeded(sqlite: InstanceType<typeof Database>) {
       pixel_diff_percent INTEGER,
       ssim_score INTEGER,
       passed TEXT NOT NULL DEFAULT 'pending',
+      source TEXT NOT NULL DEFAULT 'regression',
       created_at INTEGER NOT NULL
     );
 
