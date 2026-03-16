@@ -57,3 +57,25 @@ describe('createDebouncedCallback', () => {
     expect(callback).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('watchCommand', () => {
+  it('exits with message when no watch config is present', async () => {
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mock('@sentinel/capture', () => ({
+      loadConfig: vi.fn().mockResolvedValue({
+        project: 'test',
+        baseUrl: 'http://localhost:3000',
+        capture: { routes: [{ path: '/', name: 'home' }] },
+        // no watch property
+      }),
+    }));
+
+    const { watchCommand } = await import('../commands/watch.js');
+    await watchCommand({});
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.stringContaining('No watch.paths configured'),
+    );
+    consoleSpy.mockRestore();
+  });
+});
