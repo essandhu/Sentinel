@@ -27,8 +27,8 @@ export function ApprovalButtons({ diffId, canApprove = true }: ApprovalButtonsPr
   if (!canApprove) return null;
 
   const progress = chainData as ChainProgress | undefined;
-  const hasChain = progress && progress.chain.length > 0;
-  const chainComplete = hasChain && progress.isComplete;
+  const hasChain = progress?.chain?.length ? progress.chain.length > 0 : false;
+  const chainComplete = hasChain && progress!.isComplete;
 
   async function invalidateAll() {
     await Promise.all([

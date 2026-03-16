@@ -54,7 +54,7 @@ export function ApprovalChainProgress({ diffId, projectId }: ApprovalChainProgre
   if (isLoading || isError || !data) return null;
 
   const progress = data as ChainProgress;
-  if (progress.chain.length === 0) return null;
+  if (!progress.chain || progress.chain.length === 0) return null;
 
   const completedMap = new Map<number, CompletedStep>();
   for (const c of progress.completed) {

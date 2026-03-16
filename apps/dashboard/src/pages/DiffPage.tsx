@@ -1,7 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@clerk/react';
 import { trpc, trpcClient, queryClient } from '../trpc';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { SideBySide } from '../components/SideBySide';
@@ -68,14 +67,10 @@ export function DiffPage() {
   const [shiftsVisible, setShiftsVisible] = useState(true);
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-  let orgRole: string | undefined;
-  try {
-    const auth = useAuth();
-    orgRole = auth.orgRole ?? undefined;
-  } catch {
-    // Clerk not configured - safe default
-  }
-  const canApprove = orgRole === 'org:admin' || orgRole === 'org:member';
+  // In local mode there is no ClerkProvider, so useAuth() cannot be called.
+  // Calling a hook inside try-catch corrupts React's internal state.
+  const isLocalMode = typeof __SENTINEL_MODE__ !== 'undefined' && __SENTINEL_MODE__ === 'local';
+  const canApprove = isLocalMode;
 
   const { data: run } = useQuery(
     trpc.runs.get.queryOptions({ runId: runId ?? '' }),
