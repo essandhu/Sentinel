@@ -99,6 +99,7 @@ export const diffReports = sqliteTable('diff_reports', {
   // Stored as 0-10000 (0.0000 - 1.0000 SSIM score * 10000)
   ssimScore: integer('ssim_score'),
   passed: text('passed').notNull().default('pending'),
+  source: text('source').notNull().default('regression'), // 'regression' | 'design-drift'
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
 
