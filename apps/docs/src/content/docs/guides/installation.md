@@ -7,10 +7,10 @@ sidebar:
 
 ## Prerequisites
 
-- **Node.js 22+** (Sentinel uses modern ESM features)
+- **Node.js 22+** (Sentinel uses modern ESM features and `fs.watch` recursive mode)
 - **pnpm** (recommended) or npm/yarn
-- **PostgreSQL 15+** for storing capture results
-- **S3-compatible storage** (MinIO, AWS S3, or Cloudflare R2) for screenshots
+
+No database or cloud storage setup required — Sentinel runs fully local with SQLite and filesystem storage.
 
 ## Install the CLI
 
@@ -34,11 +34,10 @@ sentinel init
 
 The wizard will:
 
-1. **Detect your framework** -- Next.js, Vite, Angular, or generic
-2. **Ask for your base URL** -- e.g., `http://localhost:3000`
-3. **Prompt for routes** -- paths to capture (e.g., `/`, `/about`, `/pricing`)
-4. **Set default viewports** -- desktop (1280x720), tablet (768x1024), mobile (375x667)
-5. **Generate `sentinel.config.yml`** in your project root
+1. **Detect your framework** — Next.js, Astro, SvelteKit, Vite, or generic
+2. **Auto-discover routes** — extracts routes from your file structure, sitemap, or crawls your app
+3. **Set default viewports** — desktop (1280x720), mobile (375x667)
+4. **Generate `sentinel.config.yml`** in your project root
 
 ### Manual Configuration
 
@@ -50,6 +49,7 @@ baseUrl: http://localhost:3000
 capture:
   viewports:
     - 1280x720
+    - 375x667
   routes:
     - path: /
       name: homepage
@@ -57,62 +57,68 @@ capture:
       name: about
 ```
 
-See the [Configuration Guide](/guides/configuration/) for all available options.
+See the [Configuration Reference](/reference/config/) for all available options.
 
 ## Verify Installation
 
-Run your first capture:
+Start your dev server, then run your first capture:
 
 ```bash
-sentinel capture --config sentinel.config.yml
+# In one terminal
+pnpm dev
+
+# In another terminal
+sentinel capture
 ```
 
 The CLI will:
 
-1. Launch a headless browser
+1. Auto-download Chromium on first run
 2. Navigate to each route at each viewport size
-3. Capture screenshots
-4. Compare against baselines (if they exist)
-5. Output a JSON summary with pass/fail results
+3. Capture screenshots and store them in `.sentinel/`
+4. On the first run, all captures become initial baselines
+5. On subsequent runs, diffs are computed against baselines
 
-On the first run, all captures become the initial baselines.
+## Review Diffs
 
-## Docker Setup
-
-For production deployments, use Docker Compose:
+After a capture run with visual changes:
 
 ```bash
-git clone https://github.com/sentinel-visual/sentinel
-cd sentinel
-docker compose up -d
+# Open the local dashboard
+sentinel dashboard
+
+# Or approve/reject from CLI
+sentinel approve
 ```
 
-This starts:
+## Local Storage
 
-| Service | Port | Purpose |
-|---------|------|---------|
-| `api` | 3000 | REST API + tRPC + GraphQL |
-| `dashboard` | 5173 | React dashboard |
-| `postgres` | 5432 | Database |
-| `redis` | 6379 | BullMQ job queue |
-| `minio` | 9000 | S3-compatible screenshot storage |
+All data is stored in the `.sentinel/` directory:
 
-### Environment Variables
+```
+.sentinel/
+  sentinel.db          # SQLite database (captures, diffs, approvals)
+  captures/            # Screenshot images per run
+  baselines/           # Approved baseline images
+  diffs/               # Diff images
+  approvals.json       # Git-portable approval records
+```
 
-Create a `.env` file in the project root:
+Add `.sentinel/` to your `.gitignore` (except `approvals.json` if you want portable approvals).
+
+## Remote Server Mode (Optional)
+
+For team use with shared baselines, Sentinel supports a remote server mode with PostgreSQL, S3-compatible storage, and a shared dashboard:
 
 ```bash
-DATABASE_URL=postgresql://sentinel:sentinel@localhost:5432/sentinel
-REDIS_URL=redis://localhost:6379
-S3_ENDPOINT=http://localhost:9000
-S3_ACCESS_KEY=minioadmin
-S3_SECRET_KEY=minioadmin
-S3_BUCKET=sentinel-screenshots
-S3_REGION=us-east-1
+sentinel login          # Authenticate with remote server
+sentinel capture --remote  # Capture against remote baselines
 ```
+
+See the API documentation for remote server setup.
 
 ## Next Steps
 
-- [Configure routes and thresholds](/guides/configuration/)
+- [Configure routes, thresholds, and advanced features](/reference/config/)
 - [Set up CI/CD integration](/reference/cli/)
-- [Explore the REST API](/reference/api/)
+- [Use watch mode for development](/reference/cli/#sentinel-watch)
