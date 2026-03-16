@@ -388,6 +388,22 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
       genuineFailureCount = failedDiffs.length - flakyFailureCount;
     }
 
+    // ── Record threshold history & show recommendations ──────────────────
+    const adaptiveConfig = (config as any).adaptiveThresholds;
+    if (adaptiveConfig?.enabled) {
+      const { recordDiffHistory, getThresholdRecommendations } = await import('../threshold-reporter.js');
+      recordDiffHistory(runtime.db, project.id, runId, diffs);
+
+      const recs = getThresholdRecommendations(runtime.db, project.id, adaptiveConfig.minRuns ?? 5);
+      if (recs.length > 0 && !options.ci) {
+        console.log('');
+        console.log(chalk.cyan.bold('Threshold Recommendations:'));
+        for (const rec of recs) {
+          console.log(chalk.cyan(`  ${rec.url} @ ${rec.viewport}: pixelDiff \u2264 ${rec.recommended.pixelDiffPercent.toFixed(2)}%, ssim \u2265 ${rec.recommended.ssimMin.toFixed(4)} (${rec.dataPoints} runs)`));
+        }
+      }
+    }
+
     // ── Rich output ────────────────────────────────────────────────────────
     if (options.ci) {
       // JSON output for CI pipelines
