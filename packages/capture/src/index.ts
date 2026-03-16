@@ -17,3 +17,5 @@ export { computeCalibrationMetrics, compareModels, buildABReport, type Calibrati
 export * from './discovery/types.js';
 export * from './discovery/discover-routes.js';
 export * from './thresholds/adaptive-threshold-engine.js';
+export * from './drift/design-drift-matcher.js';
+export * from './drift/design-drift-runner.js';
