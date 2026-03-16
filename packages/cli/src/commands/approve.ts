@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { join } from 'node:path';
 import { select } from '@inquirer/prompts';
 import { initLocalRuntime, type LocalRuntime } from '../local-runtime.js';
 import { sqliteSchema } from '@sentinel/db';
@@ -136,4 +137,28 @@ async function approveDiff(runtime: LocalRuntime, diff: PendingDiff): Promise<vo
   // Mark diff as passed (use raw SQL to avoid drizzle-orm dual-instance type conflicts)
   const client = (runtime.db as any).$client;
   client.prepare(`UPDATE diff_reports SET passed = 'passed' WHERE id = ?`).run(diff.diffId);
+
+  // Dual-write to .sentinel/approvals.json for git portability
+  try {
+    const { appendApproval } = await import('../approval-file.js');
+    const { resolveUserIdentity } = await import('../user-identity.js');
+    const identity = await resolveUserIdentity();
+
+    const runRow = client.prepare(
+      'SELECT commit_sha, branch_name FROM capture_runs WHERE id = (SELECT run_id FROM snapshots WHERE id = ?)'
+    ).get(diff.snapshotId) as { commit_sha: string | null } | undefined;
+
+    await appendApproval(join(process.cwd(), '.sentinel'), {
+      url: diff.url,
+      viewport: diff.viewport,
+      browser: diff.browser ?? 'chromium',
+      approvedBy: `${identity.name} <${identity.email}>`,
+      commitSha: runRow?.commit_sha ?? null,
+      timestamp: new Date().toISOString(),
+      reason: null,
+      diffPercent: (diff.diffPercent ?? 0) / 100,
+    });
+  } catch (err) {
+    console.warn(`Warning: could not write to approvals.json: ${err instanceof Error ? err.message : err}`);
+  }
 }
