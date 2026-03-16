@@ -53,7 +53,7 @@ export async function approveCommand(options: ApproveOptions): Promise<void> {
       FROM diff_reports dr
       INNER JOIN snapshots s ON s.id = dr.snapshot_id
       INNER JOIN capture_runs cr ON cr.id = s.run_id
-      WHERE s.run_id = ? AND dr.passed = 'failed'
+      WHERE s.run_id = ? AND dr.passed = 'false'
     `).all(runId);
 
     if (pendingDiffs.length === 0) {
