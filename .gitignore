@@ -20,3 +20,6 @@ test-results/
 # Planning docs
 .planning/
 docs/plans/
+
+# Git worktrees
+.worktrees/

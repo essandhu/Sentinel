@@ -8,6 +8,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./thresholds": {
+      "import": "./dist/thresholds/adaptive-threshold-engine.js",
+      "types": "./dist/thresholds/adaptive-threshold-engine.d.ts"
     }
   },
   "scripts": {
@@ -23,6 +27,7 @@
     "@sentinel/storage": "workspace:*",
     "@sentinel/types": "workspace:*",
     "drizzle-orm": "^0.45.0",
+    "fast-xml-parser": "^5.5.5",
     "is-docker": "^3.0.0",
     "lighthouse": "^12.8.0",
     "onnxruntime-node": "^1.24.3",

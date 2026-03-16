@@ -135,6 +135,21 @@ export const PluginConfigSchema = z.object({
   config: z.record(z.string(), z.unknown()).optional(),
 });
 
+export const DiscoverySchema = z.object({
+  mode: z.enum(['auto', 'manual']).default('manual'),
+  crawlDepth: z.number().int().min(1).max(10).optional(),
+  crawlMaxPages: z.number().int().min(1).max(500).optional(),
+});
+
+export const AutoMaskingSchema = z.object({
+  enabled: z.boolean().default(false),
+});
+
+export const AdaptiveThresholdsSchema = z.object({
+  enabled: z.boolean().default(false),
+  minRuns: z.number().int().min(1).default(5),
+});
+
 export const SentinelConfigSchema = z
   .object({
     project: z.string(),
@@ -157,12 +172,16 @@ export const SentinelConfigSchema = z
     layoutShift: LayoutShiftSchema.optional(),
     maxCapturesPerRun: z.number().int().min(1).default(500),
     plugins: z.record(z.string(), PluginConfigSchema).optional(),
+    discovery: DiscoverySchema.optional(),
+    autoMasking: AutoMaskingSchema.optional(),
+    adaptiveThresholds: AdaptiveThresholdsSchema.optional(),
   })
   .superRefine((data, ctx) => {
-    if (!data.capture.routes.length && !data.adapters?.length) {
+    const isAutoDiscovery = data.discovery?.mode === 'auto';
+    if (!isAutoDiscovery && !data.capture.routes.length && !data.adapters?.length) {
       ctx.addIssue({
         code: 'custom',
-        message: 'At least one route or adapter must be configured',
+        message: 'At least one route, adapter, or discovery.mode=auto must be configured',
         path: ['capture', 'routes'],
       });
     }

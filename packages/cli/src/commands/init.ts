@@ -82,13 +82,14 @@ export interface GenerateConfigOptions {
   routes: string[];
   projectName: string;
   framework?: string;
+  discoveryMode?: 'auto' | 'manual';
 }
 
 /**
  * Generate a sentinel.config.yml string from the given options.
  */
 export function generateConfig(options: GenerateConfigOptions): string {
-  const config = {
+  const config: Record<string, unknown> = {
     project: options.projectName,
     baseUrl: options.baseUrl,
     capture: {
@@ -99,6 +100,10 @@ export function generateConfig(options: GenerateConfigOptions): string {
       viewports: ['1280x720', '375x667'],
     },
   };
+
+  if (options.discoveryMode === 'auto') {
+    config.discovery = { mode: 'auto' };
+  }
 
   return yamlStringify(config);
 }
@@ -111,8 +116,9 @@ export function generateConfig(options: GenerateConfigOptions): string {
  */
 export async function initCommand(opts: { cwd?: string }): Promise<void> {
   // Dynamic imports to avoid pulling in prompts/chalk for non-interactive use
-  const { input, confirm } = await import('@inquirer/prompts');
+  const { input, confirm, select } = await import('@inquirer/prompts');
   const chalk = (await import('chalk')).default;
+  const { discoverRoutes } = await import('@sentinel/capture');
 
   const cwd = opts.cwd ?? process.cwd();
   const configPath = join(cwd, 'sentinel.config.yml');
@@ -137,12 +143,39 @@ export async function initCommand(opts: { cwd?: string }): Promise<void> {
     default: framework?.defaultBaseUrl ?? 'http://localhost:3000',
   });
 
-  // Prompt for routes
-  const routeInput = await input({
-    message: 'Routes (comma-separated paths):',
-    default: (framework?.defaultRoutes ?? ['/']).join(', '),
+  // Auto-discover or manually input routes
+  let routes: string[];
+  let discoveryMode: 'auto' | 'manual' | undefined;
+
+  const useAutoDiscovery = await confirm({
+    message: 'Auto-discover routes?',
+    default: true,
   });
-  const routes = routeInput.split(',').map((r) => r.trim()).filter(Boolean);
+
+  if (useAutoDiscovery) {
+    const result = await discoverRoutes(cwd, baseUrl);
+    if (result.routes.length > 0) {
+      console.log(chalk.green(`Discovered ${chalk.bold(String(result.routes.length))} routes from: ${result.sources.join(', ')}`));
+      for (const route of result.routes) {
+        console.log(chalk.dim(`  ${route.path} (${route.source})`));
+      }
+      routes = result.routes.map((r) => r.path);
+      discoveryMode = 'auto';
+    } else {
+      console.log(chalk.yellow('No routes discovered. Falling back to manual input.'));
+      const routeInput = await input({
+        message: 'Routes (comma-separated paths):',
+        default: (framework?.defaultRoutes ?? ['/']).join(', '),
+      });
+      routes = routeInput.split(',').map((r) => r.trim()).filter(Boolean);
+    }
+  } else {
+    const routeInput = await input({
+      message: 'Routes (comma-separated paths):',
+      default: (framework?.defaultRoutes ?? ['/']).join(', '),
+    });
+    routes = routeInput.split(',').map((r) => r.trim()).filter(Boolean);
+  }
 
   // Check for existing config
   try {
@@ -160,7 +193,7 @@ export async function initCommand(opts: { cwd?: string }): Promise<void> {
   }
 
   // Generate and write config
-  const yaml = generateConfig({ baseUrl, routes, projectName, framework: framework?.name });
+  const yaml = generateConfig({ baseUrl, routes, projectName, framework: framework?.name, discoveryMode });
   await writeFile(configPath, yaml, 'utf-8');
 
   const { loadCredentials } = await import('./login.js');

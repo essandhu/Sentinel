@@ -328,3 +328,17 @@ export const environmentDiffs = sqliteTable('environment_diffs', {
   passed: text('passed').notNull().default('pending'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
+
+export const routeThresholdHistory = sqliteTable('route_threshold_history', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  projectId: text('project_id')
+    .references(() => projects.id)
+    .notNull(),
+  url: text('url').notNull(),
+  viewport: text('viewport').notNull(),
+  browser: text('browser').notNull().default('chromium'),
+  pixelDiffPercent: integer('pixel_diff_percent'),
+  ssimScore: integer('ssim_score'),
+  runId: text('run_id').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+});

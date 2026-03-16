@@ -14,3 +14,6 @@ export * from './capture/lighthouse-audit.js';
 export * from './plugins/plugin-loader.js';
 export * from './plugins/plugin-hooks.js';
 export { computeCalibrationMetrics, compareModels, buildABReport, type CalibrationMetrics, type ABTestResult } from './classify/ab-testing.js';
+export * from './discovery/types.js';
+export * from './discovery/discover-routes.js';
+export * from './thresholds/adaptive-threshold-engine.js';

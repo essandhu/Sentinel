@@ -19,6 +19,9 @@ import {
   FlakySchema,
   LayoutShiftSchema,
   SentinelConfigSchema,
+  DiscoverySchema,
+  AutoMaskingSchema,
+  AdaptiveThresholdsSchema,
 } from './config-schema.js';
 import { BREAKPOINT_TEMPLATES } from './breakpoint-templates.js';
 
@@ -440,7 +443,7 @@ describe('SentinelConfigSchema', () => {
         baseUrl: 'http://localhost:3000',
         capture: { routes: [] },
       })
-    ).toThrow('At least one route or adapter must be configured');
+    ).toThrow('At least one route, adapter, or discovery.mode=auto must be configured');
   });
 
   it('rejects suite referencing non-existent route', () => {
@@ -529,6 +532,73 @@ describe('SentinelConfigSchema', () => {
     expect(result.flaky?.maxRetries).toBe(5);
     expect(result.layoutShift?.enabled).toBe(true);
     expect(result.maxCapturesPerRun).toBe(100);
+  });
+});
+
+describe('discovery config', () => {
+  it('accepts discovery.mode = auto with empty routes', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [] },
+      discovery: { mode: 'auto' },
+    });
+    expect(config.discovery?.mode).toBe('auto');
+  });
+
+  it('defaults discovery to undefined (manual mode)', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+    });
+    expect(config.discovery).toBeUndefined();
+  });
+
+  it('accepts crawlDepth and crawlMaxPages options', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [] },
+      discovery: { mode: 'auto', crawlDepth: 5, crawlMaxPages: 100 },
+    });
+    expect(config.discovery?.crawlDepth).toBe(5);
+    expect(config.discovery?.crawlMaxPages).toBe(100);
+  });
+});
+
+describe('autoMasking config', () => {
+  it('accepts autoMasking.enabled boolean', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      autoMasking: { enabled: true },
+    });
+    expect(config.autoMasking?.enabled).toBe(true);
+  });
+});
+
+describe('adaptiveThresholds config', () => {
+  it('accepts adaptiveThresholds with minRuns', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      adaptiveThresholds: { enabled: true, minRuns: 10 },
+    });
+    expect(config.adaptiveThresholds?.enabled).toBe(true);
+    expect(config.adaptiveThresholds?.minRuns).toBe(10);
+  });
+
+  it('defaults minRuns to 5', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test',
+      baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      adaptiveThresholds: { enabled: true },
+    });
+    expect(config.adaptiveThresholds?.minRuns).toBe(5);
   });
 });
 
