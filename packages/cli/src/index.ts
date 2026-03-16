@@ -31,6 +31,7 @@ program
   .option('--branch <name>', 'Git branch name to associate with this run')
   .option('--suite <name>', 'Run only routes in the named suite')
   .option('--plan <name>', 'Execute a test plan (ordered suite sequence with gating)')
+  .option('--components', 'Capture Storybook/component stories instead of pages')
   .option('--ci', 'CI mode: auto-download browsers, JSON output, no prompts')
   .option('--remote', 'Use remote server mode (requires sentinel login)')
   .action(captureCommand);
