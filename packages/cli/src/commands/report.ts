@@ -6,10 +6,18 @@ import { initLocalRuntime } from '../local-runtime.js';
 interface ReportOptions {
   run?: string;
   output?: string;
+  changelog?: boolean;
+  groupBy?: string;
 }
 
 export async function reportCommand(options: ReportOptions): Promise<void> {
   const runtime = await initLocalRuntime(process.cwd());
+
+  if (options.changelog) {
+    await generateChangelogReport(runtime, options);
+    runtime.close();
+    return;
+  }
 
   try {
     // Find target run
@@ -79,4 +87,37 @@ function generateReportHtml(runId: string, diffs: any[]): string {
 
 function escapeHtml(str: string): string {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+async function generateChangelogReport(runtime: any, options: ReportOptions): Promise<void> {
+  const client = (runtime.db as any).$client;
+  const { queryChangelogByRoute } = await import('../changelog/changelog-queries.js');
+  const { generateChangelogHtml } = await import('../changelog/changelog-report.js');
+
+  const project = await runtime.db.query.projects.findFirst() as { id: string } | undefined;
+  if (!project) {
+    console.log(chalk.yellow('No project found.'));
+    return;
+  }
+
+  const routes = client.prepare(
+    `SELECT DISTINCT s.url, s.viewport FROM snapshots s
+     INNER JOIN capture_runs cr ON cr.id = s.run_id
+     WHERE cr.project_id = ?`
+  ).all(project.id) as Array<{ url: string; viewport: string }>;
+
+  const allEntries: any[] = [];
+  for (const route of routes) {
+    const entries = queryChangelogByRoute(client, project.id, route.url, route.viewport, 20);
+    allEntries.push(...entries);
+  }
+
+  const groupBy = (options.groupBy === 'commit' ? 'commit' : 'route') as 'route' | 'commit';
+  const html = generateChangelogHtml(allEntries, groupBy);
+  const outPath = options.output ?? join(process.cwd(), '.sentinel', 'changelog.html');
+
+  const { mkdir } = await import('node:fs/promises');
+  await mkdir(join(process.cwd(), '.sentinel'), { recursive: true });
+  await writeFile(outPath, html);
+  console.log(chalk.green(`Changelog saved to ${outPath}`));
 }

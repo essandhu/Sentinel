@@ -1,4 +1,20 @@
-import type { DiffSummary, BudgetResultEntry } from '@sentinel/cli';
+import type { DiffSummary, DiffEntry, BudgetResultEntry } from '@sentinel/cli';
+
+/**
+ * Split diffs into page diffs and component (Storybook) diffs.
+ */
+export const splitDiffsByType = (diffs: DiffEntry[]): { pages: DiffEntry[]; components: DiffEntry[] } => {
+  const pages: DiffEntry[] = [];
+  const components: DiffEntry[] = [];
+  for (const diff of diffs) {
+    if (diff.url.includes('/iframe.html?id=') && diff.url.includes('viewMode=story')) {
+      components.push(diff);
+    } else {
+      pages.push(diff);
+    }
+  }
+  return { pages, components };
+};
 
 /**
  * Format budget results into a markdown table section.
@@ -63,7 +79,17 @@ export function formatComment(summary: DiffSummary, dashboardUrl?: string): stri
     ? `**All ${summary.diffs.length} route(s) passed.**`
     : `**${failedCount} of ${summary.diffs.length} route(s) failed.**`;
 
-  const parts = [heading, '', summaryLine, '', tableHeader, ...rows];
+  const { pages, components } = splitDiffsByType(summary.diffs);
+  const pageFailures = pages.filter(d => !d.passed).length;
+  const componentFailures = components.filter(d => !d.passed).length;
+
+  const countLines: string[] = [];
+  countLines.push(`**Pages:** ${pages.length} captured${pageFailures > 0 ? `, ${pageFailures} regression(s)` : ''}`);
+  if (components.length > 0) {
+    countLines.push(`**Components:** ${components.length} captured${componentFailures > 0 ? `, ${componentFailures} regression(s)` : ''}`);
+  }
+
+  const parts = [heading, '', summaryLine, '', ...countLines, '', tableHeader, ...rows];
 
   // Append flaky routes warning if applicable
   const flakyFailureCount = summary.flakyFailureCount ?? 0;
