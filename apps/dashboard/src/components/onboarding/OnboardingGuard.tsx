@@ -52,7 +52,8 @@ export function OnboardingGuard({ children }: OnboardingGuardProps) {
 
   // Latch the decision on first data load
   if (showOnboarding.current === null) {
-    showOnboarding.current = !projects || projects.length === 0;
+    const projectList = Array.isArray(projects) ? projects : [];
+    showOnboarding.current = projectList.length === 0;
   }
 
   if (showOnboarding.current) {

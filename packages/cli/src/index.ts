@@ -95,6 +95,16 @@ program
     await pruneCommand(opts);
   });
 
+program
+  .command('watch')
+  .description('Watch source files and re-capture on change')
+  .option('-c, --config <path>', 'Path to sentinel config file', 'sentinel.config.yml')
+  .option('-p, --port <port>', 'Start dashboard server on this port')
+  .action(async (opts) => {
+    const { watchCommand } = await import('./commands/watch.js');
+    await watchCommand(opts);
+  });
+
 export { program };
 
 await program.parseAsync(process.argv);

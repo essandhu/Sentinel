@@ -170,6 +170,12 @@ export const DesignDriftSchema = z.object({
   mappings: z.array(DesignDriftMappingSchema).optional(),
 });
 
+export const WatchSchema = z.object({
+  paths: z.array(z.string().min(1)).min(1),
+  debounceMs: z.number().int().min(100).max(10000).default(500),
+  clearScreen: z.boolean().default(true),
+});
+
 export const SentinelConfigSchema = z
   .object({
     project: z.string(),
@@ -198,6 +204,7 @@ export const SentinelConfigSchema = z
     components: ComponentsSchema.optional(),
     crossBrowserBaselines: z.boolean().default(false),
     designDrift: DesignDriftSchema.optional(),
+    watch: WatchSchema.optional(),
   })
   .superRefine((data, ctx) => {
     const isAutoDiscovery = data.discovery?.mode === 'auto';
