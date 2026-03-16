@@ -22,6 +22,7 @@ import {
   DiscoverySchema,
   AutoMaskingSchema,
   AdaptiveThresholdsSchema,
+  WatchSchema,
 } from './config-schema.js';
 import { BREAKPOINT_TEMPLATES } from './breakpoint-templates.js';
 
@@ -687,6 +688,33 @@ describe('designDrift config', () => {
       capture: { routes: [{ path: '/', name: 'home' }] },
     });
     expect(config.designDrift).toBeUndefined();
+  });
+});
+
+describe('watch config', () => {
+  it('accepts watch with paths array', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      watch: { paths: ['src/**', 'app/**'] },
+    });
+    expect(config.watch?.paths).toEqual(['src/**', 'app/**']);
+  });
+  it('defaults debounceMs to 500 and clearScreen to true', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+      watch: { paths: ['src/**'] },
+    });
+    expect(config.watch?.debounceMs).toBe(500);
+    expect(config.watch?.clearScreen).toBe(true);
+  });
+  it('defaults watch to undefined', () => {
+    const config = SentinelConfigSchema.parse({
+      project: 'test', baseUrl: 'http://localhost:3000',
+      capture: { routes: [{ path: '/', name: 'home' }] },
+    });
+    expect(config.watch).toBeUndefined();
   });
 });
 
