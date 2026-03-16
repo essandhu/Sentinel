@@ -1,54 +1,14 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import Database from 'better-sqlite3';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { unlinkSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { createSqliteDb } from '@sentinel/db';
 import { queryChangelogByRoute, queryChangelogByCommit } from './changelog-queries.js';
 
-function createTables(db: InstanceType<typeof Database>) {
-  db.exec(`
-    CREATE TABLE projects (
-      id TEXT PRIMARY KEY,
-      name TEXT NOT NULL,
-      created_at INTEGER NOT NULL
-    );
-    CREATE TABLE capture_runs (
-      id TEXT PRIMARY KEY,
-      project_id TEXT NOT NULL REFERENCES projects(id),
-      commit_sha TEXT,
-      branch_name TEXT,
-      status TEXT NOT NULL DEFAULT 'pending',
-      created_at INTEGER NOT NULL
-    );
-    CREATE TABLE snapshots (
-      id TEXT PRIMARY KEY,
-      run_id TEXT NOT NULL REFERENCES capture_runs(id),
-      url TEXT NOT NULL,
-      viewport TEXT NOT NULL,
-      browser TEXT NOT NULL DEFAULT 'chromium',
-      s3_key TEXT NOT NULL,
-      captured_at INTEGER NOT NULL
-    );
-    CREATE TABLE diff_reports (
-      id TEXT PRIMARY KEY,
-      snapshot_id TEXT NOT NULL REFERENCES snapshots(id),
-      baseline_s3_key TEXT NOT NULL,
-      diff_s3_key TEXT NOT NULL,
-      pixel_diff_percent INTEGER,
-      ssim_score INTEGER,
-      passed TEXT NOT NULL DEFAULT 'pending',
-      created_at INTEGER NOT NULL
-    );
-    CREATE TABLE approval_decisions (
-      id TEXT PRIMARY KEY,
-      diff_report_id TEXT NOT NULL REFERENCES diff_reports(id),
-      action TEXT NOT NULL,
-      user_id TEXT NOT NULL,
-      user_email TEXT NOT NULL,
-      reason TEXT,
-      created_at INTEGER NOT NULL
-    );
-  `);
-}
+let dbPath: string;
+let rawDb: any;
 
-function seedData(db: InstanceType<typeof Database>) {
+function seedData(db: any) {
   const now = Date.now();
   const oneHourAgo = now - 3600_000;
   const twoHoursAgo = now - 7200_000;
@@ -86,40 +46,40 @@ function seedData(db: InstanceType<typeof Database>) {
 }
 
 describe('changelog-queries', () => {
-  let db: InstanceType<typeof Database>;
-
   beforeEach(() => {
-    db = new Database(':memory:');
-    createTables(db);
-    seedData(db);
+    dbPath = join(tmpdir(), `sentinel-changelog-test-${Date.now()}-${Math.random().toString(36).slice(2)}.db`);
+    const drizzleDb = createSqliteDb(dbPath);
+    rawDb = (drizzleDb as any).$client;
+    seedData(rawDb);
+  });
+
+  afterEach(() => {
+    try { unlinkSync(dbPath); } catch {}
+    try { unlinkSync(dbPath + '-wal'); } catch {}
+    try { unlinkSync(dbPath + '-shm'); } catch {}
   });
 
   describe('queryChangelogByRoute', () => {
     it('returns timeline for a specific route, most recent first', () => {
-      const results = queryChangelogByRoute(db, 'proj-1', 'https://example.com/');
+      const results = queryChangelogByRoute(rawDb, 'proj-1', 'https://example.com/');
 
       expect(results.length).toBe(3);
-      // Most recent first: snap-2 and snap-3 from run-2 (oneHourAgo), then snap-1 from run-1 (twoHoursAgo)
-      // diff-2 and diff-3 are tied on created_at (oneHourAgo), diff-1 is oldest
       expect(results[0].createdAt).toBeGreaterThanOrEqual(results[1].createdAt);
       expect(results[1].createdAt).toBeGreaterThanOrEqual(results[2].createdAt);
-      // All should be for the requested URL
       for (const entry of results) {
         expect(entry.url).toBe('https://example.com/');
       }
     });
 
     it('includes approval info via LEFT JOIN', () => {
-      const results = queryChangelogByRoute(db, 'proj-1', 'https://example.com/');
+      const results = queryChangelogByRoute(rawDb, 'proj-1', 'https://example.com/');
 
-      // diff-2 has an approval
       const approved = results.find(r => r.snapshotStorageKey === 'snapshots/snap-2.png');
       expect(approved).toBeDefined();
       expect(approved!.approvalAction).toBe('approved');
       expect(approved!.approvalBy).toBe('alice@example.com');
       expect(approved!.approvalReason).toBe('Looks good');
 
-      // diff-1 has no approval
       const noApproval = results.find(r => r.snapshotStorageKey === 'snapshots/snap-1.png');
       expect(noApproval).toBeDefined();
       expect(noApproval!.approvalAction).toBeNull();
@@ -127,13 +87,13 @@ describe('changelog-queries', () => {
     });
 
     it('respects limit param', () => {
-      const results = queryChangelogByRoute(db, 'proj-1', 'https://example.com/', undefined, 1);
+      const results = queryChangelogByRoute(rawDb, 'proj-1', 'https://example.com/', undefined, 1);
 
       expect(results.length).toBe(1);
     });
 
     it('filters by viewport when provided', () => {
-      const results = queryChangelogByRoute(db, 'proj-1', 'https://example.com/', '375x812');
+      const results = queryChangelogByRoute(rawDb, 'proj-1', 'https://example.com/', '375x812');
 
       expect(results.length).toBe(1);
       expect(results[0].viewport).toBe('375x812');
@@ -142,17 +102,16 @@ describe('changelog-queries', () => {
 
   describe('queryChangelogByCommit', () => {
     it('returns all diffs for a commit ordered by url then viewport', () => {
-      const results = queryChangelogByCommit(db, 'proj-1', 'def456');
+      const results = queryChangelogByCommit(rawDb, 'proj-1', 'def456');
 
       expect(results.length).toBe(2);
       expect(results[0].commitSha).toBe('def456');
       expect(results[1].commitSha).toBe('def456');
-      // Ordered by url, viewport — both same url, so by viewport
       expect(results[0].viewport <= results[1].viewport).toBe(true);
     });
 
     it('returns empty array for unknown commit', () => {
-      const results = queryChangelogByCommit(db, 'proj-1', 'nonexistent');
+      const results = queryChangelogByCommit(rawDb, 'proj-1', 'nonexistent');
 
       expect(results).toEqual([]);
     });
