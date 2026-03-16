@@ -88,3 +88,30 @@ describe('generateConfig', () => {
     expect(parsed.capture.routes[0].path).toBe('/dashboard');
   });
 });
+
+describe('enhanced init with auto-discovery', () => {
+  it('generateConfig includes discovery mode when discoveryMode is auto', () => {
+    const yaml = generateConfig({
+      baseUrl: 'http://localhost:3000',
+      routes: ['/', '/about', '/pricing'],
+      projectName: 'my-project',
+      framework: 'next',
+      discoveryMode: 'auto',
+    });
+
+    const parsed = parseYaml(yaml);
+    expect(parsed.discovery?.mode).toBe('auto');
+    expect(parsed.capture.routes).toHaveLength(3);
+  });
+
+  it('generateConfig omits discovery when no discoveryMode', () => {
+    const yaml = generateConfig({
+      baseUrl: 'http://localhost:3000',
+      routes: ['/'],
+      projectName: 'my-project',
+    });
+
+    const parsed = parseYaml(yaml);
+    expect(parsed.discovery).toBeUndefined();
+  });
+});
