@@ -76,6 +76,8 @@ program
   .description('Generate static HTML report from last capture run')
   .option('--run <runId>', 'Generate report for a specific run')
   .option('-o, --output <path>', 'Output file path')
+  .option('--changelog', 'Generate visual changelog report')
+  .option('--group-by <mode>', 'Group changelog by "route" (default) or "commit"')
   .action(reportCommand);
 
 program
