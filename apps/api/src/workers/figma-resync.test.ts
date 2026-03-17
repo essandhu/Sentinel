@@ -5,11 +5,11 @@ const mockCreateDb = vi.hoisted(() => vi.fn());
 const mockUploadBuffer = vi.hoisted(() => vi.fn());
 const mockDecrypt = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/adapters', () => ({
+vi.mock('@sentinel-vrt/adapters', () => ({
   extractDesignTokens: mockExtractDesignTokens,
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: mockCreateDb,
   workspaceSettings: {
     workspaceId: 'workspaceSettings.workspaceId',
@@ -17,7 +17,7 @@ vi.mock('@sentinel/db', () => ({
   },
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   uploadBuffer: mockUploadBuffer,
 }));
 

@@ -1,6 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import type { SentinelPlugin } from '@sentinel/types';
+import type { SentinelPlugin } from '@sentinel-vrt/types';
 
 const PLUGIN_PREFIX = 'sentinel-plugin-';
 

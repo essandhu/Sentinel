@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { eq, and } from 'drizzle-orm';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb, testSuites, type Db } from '@sentinel/db';
+import { createDb, testSuites, type Db } from '@sentinel-vrt/db';
 
 function getDb() {
   return createDb(process.env.DATABASE_URL!);

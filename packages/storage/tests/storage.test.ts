@@ -38,7 +38,7 @@ const RED_PIXEL_PNG = Buffer.from([
   0x44, 0xae, 0x42, 0x60, 0x82,
 ]);
 
-describe('@sentinel/storage integration', async () => {
+describe('@sentinel-vrt/storage integration', async () => {
   const available = await isS3Available();
   if (!available) {
     it.skip('S3/MinIO not available -- skipping storage tests', () => {});

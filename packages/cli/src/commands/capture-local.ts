@@ -1,15 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
-// Use re-exported drizzle operators from @sentinel/db to avoid dual-instance issues
-import { loadConfig, processCaptureLocal, type SentinelConfigParsed } from '@sentinel/capture';
-import { createSqliteDb, sqliteSchema, type SqliteDb } from '@sentinel/db';
-import { FilesystemStorageAdapter } from '@sentinel/storage';
+// Use re-exported drizzle operators from @sentinel-vrt/db to avoid dual-instance issues
+import { loadConfig, processCaptureLocal, type SentinelConfigParsed } from '@sentinel-vrt/capture';
+import { createSqliteDb, sqliteSchema, type SqliteDb } from '@sentinel-vrt/db';
+import { FilesystemStorageAdapter } from '@sentinel-vrt/storage';
 import { computeAndStoreHealthScores } from '../health-score-compute.js';
 import type { DiffEntry, DiffSummary, BudgetResultEntry, FlakyRouteEntry, CaptureOptions } from './capture.js';
 
 const { projects, captureRuns, snapshots, diffReports, testPlanRuns, lighthouseScores } = sqliteSchema;
 
-// Drizzle operators — imported via @sentinel/db's drizzle-orm instance to avoid
+// Drizzle operators — imported via @sentinel-vrt/db's drizzle-orm instance to avoid
 // pnpm dual-instance type conflicts between Pg and SQLite drizzle copies.
 const esmRequire = createRequire(import.meta.url);
 const { eq, and, gte, asc } = esmRequire('drizzle-orm') as {

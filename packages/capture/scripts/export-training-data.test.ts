@@ -2,12 +2,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { Region } from '../src/classify/connected-components.js';
 
 // Mock modules before importing
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   classificationOverrides: { diffReportId: 'co.diffReportId', originalCategory: 'co.originalCategory', overrideCategory: 'co.overrideCategory' },
   diffReports: { id: 'dr.id', diffS3Key: 'dr.diffS3Key' },
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   downloadBuffer: vi.fn(),
 }));
 
@@ -27,7 +27,7 @@ vi.mock('../src/classify/region-features.js', () => ({
 
 // Now import after mocks
 import { exportTrainingData, formatPerRegionCsvHeaders, formatPerRegionRow, type PerRegionRow } from './export-training-data.js';
-import { downloadBuffer } from '@sentinel/storage';
+import { downloadBuffer } from '@sentinel-vrt/storage';
 import sharp from 'sharp';
 import { findConnectedComponents } from '../src/classify/connected-components.js';
 import { extractFeatures } from '../src/classify/region-features.js';

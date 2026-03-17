@@ -11,7 +11,7 @@ vi.mock('node:crypto', () => ({
   randomUUID: vi.fn(() => FIXED_UUID),
 }));
 
-// Mock @sentinel/db
+// Mock @sentinel-vrt/db
 const mockInsert = vi.fn();
 const mockValues = vi.fn().mockImplementation(() => {
   callOrder.push('db.insert');
@@ -23,7 +23,7 @@ const mockSelectWhere = vi.fn();
 const mockSelectFrom = vi.fn().mockReturnValue({ where: mockSelectWhere });
 const mockSelect = vi.fn().mockReturnValue({ from: mockSelectFrom });
 
-vi.mock('@sentinel/db', () => {
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: mockSelect,
     insert: mockInsert,

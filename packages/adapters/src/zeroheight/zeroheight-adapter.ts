@@ -1,4 +1,4 @@
-import type { DesignSourceAdapter, DesignSpec, AdapterConfig, TokenValue } from '@sentinel/types';
+import type { DesignSourceAdapter, DesignSpec, AdapterConfig, TokenValue } from '@sentinel-vrt/types';
 import { fetchTokenExport } from './zeroheight-client.js';
 import { normalizeColorToHex } from '../tokens/color-normalize.js';
 

@@ -12,11 +12,11 @@ const mockBucket = 'test-bucket';
 const mockDownloadBuffer = vi.fn();
 const mockRunDualDiff = vi.fn();
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   downloadBuffer: (...args: unknown[]) => mockDownloadBuffer(...args),
 }));
 
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   runDualDiff: (...args: unknown[]) => mockRunDualDiff(...args),
 }));
 
@@ -67,8 +67,8 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   return db;
 }
 
-// Mock @sentinel/db -- must be before import
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db -- must be before import
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(),
   projects: { id: 'projects.id', workspaceId: 'projects.workspaceId' },
   captureRuns: {

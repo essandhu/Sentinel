@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { eq, and } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
-import { createDb, projects, captureRuns } from '@sentinel/db';
+import { createDb, projects, captureRuns } from '@sentinel-vrt/db';
 import { getCaptureQueue } from '../../queue.js';
 
 const db = createDb(process.env.DATABASE_URL!);

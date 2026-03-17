@@ -1,4 +1,4 @@
-import type { SqliteDb } from '@sentinel/db';
+import type { SqliteDb } from '@sentinel-vrt/db';
 
 /**
  * Compute and store project + component health scores after a capture run.

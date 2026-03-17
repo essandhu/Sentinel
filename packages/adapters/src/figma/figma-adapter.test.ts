@@ -178,7 +178,7 @@ describe('isRateLimited and persistRateLimit', () => {
   });
 
   it('isRateLimited() returns false when no adapter_state row exists', async () => {
-    vi.doMock('@sentinel/db', () => ({
+    vi.doMock('@sentinel-vrt/db', () => ({
       createDb: vi.fn().mockReturnValue({
         query: {
           adapterState: {
@@ -198,7 +198,7 @@ describe('isRateLimited and persistRateLimit', () => {
 
   it('isRateLimited() returns true when retryAfterTimestamp is in the future', async () => {
     const futureDate = new Date(Date.now() + 60_000);
-    vi.doMock('@sentinel/db', () => ({
+    vi.doMock('@sentinel-vrt/db', () => ({
       createDb: vi.fn().mockReturnValue({
         query: {
           adapterState: {
@@ -215,7 +215,7 @@ describe('isRateLimited and persistRateLimit', () => {
     }));
     vi.resetModules();
     // Re-register mocks after resetModules
-    vi.doMock('@sentinel/db', () => ({
+    vi.doMock('@sentinel-vrt/db', () => ({
       createDb: vi.fn().mockReturnValue({
         query: {
           adapterState: {
@@ -238,7 +238,7 @@ describe('isRateLimited and persistRateLimit', () => {
   it('isRateLimited() returns false when retryAfterTimestamp is in the past', async () => {
     const pastDate = new Date(Date.now() - 60_000);
     vi.resetModules();
-    vi.doMock('@sentinel/db', () => ({
+    vi.doMock('@sentinel-vrt/db', () => ({
       createDb: vi.fn().mockReturnValue({
         query: {
           adapterState: {
@@ -263,7 +263,7 @@ describe('isRateLimited and persistRateLimit', () => {
     const mockValues = vi.fn().mockReturnValue({ onConflictDoUpdate: mockOnConflictDoUpdate });
     const mockInsert = vi.fn().mockReturnValue({ values: mockValues });
     vi.resetModules();
-    vi.doMock('@sentinel/db', () => ({
+    vi.doMock('@sentinel-vrt/db', () => ({
       createDb: vi.fn().mockReturnValue({
         insert: mockInsert,
       }),

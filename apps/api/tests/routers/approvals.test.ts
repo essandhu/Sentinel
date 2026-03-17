@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing routers
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing routers
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -66,7 +66,7 @@ vi.mock('../src/services/jira-service.js', () => ({
   attachToJiraIssue: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn().mockReturnValue({}),
   downloadBuffer: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
 }));
@@ -79,7 +79,7 @@ describe('reviewerProcedure role enforcement', () => {
   it('allows request when auth is null (dev/test pass-through)', async () => {
     const { appRouter } = await import('../../src/routers/index.js');
     const caller = appRouter.createCaller({ auth: null } as any);
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     const mockDb = (createDb as ReturnType<typeof vi.fn>)();
 
     // Chainable select helper
@@ -120,7 +120,7 @@ describe('reviewerProcedure role enforcement', () => {
       auth: { userId: 'user-1', orgId: 'org-1', orgRole: 'org:admin', sessionClaims: { email: 'admin@test.com' } },
     } as any);
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     const mockDb = (createDb as ReturnType<typeof vi.fn>)();
 
     const makeChain = (resolveValue: any[]) => {
@@ -157,7 +157,7 @@ describe('reviewerProcedure role enforcement', () => {
       auth: { userId: 'user-2', orgId: 'org-1', orgRole: 'org:member', sessionClaims: { email: 'member@test.com' } },
     } as any);
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     const mockDb = (createDb as ReturnType<typeof vi.fn>)();
 
     const makeChain = (resolveValue: any[]) => {
@@ -243,7 +243,7 @@ describe('approvals router endpoints', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

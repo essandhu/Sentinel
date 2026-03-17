@@ -5,7 +5,7 @@ import {
   snapshots,
   captureRuns,
   projects,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 
 export interface TeamMetrics {
   meanTimeToApproveMs: number | null;

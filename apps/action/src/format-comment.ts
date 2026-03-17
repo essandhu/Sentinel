@@ -1,4 +1,4 @@
-import type { DiffSummary, DiffEntry, BudgetResultEntry } from '@sentinel/cli';
+import type { DiffSummary, DiffEntry, BudgetResultEntry } from '@sentinel-vrt/cli';
 
 /**
  * Split diffs into page diffs and component (Storybook) diffs.

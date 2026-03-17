@@ -12,7 +12,7 @@ const mockInsert = vi.hoisted(() => vi.fn());
 const mockInsertValues = vi.hoisted(() => vi.fn());
 const mockQueueAdd = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({
     select: mockSelect,
     update: mockUpdate,

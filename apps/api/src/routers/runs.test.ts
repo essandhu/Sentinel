@@ -14,8 +14,8 @@ vi.mock('../services/run-service.js', () => ({
   getRunById: (...args: unknown[]) => mockGetRunById(...args),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
 }));
 

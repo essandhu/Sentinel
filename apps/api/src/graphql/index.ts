@@ -1,6 +1,6 @@
 import mercurius from 'mercurius';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { createDb } from '@sentinel/db';
+import { createDb } from '@sentinel-vrt/db';
 import { schema } from './schema.js';
 import { resolvers } from './resolvers.js';
 import { loaders } from './loaders.js';

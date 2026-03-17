@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { eq, and, gte, asc } from 'drizzle-orm';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb, diffReports, snapshots, captureRuns, type Db } from '@sentinel/db';
+import { createDb, diffReports, snapshots, captureRuns, type Db } from '@sentinel-vrt/db';
 import { countFlips, computeStabilityScore } from '../services/stability-score-service.js';
 
 function getDb() {

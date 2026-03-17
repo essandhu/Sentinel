@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { createDb } from '@sentinel/db';
+import { createDb } from '@sentinel-vrt/db';
 import { getDiffsByRunId, verifyRunInWorkspace } from '../../services/diff-service.js';
 
 const db = createDb(process.env.DATABASE_URL!);

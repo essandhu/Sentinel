@@ -8,8 +8,8 @@ vi.mock('@clerk/fastify', () => ({
   getAuth: mockGetAuth,
 }));
 
-// Mock @sentinel/storage so the route handler doesn't need real S3
-vi.mock('@sentinel/storage', () => ({
+// Mock @sentinel-vrt/storage so the route handler doesn't need real S3
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
 }));
 

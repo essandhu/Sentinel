@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { t, workspaceProcedure, adminProcedure } from '../trpc.js';
-import { createDb, notificationPreferences } from '@sentinel/db';
+import { createDb, notificationPreferences } from '@sentinel-vrt/db';
 import {
   DEFAULT_NOTIFICATION_PREFERENCES,
   type NotificationPreferencesMap,

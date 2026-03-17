@@ -2,8 +2,8 @@ import chalk from 'chalk';
 import { join } from 'node:path';
 import { select } from '@inquirer/prompts';
 import { initLocalRuntime, type LocalRuntime } from '../local-runtime.js';
-import { sqliteSchema } from '@sentinel/db';
-import { StorageKeys } from '@sentinel/storage';
+import { sqliteSchema } from '@sentinel-vrt/db';
+import { StorageKeys } from '@sentinel-vrt/storage';
 
 interface ApproveOptions {
   all?: boolean;

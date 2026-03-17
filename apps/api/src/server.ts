@@ -5,7 +5,7 @@ import multipart from '@fastify/multipart';
 import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { createStorageClient } from '@sentinel/storage';
+import { createStorageClient } from '@sentinel-vrt/storage';
 import { appRouter } from './routers/index.js';
 import { createContext } from './context.js';
 import { registerFigmaWebhookRoute } from './webhooks/figma-webhook-handler.js';

@@ -3,7 +3,7 @@ import {
   computeAdaptiveThresholds,
   hasEnoughHistory,
   type ThresholdHistoryEntry,
-} from '@sentinel/capture/thresholds';
+} from '@sentinel-vrt/capture/thresholds';
 
 interface DiffForHistory {
   url: string;

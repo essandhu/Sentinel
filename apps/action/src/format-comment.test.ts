@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { splitDiffsByType, formatComment } from './format-comment.js';
-import type { DiffSummary } from '@sentinel/cli';
+import type { DiffSummary } from '@sentinel-vrt/cli';
 
 const makeDiff = (url: string, passed = true) => ({
   url,

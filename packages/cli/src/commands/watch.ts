@@ -34,7 +34,7 @@ interface WatchOptions {
 }
 
 export const watchCommand = async (options: WatchOptions): Promise<void> => {
-  const { loadConfig } = await import('@sentinel/capture');
+  const { loadConfig } = await import('@sentinel-vrt/capture');
   const config = await loadConfig(options.config ?? 'sentinel.config.yml');
 
   const watchConfig = (config as any).watch;

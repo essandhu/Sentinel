@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import { eq, and, isNull } from 'drizzle-orm';
-import { createDb, apiKeys } from '@sentinel/db';
+import { createDb, apiKeys } from '@sentinel-vrt/db';
 import { hashApiKey } from '../../services/api-key-service.js';
 
 const db = createDb(process.env.DATABASE_URL!);

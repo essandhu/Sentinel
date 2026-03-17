@@ -7,7 +7,7 @@ import {
   snapshots,
   layoutShifts,
   type Db,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 
 /** Shape of a region within a classification */
 export interface ClassificationRegion {

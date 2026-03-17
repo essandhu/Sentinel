@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const mockCreateDb = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: mockCreateDb,
   baselines: {
     id: 'baselines.id',

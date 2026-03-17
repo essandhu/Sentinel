@@ -1,8 +1,8 @@
 import { S3Client } from '@aws-sdk/client-s3';
 import pLimit from 'p-limit';
-import { createDb, type Db, adapterState } from '@sentinel/db';
+import { createDb, type Db, adapterState } from '@sentinel-vrt/db';
 import { eq } from 'drizzle-orm';
-import type { DesignSourceAdapter, DesignSpec } from '@sentinel/types';
+import type { DesignSourceAdapter, DesignSpec } from '@sentinel-vrt/types';
 import type { FigmaAdapterConfig } from '../types.js';
 import {
   fetchFigmaImages,

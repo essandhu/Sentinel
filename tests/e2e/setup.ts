@@ -1,8 +1,8 @@
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { mkdtemp, rm } from 'node:fs/promises';
-import { createSqliteDb, type SqliteDb } from '@sentinel/db';
-import { FilesystemStorageAdapter, type StorageAdapter } from '@sentinel/storage';
+import { createSqliteDb, type SqliteDb } from '@sentinel-vrt/db';
+import { FilesystemStorageAdapter, type StorageAdapter } from '@sentinel-vrt/storage';
 
 // ---------------------------------------------------------------------------
 // Constants

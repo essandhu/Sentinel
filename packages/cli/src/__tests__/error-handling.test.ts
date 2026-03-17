@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // ── Mocks ─────────────────────────────────────────────────────────────────────
-// Mock @sentinel/capture
-vi.mock('@sentinel/capture', () => ({
+// Mock @sentinel-vrt/capture
+vi.mock('@sentinel-vrt/capture', () => ({
   loadConfig: vi.fn(),
   processCaptureLocal: vi.fn().mockResolvedValue(undefined),
 }));
 
-// Mock @sentinel/db
+// Mock @sentinel-vrt/db
 const mockInsertReturning = vi.fn();
 const mockSelectWhere = vi.fn();
 
@@ -24,7 +24,7 @@ const mockDb = {
   all: vi.fn(),
 };
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createSqliteDb: vi.fn(() => mockDb),
   sqliteSchema: {
     projects: { name: 'projects' },
@@ -44,15 +44,15 @@ vi.mock('drizzle-orm', () => ({
   asc: vi.fn((field) => ({ asc: field })),
 }));
 
-// Mock @sentinel/storage
+// Mock @sentinel-vrt/storage
 const mockStorage = { ensureReady: vi.fn().mockResolvedValue(undefined) };
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   FilesystemStorageAdapter: vi.fn(function () { return mockStorage; }),
 }));
 
 // ── Imports (after mocks) ─────────────────────────────────────────────────────
 import { runCapture } from '../commands/capture-local.js';
-import { loadConfig, processCaptureLocal } from '@sentinel/capture';
+import { loadConfig, processCaptureLocal } from '@sentinel-vrt/capture';
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
 describe('capture error handling', () => {

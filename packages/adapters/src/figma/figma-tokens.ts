@@ -1,4 +1,4 @@
-import type { TokenValue } from '@sentinel/types';
+import type { TokenValue } from '@sentinel-vrt/types';
 
 const FIGMA_API_BASE = 'https://api.figma.com';
 

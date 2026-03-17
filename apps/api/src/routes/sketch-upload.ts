@@ -3,9 +3,9 @@ import { join } from 'node:path';
 import { writeFile, unlink } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { FastifyInstance } from 'fastify';
-import { SketchAdapter } from '@sentinel/adapters';
-import { createStorageClient } from '@sentinel/storage';
-import { createDb } from '@sentinel/db';
+import { SketchAdapter } from '@sentinel-vrt/adapters';
+import { createStorageClient } from '@sentinel-vrt/storage';
+import { createDb } from '@sentinel-vrt/db';
 import { writeDesignBaselines } from '../services/baseline-writer.js';
 
 /**

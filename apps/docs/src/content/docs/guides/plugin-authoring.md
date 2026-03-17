@@ -14,7 +14,7 @@ Sentinel's plugin system lets you extend the platform with custom design source 
 Import reference designs from external sources:
 
 ```typescript
-import type { DesignSpec, AdapterConfig } from '@sentinel/types';
+import type { DesignSpec, AdapterConfig } from '@sentinel-vrt/types';
 
 export interface DesignSourceAdapter {
   /** Unique adapter name (e.g., 'figma', 'storybook') */

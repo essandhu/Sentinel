@@ -2,9 +2,9 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { eq, and, desc } from 'drizzle-orm';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb, components, projects, snapshots, captureRuns } from '@sentinel/db';
-import { createStorageClient, downloadBuffer } from '@sentinel/storage';
-import { runDualDiff } from '@sentinel/capture';
+import { createDb, components, projects, snapshots, captureRuns } from '@sentinel-vrt/db';
+import { createStorageClient, downloadBuffer } from '@sentinel-vrt/storage';
+import { runDualDiff } from '@sentinel-vrt/capture';
 import { listComponents } from '../services/component-service.js';
 
 const db = createDb();

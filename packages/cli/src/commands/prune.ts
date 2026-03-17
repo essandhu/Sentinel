@@ -11,7 +11,7 @@ interface PruneOptions {
 }
 
 export const pruneCommand = async (options: PruneOptions): Promise<void> => {
-  const { loadConfig } = await import('@sentinel/capture');
+  const { loadConfig } = await import('@sentinel-vrt/capture');
   const config = await loadConfig(options.config ?? 'sentinel.config.yml');
   const runtime = await initLocalRuntime(process.cwd());
 

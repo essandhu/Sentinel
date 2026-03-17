@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { DesignSpec } from '@sentinel/types';
+import type { DesignSpec } from '@sentinel-vrt/types';
 
 // ---------- Mock factories ----------
 const mockUploadBuffer = vi.fn();
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   uploadBuffer: (...args: unknown[]) => mockUploadBuffer(...args),
 }));
 
@@ -40,7 +40,7 @@ function buildMockDb() {
   return { db, insertedValues };
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   captureRuns: { id: 'captureRuns.id', projectId: 'captureRuns.projectId' },
   snapshots: { id: 'snapshots.id', runId: 'snapshots.runId' },
   baselines: { id: 'baselines.id', projectId: 'baselines.projectId' },

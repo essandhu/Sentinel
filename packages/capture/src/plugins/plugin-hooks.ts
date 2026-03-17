@@ -1,4 +1,4 @@
-import type { BeforeCaptureContext, AfterDiffContext, OnApprovalContext } from '@sentinel/types';
+import type { BeforeCaptureContext, AfterDiffContext, OnApprovalContext } from '@sentinel-vrt/types';
 import type { LoadedPlugin } from './plugin-loader.js';
 
 /**

@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { extname } from 'node:path';
 import { parse as parseYaml } from 'yaml';
-import type { DesignSpec, TokenValue, DesignSourceAdapter, AdapterConfig } from '@sentinel/types';
+import type { DesignSpec, TokenValue, DesignSourceAdapter, AdapterConfig } from '@sentinel-vrt/types';
 import type { DesignTokenAdapterConfig } from '../types.js';
 import { normalizeColorToHex } from './color-normalize.js';
 

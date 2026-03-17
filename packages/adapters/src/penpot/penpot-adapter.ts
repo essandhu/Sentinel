@@ -1,4 +1,4 @@
-import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel/types';
+import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel-vrt/types';
 import type { PenpotAdapterConfig } from '../types.js';
 import { getPenpotFileComponents, exportPenpotComponent } from './penpot-client.js';
 import pLimit from 'p-limit';

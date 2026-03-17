@@ -21,13 +21,13 @@ vi.mock('./health-score-service.js', () => ({
   computeAllHealthScores: vi.fn().mockResolvedValue(undefined),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
 }));
 
-// Mock @sentinel/storage
-vi.mock('@sentinel/storage', () => ({
+// Mock @sentinel-vrt/storage
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
 }));
 

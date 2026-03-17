@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { eq, and } from 'drizzle-orm';
-import { createDb, projects } from '@sentinel/db';
+import { createDb, projects } from '@sentinel-vrt/db';
 import { listRunsByProject } from '../../services/run-service.js';
 import { verifyRunInWorkspace } from '../../services/diff-service.js';
 

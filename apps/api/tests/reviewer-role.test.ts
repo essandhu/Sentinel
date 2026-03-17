@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing trpc
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing trpc
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
   };

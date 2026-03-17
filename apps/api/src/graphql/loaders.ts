@@ -11,7 +11,7 @@ import {
   diffClassifications,
   diffRegions,
   type Db,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import type { GqlContext } from './resolvers.js';
 import { getViolationsByRunId } from '../services/a11y-service.js';
 import { getClassificationsByDiffReportIds } from '../services/classification-service.js';

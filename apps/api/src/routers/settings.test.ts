@@ -5,8 +5,8 @@ vi.mock('../services/crypto.js', () => ({
   encrypt: vi.fn((val: string) => `encrypted:${val}`),
 }));
 
-// Mock @sentinel/db before importing routers
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing routers
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -49,7 +49,7 @@ describe('settings router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

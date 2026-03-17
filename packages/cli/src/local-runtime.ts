@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
-import { createSqliteDb, type SqliteDb } from '@sentinel/db';
-import { FilesystemStorageAdapter } from '@sentinel/storage';
+import { createSqliteDb, type SqliteDb } from '@sentinel-vrt/db';
+import { FilesystemStorageAdapter } from '@sentinel-vrt/storage';
 
 export interface LocalRuntime {
   db: SqliteDb;

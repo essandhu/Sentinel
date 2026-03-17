@@ -10,7 +10,7 @@ const mockBroadcast = vi.hoisted(() => vi.fn());
 // we can reference EventEmitter here because 'node:events' is built-in.
 let mockQueueEventsInstance: EventEmitter & { close: ReturnType<typeof vi.fn> };
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: () => mockDb,
   captureRuns: { id: 'captureRuns.id', projectId: 'captureRuns.projectId' },
   projects: { id: 'projects.id', workspaceId: 'projects.workspaceId' },

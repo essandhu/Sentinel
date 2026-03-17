@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SentinelConfigSchema } from '@sentinel/capture';
+import { SentinelConfigSchema } from '@sentinel-vrt/capture';
 
 describe('suite-filtered config passes Zod validation', () => {
   it('filtered config with suites stripped is valid', () => {

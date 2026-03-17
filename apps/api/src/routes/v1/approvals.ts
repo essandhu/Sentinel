@@ -8,7 +8,7 @@ import {
   projects,
   baselines,
   approvalDecisions,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import {
   getChainForProject,
   validateAndRecordApproval,

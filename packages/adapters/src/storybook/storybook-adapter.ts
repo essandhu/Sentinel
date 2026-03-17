@@ -1,4 +1,4 @@
-import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel/types';
+import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel-vrt/types';
 import type { StorybookAdapterConfig } from '../types.js';
 
 interface StorybookEntry {

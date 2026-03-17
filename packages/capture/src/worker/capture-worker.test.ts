@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { StorageKeys } from '@sentinel/storage';
+import { StorageKeys } from '@sentinel-vrt/storage';
 import type { S3Client } from '@aws-sdk/client-s3';
 
 // Mock all external dependencies before importing the module under test
@@ -15,8 +15,8 @@ vi.mock('../config/config-loader.js', () => ({
   loadConfig: vi.fn(),
   resolveThresholds: vi.fn(),
 }));
-vi.mock('@sentinel/storage', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@sentinel/storage')>();
+vi.mock('@sentinel-vrt/storage', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@sentinel-vrt/storage')>();
   return {
     ...actual,
     uploadBuffer: vi.fn(),
@@ -56,7 +56,7 @@ import { processCaptureJob, processCaptureShardJob, retryCapture } from './captu
 import { CaptureEngine } from '../capture/capture-engine.js';
 import { runDualDiff } from '../diff/diff-engine.js';
 import { loadConfig, resolveThresholds } from '../config/config-loader.js';
-import { uploadBuffer, downloadBuffer } from '@sentinel/storage';
+import { uploadBuffer, downloadBuffer } from '@sentinel-vrt/storage';
 import { dispatchAdapters, specsToRoutes, compareTokenSpec } from '../adapters/adapter-registry.js';
 
 const mockLoadConfig = vi.mocked(loadConfig);

@@ -6,8 +6,8 @@ import {
   type E2eInfra,
 } from './setup.js';
 import { cleanupTestData } from './helpers.js';
-import { sqliteSchema } from '@sentinel/db';
-import { StorageKeys } from '@sentinel/storage';
+import { sqliteSchema } from '@sentinel-vrt/db';
+import { StorageKeys } from '@sentinel-vrt/storage';
 
 const {
   projects,

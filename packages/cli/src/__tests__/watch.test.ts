@@ -61,7 +61,7 @@ describe('createDebouncedCallback', () => {
 describe('watchCommand', () => {
   it('exits with message when no watch config is present', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.mock('@sentinel/capture', () => ({
+    vi.mock('@sentinel-vrt/capture', () => ({
       loadConfig: vi.fn().mockResolvedValue({
         project: 'test',
         baseUrl: 'http://localhost:3000',

@@ -23,7 +23,7 @@ vi.mock('../services/jira-service.js', () => ({
 }));
 
 // Mock storage
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
   downloadBuffer: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
 }));
@@ -44,8 +44,8 @@ vi.mock('../services/notification-preferences.js', () => ({
   isNotificationEnabled: vi.fn(),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -108,7 +108,7 @@ describe('api-keys router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

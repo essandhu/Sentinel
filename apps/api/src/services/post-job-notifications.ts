@@ -6,7 +6,7 @@ import {
   diffReports,
   workspaceSettings,
   type Db,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import { decrypt } from './crypto.js';
 import { sendDriftNotification } from './slack-notifier.js';
 import { isNotificationEnabled } from './notification-preferences.js';

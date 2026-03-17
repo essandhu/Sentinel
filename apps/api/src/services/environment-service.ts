@@ -1,6 +1,6 @@
 import { eq, and, ne, asc } from 'drizzle-orm';
-import { environments } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+import { environments } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 
 const NAME_REGEX = /^[a-z0-9-]+$/;
 

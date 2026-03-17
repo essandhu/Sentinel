@@ -5,7 +5,7 @@ const mockLoadAll = vi.hoisted(() => vi.fn());
 const mockWriteDesignBaselines = vi.hoisted(() => vi.fn());
 const mockCreateStorageClient = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/adapters', () => ({
+vi.mock('@sentinel-vrt/adapters', () => ({
   SketchAdapter: class {
     name = 'sketch';
     loadAll = mockLoadAll;
@@ -32,12 +32,12 @@ vi.mock('../services/baseline-writer.js', () => ({
   writeDesignBaselines: mockWriteDesignBaselines,
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: mockCreateStorageClient,
   uploadBuffer: vi.fn(),
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   workspaceSettings: {},
   projects: {},

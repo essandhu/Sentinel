@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing routers
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing routers
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
   };
@@ -27,7 +27,7 @@ describe('workspaceProcedure middleware', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 
@@ -47,7 +47,7 @@ describe('workspaceProcedure middleware', () => {
 
   it('allows request when ctx.auth is null (Clerk not configured / test env)', async () => {
     setupMockDbChain(mockDb);
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../src/routers/index.js');
@@ -60,7 +60,7 @@ describe('workspaceProcedure middleware', () => {
 
   it('allows request when ctx.auth.userId is a non-empty string (valid session)', async () => {
     setupMockDbChain(mockDb);
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../src/routers/index.js');
@@ -75,7 +75,7 @@ describe('workspaceProcedure middleware', () => {
 
   it('throws UNAUTHORIZED when ctx.auth exists but ctx.auth.userId is falsy', async () => {
     setupMockDbChain(mockDb);
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../src/routers/index.js');

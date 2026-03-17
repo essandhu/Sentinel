@@ -118,7 +118,7 @@ export async function initCommand(opts: { cwd?: string }): Promise<void> {
   // Dynamic imports to avoid pulling in prompts/chalk for non-interactive use
   const { input, confirm, select } = await import('@inquirer/prompts');
   const chalk = (await import('chalk')).default;
-  const { discoverRoutes } = await import('@sentinel/capture');
+  const { discoverRoutes } = await import('@sentinel-vrt/capture');
 
   const cwd = opts.cwd ?? process.cwd();
   const configPath = join(cwd, 'sentinel.config.yml');

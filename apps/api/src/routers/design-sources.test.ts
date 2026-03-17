@@ -10,7 +10,7 @@ const mockPenpotLoadAll = vi.hoisted(() => vi.fn());
 const mockWriteDesignBaselines = vi.hoisted(() => vi.fn());
 const mockCreateStorageClient = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/adapters', () => ({
+vi.mock('@sentinel-vrt/adapters', () => ({
   registerFigmaWebhook: mockRegisterFigmaWebhook,
   deleteFigmaWebhook: mockDeleteFigmaWebhook,
   validatePenpotConnection: mockValidatePenpotConnection,
@@ -30,8 +30,8 @@ vi.mock('@sentinel/adapters', () => ({
   FigmaApiError: class extends Error {},
 }));
 
-// Mock @sentinel/db before importing routers
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing routers
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -81,7 +81,7 @@ vi.mock('../services/baseline-writer.js', () => ({
   writeDesignBaselines: mockWriteDesignBaselines,
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: mockCreateStorageClient,
   uploadBuffer: vi.fn(),
 }));
@@ -99,7 +99,7 @@ describe('design-sources router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
     mockEncrypt.mockImplementation((val: string) => `enc:${val}`);
     mockDecrypt.mockImplementation((val: string) => val.replace('enc:', ''));

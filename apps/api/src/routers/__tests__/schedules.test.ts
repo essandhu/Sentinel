@@ -124,7 +124,7 @@ function setUpdateReturning(db: any, rows: unknown[]) {
 // We need mockDb to be accessible from the router code via createDb()
 let activeMockDb: any;
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => activeMockDb),
   projects: { id: 'projects.id', workspaceId: 'projects.workspaceId', name: 'projects.name' },
   captureSchedules: {

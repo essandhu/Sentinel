@@ -1,5 +1,5 @@
 import { eq, and, desc, ne } from 'drizzle-orm';
-import { a11yViolations, captureRuns, type Db } from '@sentinel/db';
+import { a11yViolations, captureRuns, type Db } from '@sentinel-vrt/db';
 
 /**
  * Get violations for a specific capture run, grouped by status (new/fixed/existing) with summary counts.

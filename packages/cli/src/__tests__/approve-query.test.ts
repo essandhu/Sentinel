@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { createSqliteDb } from '@sentinel/db';
+import { createSqliteDb } from '@sentinel-vrt/db';
 
 describe('approve command finds failed diffs', () => {
   const dbPaths: string[] = [];

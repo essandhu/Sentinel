@@ -1,17 +1,17 @@
 import { randomUUID } from 'node:crypto';
 import { eq, ne, desc, asc, and, sql } from 'drizzle-orm';
-import { uploadBuffer, downloadBuffer, StorageKeys, createStorageClient } from '@sentinel/storage';
-import type { StorageAdapter } from '@sentinel/storage';
-import { captureRuns, captureSchedules, snapshots, diffReports, baselines, components, a11yViolations, diffClassifications, diffRegions, breakpointPresets, projects, workspaceSettings, approvalDecisions, approvalChainSteps, layoutShifts } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
-import type { DesignSpec } from '@sentinel/types';
+import { uploadBuffer, downloadBuffer, StorageKeys, createStorageClient } from '@sentinel-vrt/storage';
+import type { StorageAdapter } from '@sentinel-vrt/storage';
+import { captureRuns, captureSchedules, snapshots, diffReports, baselines, components, a11yViolations, diffClassifications, diffRegions, breakpointPresets, projects, workspaceSettings, approvalDecisions, approvalChainSteps, layoutShifts } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
+import type { DesignSpec } from '@sentinel-vrt/types';
 import { loadConfig, resolveThresholds } from '../config/config-loader.js';
 import { CaptureEngine } from '../capture/capture-engine.js';
 import { runDualDiff } from '../diff/diff-engine.js';
 import { dispatchAdapters, specsToRoutes, compareTokenSpec } from '../adapters/adapter-registry.js';
 import { runAxeAudit, type AxeViolation } from '../capture/axe-audit.js';
 import { runLighthouseAudit, runMedianLighthouseAudit, type LighthouseScores } from '../capture/lighthouse-audit.js';
-import { lighthouseScores as lighthouseScoresTable } from '@sentinel/db';
+import { lighthouseScores as lighthouseScoresTable } from '@sentinel-vrt/db';
 import { computeViolationFingerprint } from '../capture/a11y-fingerprint.js';
 import { classifyViolations, type FlatViolation } from '../capture/a11y-regression.js';
 import { classifyDiff } from '../classify/index.js';
@@ -22,7 +22,7 @@ import type { ElementPosition } from '../capture/dom-positions.js';
 import { PluginHookRunner, getPluginsForRun } from '../plugins/plugin-hooks.js';
 
 // Derive the S3Client type from createStorageClient return type
-// This avoids a direct @aws-sdk/client-s3 devDependency in @sentinel/capture
+// This avoids a direct @aws-sdk/client-s3 devDependency in @sentinel-vrt/capture
 type StorageClient = ReturnType<typeof createStorageClient>;
 
 // Module-level storage adapter override for local mode

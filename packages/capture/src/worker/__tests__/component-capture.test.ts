@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock dependencies
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   components: {
     id: 'components.id',
     projectId: 'components.projectId',
@@ -33,7 +33,7 @@ vi.mock('drizzle-orm', () => ({
   desc: vi.fn((col) => ({ _type: 'desc', col })),
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   uploadBuffer: vi.fn().mockResolvedValue(undefined),
   downloadBuffer: vi.fn().mockResolvedValue(Buffer.from('fake')),
   StorageKeys: {

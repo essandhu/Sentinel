@@ -11,18 +11,18 @@ import {
   baselines,
   approvalDecisions,
   workspaceSettings,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import { decrypt } from '../services/crypto.js';
 import { createJiraIssue, attachToJiraIssue } from '../services/jira-service.js';
 import { isNotificationEnabled } from '../services/notification-preferences.js';
-import { createStorageClient, downloadBuffer } from '@sentinel/storage';
+import { createStorageClient, downloadBuffer } from '@sentinel-vrt/storage';
 import { wsManager } from '../ws/websocket-manager.js';
 import {
   getChainForProject,
   validateAndRecordApproval,
   maybePromoteBaseline,
 } from '../services/approval-chain-service.js';
-import { loadAllPlugins, PluginHookRunner, loadConfig } from '@sentinel/capture';
+import { loadAllPlugins, PluginHookRunner, loadConfig } from '@sentinel-vrt/capture';
 
 const db = createDb();
 

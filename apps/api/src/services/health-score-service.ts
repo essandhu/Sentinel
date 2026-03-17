@@ -9,9 +9,9 @@ import {
   healthScores,
   a11yViolations,
   type Db,
-} from '@sentinel/db';
-import { downloadBuffer } from '@sentinel/storage';
-import { runDualDiff } from '@sentinel/capture';
+} from '@sentinel-vrt/db';
+import { downloadBuffer } from '@sentinel-vrt/storage';
+import { runDualDiff } from '@sentinel-vrt/capture';
 import { computeAveragePerfScore } from './lighthouse-query-service.js';
 
 /** Tighter thresholds for cross-page component consistency (matching components router). */

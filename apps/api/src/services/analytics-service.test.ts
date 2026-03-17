@@ -29,7 +29,7 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   };
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   approvalDecisions: {
     id: 'approvalDecisions.id',

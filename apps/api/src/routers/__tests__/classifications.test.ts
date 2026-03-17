@@ -15,8 +15,8 @@ vi.mock('../../services/classification-service.js', () => ({
   getLayoutShiftsByDiffReportId: (...args: unknown[]) => mockGetLayoutShiftsByDiffReportId(...args),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
 }));
 

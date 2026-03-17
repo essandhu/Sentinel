@@ -38,8 +38,8 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   return db;
 }
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(),
   lighthouseScores: {
     id: 'lighthouseScores.id',

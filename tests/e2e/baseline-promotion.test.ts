@@ -5,8 +5,8 @@ import {
   teardownE2eInfra,
   type E2eInfra,
 } from './setup.js';
-import { sqliteSchema } from '@sentinel/db';
-import { StorageKeys } from '@sentinel/storage';
+import { sqliteSchema } from '@sentinel-vrt/db';
+import { StorageKeys } from '@sentinel-vrt/storage';
 
 const {
   projects,

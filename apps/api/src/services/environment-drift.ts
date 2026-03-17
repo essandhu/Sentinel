@@ -6,8 +6,8 @@ import {
   captureRuns,
   projects,
   workspaceSettings,
-} from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+} from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 import { computeEnvironmentDiff, type StorageAdapter } from './environment-diff.js';
 import { isNotificationEnabled } from './notification-preferences.js';
 import { sendEnvironmentDriftNotification } from './slack-notifier.js';

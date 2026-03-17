@@ -4,8 +4,8 @@ import { randomBytes } from 'node:crypto';
 import { TRPCError } from '@trpc/server';
 import { t } from '../trpc.js';
 import { workspaceProcedure, adminProcedure } from '../trpc.js';
-import { createDb, workspaceSettings } from '@sentinel/db';
-import { createStorageClient } from '@sentinel/storage';
+import { createDb, workspaceSettings } from '@sentinel-vrt/db';
+import { createStorageClient } from '@sentinel-vrt/storage';
 import { encrypt, decrypt } from '../services/crypto.js';
 import { writeDesignBaselines } from '../services/baseline-writer.js';
 import {
@@ -15,7 +15,7 @@ import {
   PenpotAdapter,
   validateZeroheightConnection,
   ZeroheightAdapter,
-} from '@sentinel/adapters';
+} from '@sentinel-vrt/adapters';
 
 export const designSourcesRouter = t.router({
   /**

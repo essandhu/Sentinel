@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb } from '@sentinel/db';
+import { createDb } from '@sentinel-vrt/db';
 import { getTeamMetrics, getRegressionTrend, getDiffExportData } from '../services/analytics-service.js';
 
 function getDb() {

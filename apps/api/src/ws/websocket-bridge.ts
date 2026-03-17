@@ -1,6 +1,6 @@
 import { QueueEvents } from 'bullmq';
 import { eq } from 'drizzle-orm';
-import { createDb, captureRuns, projects } from '@sentinel/db';
+import { createDb, captureRuns, projects } from '@sentinel-vrt/db';
 import { wsManager } from './websocket-manager.js';
 
 const db = createDb();

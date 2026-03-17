@@ -1,4 +1,4 @@
-import type { Db } from '@sentinel/db';
+import type { Db } from '@sentinel-vrt/db';
 import { listProjects, getProjectById } from '../services/project-service.js';
 import { listRuns, getRunById } from '../services/run-service.js';
 import { getViolationsByRunId } from '../services/a11y-service.js';

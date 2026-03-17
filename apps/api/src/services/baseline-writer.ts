@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import type { S3Client } from '@aws-sdk/client-s3';
-import type { DesignSpec } from '@sentinel/types';
-import { uploadBuffer } from '@sentinel/storage';
-import { captureRuns, snapshots, baselines, type Db } from '@sentinel/db';
+import type { DesignSpec } from '@sentinel-vrt/types';
+import { uploadBuffer } from '@sentinel-vrt/storage';
+import { captureRuns, snapshots, baselines, type Db } from '@sentinel-vrt/db';
 
 /**
  * Converts an array of DesignSpec objects into S3 uploads and baseline DB rows.
