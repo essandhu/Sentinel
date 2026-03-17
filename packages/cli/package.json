@@ -2,8 +2,11 @@
   "name": "@sentinel-vrt/cli",
   "version": "0.1.0",
   "type": "module",
-  "main": "./dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": ["bin", "dist", "dashboard-dist"],
+  "main": "./dist/index.js",
   "bin": {
     "sentinel": "./bin/sentinel.js"
   },

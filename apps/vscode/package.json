@@ -3,6 +3,7 @@
   "displayName": "Sentinel",
   "description": "Visual regression monitoring for VS Code",
   "version": "0.1.0",
+  "private": true,
   "publisher": "sentinel",
   "engines": {
     "vscode": "^1.85.0"
