@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Patch package versions
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Update root
+          pnpm --silent pkg set version="$VERSION"
+          # Update all workspace packages
+          for pkg in packages/types packages/db packages/storage packages/adapters packages/capture packages/cli; do
+            pushd "$pkg" > /dev/null
+            pnpm --silent pkg set version="$VERSION"
+            popd > /dev/null
+          done
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Publish packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # Publish in dependency order
+          # Tier 1: no internal deps
+          pnpm --filter @sentinel-vrt/types publish --no-git-checks --access public
+
+          # Tier 2: depends on types only
+          pnpm --filter @sentinel-vrt/db publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/storage publish --no-git-checks --access public
+
+          # Tier 3: depends on db, storage, types
+          pnpm --filter @sentinel-vrt/adapters publish --no-git-checks --access public
+
+          # Tier 4: depends on adapters, db, storage, types
+          pnpm --filter @sentinel-vrt/capture publish --no-git-checks --access public
+
+          # Tier 5: the CLI (user-facing)
+          pnpm --filter @sentinel-vrt/cli publish --no-git-checks --access public
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
