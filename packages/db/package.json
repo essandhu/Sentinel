@@ -2,8 +2,14 @@
   "name": "@sentinel-vrt/db",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/db"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "files": ["dist"],
   "main": "./dist/index.js",

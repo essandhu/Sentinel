@@ -31,6 +31,9 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -57,25 +60,23 @@ jobs:
         run: pnpm test
 
       - name: Publish packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          # Publish in dependency order
+          # Publish in dependency order (uses OIDC trusted publishing, no token needed)
           # Tier 1: no internal deps
-          pnpm --filter @sentinel-vrt/types publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/types publish --no-git-checks --access public --provenance
 
           # Tier 2: depends on types only
-          pnpm --filter @sentinel-vrt/db publish --no-git-checks --access public
-          pnpm --filter @sentinel-vrt/storage publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/db publish --no-git-checks --access public --provenance
+          pnpm --filter @sentinel-vrt/storage publish --no-git-checks --access public --provenance
 
           # Tier 3: depends on db, storage, types
-          pnpm --filter @sentinel-vrt/adapters publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/adapters publish --no-git-checks --access public --provenance
 
           # Tier 4: depends on adapters, db, storage, types
-          pnpm --filter @sentinel-vrt/capture publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/capture publish --no-git-checks --access public --provenance
 
           # Tier 5: the CLI (user-facing)
-          pnpm --filter @sentinel-vrt/cli publish --no-git-checks --access public
+          pnpm --filter @sentinel-vrt/cli publish --no-git-checks --access public --provenance
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

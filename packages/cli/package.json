@@ -2,8 +2,14 @@
   "name": "@sentinel-vrt/cli",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/cli"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "files": ["bin", "dist", "dashboard-dist"],
   "main": "./dist/index.js",
