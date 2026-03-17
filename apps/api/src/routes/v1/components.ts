@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { eq, and } from 'drizzle-orm';
-import { createDb, projects } from '@sentinel/db';
+import { createDb, projects } from '@sentinel-vrt/db';
 import { listComponents } from '../../services/component-service.js';
 
 const db = createDb(process.env.DATABASE_URL!);

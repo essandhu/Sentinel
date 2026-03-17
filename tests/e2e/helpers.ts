@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { sqliteSchema, type SqliteDb } from '@sentinel/db';
+import { sqliteSchema, type SqliteDb } from '@sentinel-vrt/db';
 
 const {
   projects,

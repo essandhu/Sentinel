@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing router
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing router
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -35,13 +35,13 @@ vi.mock('@sentinel/db', () => {
 });
 
 const mockDownloadBuffer = vi.fn();
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
   downloadBuffer: (...args: unknown[]) => mockDownloadBuffer(...args),
 }));
 
 const mockRunDualDiff = vi.fn();
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   runDualDiff: (...args: unknown[]) => mockRunDualDiff(...args),
 }));
 
@@ -61,7 +61,7 @@ describe('components router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import crypto from 'node:crypto';
-import { createDb, baselines, projects, type Db } from '@sentinel/db';
+import { createDb, baselines, projects, type Db } from '@sentinel-vrt/db';
 import { eq, and } from 'drizzle-orm';
 
 /**

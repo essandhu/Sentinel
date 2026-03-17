@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { relative } from 'node:path';
 import fg from 'fast-glob';
-import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel/types';
+import type { DesignSourceAdapter, DesignSpec, AdapterConfig } from '@sentinel-vrt/types';
 import type { ImageAdapterConfig } from '../types.js';
 
 export class ImageBaselineAdapter implements DesignSourceAdapter {

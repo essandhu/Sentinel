@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { t } from '../trpc.js';
 import { workspaceProcedure, adminProcedure } from '../trpc.js';
-import { createDb, workspaceSettings } from '@sentinel/db';
+import { createDb, workspaceSettings } from '@sentinel-vrt/db';
 import { encrypt } from '../services/crypto.js';
 
 export const settingsRouter = t.router({

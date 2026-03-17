@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel/config",
+  "name": "@sentinel-vrt/config",
   "version": "0.1.0",
   "private": true,
   "exports": {

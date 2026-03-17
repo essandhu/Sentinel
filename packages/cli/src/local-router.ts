@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
-import type { SqliteDb } from '@sentinel/db';
+import type { SqliteDb } from '@sentinel-vrt/db';
 
 interface LocalContext {
   db: SqliteDb;

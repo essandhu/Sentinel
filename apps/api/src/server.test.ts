@@ -13,7 +13,7 @@ vi.mock('@aws-sdk/client-s3', () => ({
 vi.mock('@aws-sdk/s3-request-presigner', () => ({
   getSignedUrl: vi.fn().mockResolvedValue('https://s3.example.com/signed'),
 }));
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
 }));
 vi.mock('./routers/index.js', () => ({

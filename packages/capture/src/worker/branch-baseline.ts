@@ -1,6 +1,6 @@
 import { eq, and, desc } from 'drizzle-orm';
-import { baselines } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+import { baselines } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 
 export interface LookupBaselineOpts {
   projectId: string;

@@ -17,7 +17,7 @@ vi.mock('../services/project-service.js', () => ({
   listProjects: (...args: unknown[]) => mockListProjects(...args),
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => sharedMockDb),
   projects: {
     id: 'projects.id',

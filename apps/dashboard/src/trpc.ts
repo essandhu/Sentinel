@@ -1,7 +1,7 @@
 import { createTRPCContext, createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { QueryClient } from '@tanstack/react-query';
-import type { AppRouter } from '@sentinel/api/router';
+import type { AppRouter } from '@sentinel-vrt/api/router';
 
 export const queryClient = new QueryClient({
   defaultOptions: {

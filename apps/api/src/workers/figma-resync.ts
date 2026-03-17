@@ -1,7 +1,7 @@
 import type { S3Client } from '@aws-sdk/client-s3';
-import { extractDesignTokens } from '@sentinel/adapters';
-import { createDb, workspaceSettings } from '@sentinel/db';
-import { uploadBuffer } from '@sentinel/storage';
+import { extractDesignTokens } from '@sentinel-vrt/adapters';
+import { createDb, workspaceSettings } from '@sentinel-vrt/db';
+import { uploadBuffer } from '@sentinel-vrt/storage';
 import { eq } from 'drizzle-orm';
 import { decrypt } from '../services/crypto.js';
 

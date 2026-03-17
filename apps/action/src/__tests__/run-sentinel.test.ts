@@ -1,18 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@sentinel/cli', () => ({
+vi.mock('@sentinel-vrt/cli', () => ({
   runCapture: vi.fn(),
 }));
 
 import { runSentinel } from '../run-sentinel.js';
-import { runCapture } from '@sentinel/cli';
+import { runCapture } from '@sentinel-vrt/cli';
 
 describe('runSentinel', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('calls runCapture from @sentinel/cli and returns the DiffSummary', async () => {
+  it('calls runCapture from @sentinel-vrt/cli and returns the DiffSummary', async () => {
     const mockSummary = {
       allPassed: true,
       failedCount: 0,

@@ -1,9 +1,18 @@
 {
-  "name": "@sentinel/cli",
+  "name": "@sentinel-vrt/cli",
   "version": "0.1.0",
   "type": "module",
-  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": ["bin", "dist", "dashboard-dist"],
+  "main": "./dist/index.js",
   "bin": {
     "sentinel": "./bin/sentinel.js"
   },
@@ -17,9 +26,9 @@
     "@fastify/websocket": "^11.0.0",
     "@inquirer/prompts": "^8.3.0",
     "playwright-core": "^1.58.0",
-    "@sentinel/capture": "workspace:*",
-    "@sentinel/db": "workspace:*",
-    "@sentinel/storage": "workspace:*",
+    "@sentinel-vrt/capture": "workspace:*",
+    "@sentinel-vrt/db": "workspace:*",
+    "@sentinel-vrt/storage": "workspace:*",
     "@trpc/server": "^11.0.0",
     "better-sqlite3": "^11.0.0",
     "chalk": "^5.6.2",
@@ -31,7 +40,7 @@
     "zod": "^3.0.0"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/better-sqlite3": "^7.6.0",
     "@types/node": "^25.3.3",
     "@types/ws": "^8.0.0",

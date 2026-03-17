@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // ---------- Mock modules ----------
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   snapshots: {
     id: 'snapshots.id',
@@ -39,7 +39,7 @@ vi.mock('@sentinel/db', () => ({
 const { mockRunDualDiff } = vi.hoisted(() => ({
   mockRunDualDiff: vi.fn(),
 }));
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   runDualDiff: mockRunDualDiff,
 }));
 

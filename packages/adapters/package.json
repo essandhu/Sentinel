@@ -1,7 +1,17 @@
 {
-  "name": "@sentinel/adapters",
+  "name": "@sentinel-vrt/adapters",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/adapters"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": ["dist"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -17,9 +27,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
-    "@sentinel/db": "workspace:*",
-    "@sentinel/storage": "workspace:*",
-    "@sentinel/types": "workspace:*",
+    "@sentinel-vrt/db": "workspace:*",
+    "@sentinel-vrt/storage": "workspace:*",
+    "@sentinel-vrt/types": "workspace:*",
     "@types/adm-zip": "^0.5.7",
     "adm-zip": "^0.5.16",
     "colorjs.io": "^0.5.2",
@@ -31,7 +41,7 @@
     "yaml": "^2.7.0"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/node": "^25.3.3",
     "dotenv": "^16.0.0",
     "typescript": "catalog:",

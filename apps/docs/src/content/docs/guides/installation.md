@@ -15,13 +15,13 @@ No database or cloud storage setup required — Sentinel runs fully local with S
 ## Install the CLI
 
 ```bash
-pnpm add -D @sentinel/cli
+pnpm add -D @sentinel-vrt/cli
 ```
 
 Or install globally:
 
 ```bash
-pnpm add -g @sentinel/cli
+pnpm add -g @sentinel-vrt/cli
 ```
 
 ## Initialize Your Project

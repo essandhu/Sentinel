@@ -1,6 +1,6 @@
 import { eq, and, isNotNull } from 'drizzle-orm';
-import { diffClassifications, classificationOverrides } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+import { diffClassifications, classificationOverrides } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 
 /**
  * Calibration metrics for a set of predictions.

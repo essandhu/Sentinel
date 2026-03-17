@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb } from '@sentinel/db';
+import { createDb } from '@sentinel-vrt/db';
 import {
   listEnvironments,
   createEnvironment,
@@ -12,8 +12,8 @@ import {
   listEnvironmentRoutes,
 } from '../services/environment-diff.js';
 import type { StorageAdapter } from '../services/environment-diff.js';
-import { downloadBuffer, uploadBuffer } from '@sentinel/storage';
-import { createStorageClient } from '@sentinel/storage';
+import { downloadBuffer, uploadBuffer } from '@sentinel-vrt/storage';
+import { createStorageClient } from '@sentinel-vrt/storage';
 
 function getDb() {
   return createDb(process.env.DATABASE_URL!);

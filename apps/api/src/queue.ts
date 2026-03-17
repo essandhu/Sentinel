@@ -1,5 +1,5 @@
 import { Queue, FlowProducer } from 'bullmq';
-import type { CaptureJobData } from '@sentinel/capture';
+import type { CaptureJobData } from '@sentinel-vrt/capture';
 import type { FigmaResyncJobData } from './workers/figma-resync.js';
 import { parseRedisUrl } from './workers/parse-redis-url.js';
 

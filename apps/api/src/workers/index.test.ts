@@ -58,7 +58,7 @@ function buildMockDb(selectResponses: unknown[][] = [], updateResult?: unknown[]
 
 const mockDb = buildMockDb();
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: (...args: any[]) => {
     mockCreateDb(...args);
     return mockDb;
@@ -87,13 +87,13 @@ vi.mock('@sentinel/db', () => ({
   },
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: mockCreateStorageClient,
   downloadBuffer: mockDownloadBuffer,
   uploadBuffer: mockUploadBuffer,
 }));
 
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   processCaptureJob: mockProcessCaptureJob,
   processCaptureShardJob: mockProcessCaptureShardJob,
   loadConfig: mockLoadConfig,

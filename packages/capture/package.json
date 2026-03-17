@@ -1,7 +1,17 @@
 {
-  "name": "@sentinel/capture",
+  "name": "@sentinel-vrt/capture",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/capture"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": ["dist"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -22,10 +32,10 @@
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.1",
-    "@sentinel/adapters": "workspace:*",
-    "@sentinel/db": "workspace:*",
-    "@sentinel/storage": "workspace:*",
-    "@sentinel/types": "workspace:*",
+    "@sentinel-vrt/adapters": "workspace:*",
+    "@sentinel-vrt/db": "workspace:*",
+    "@sentinel-vrt/storage": "workspace:*",
+    "@sentinel-vrt/types": "workspace:*",
     "drizzle-orm": "^0.45.0",
     "fast-xml-parser": "^5.5.5",
     "is-docker": "^3.0.0",
@@ -39,7 +49,7 @@
     "zod": "^3.0.0"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/node": "^25.3.3",
     "typescript": "catalog:",
     "vitest": "catalog:"

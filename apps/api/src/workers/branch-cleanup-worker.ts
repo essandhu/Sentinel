@@ -1,5 +1,5 @@
 import { Worker, Queue } from 'bullmq';
-import { createDb, baselines, captureRuns, type Db } from '@sentinel/db';
+import { createDb, baselines, captureRuns, type Db } from '@sentinel-vrt/db';
 import { eq, and, notInArray, max } from 'drizzle-orm';
 import type { RedisConnectionOptions } from './parse-redis-url.js';
 

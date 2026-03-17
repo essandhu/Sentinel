@@ -35,7 +35,7 @@ function buildMockDb(selectResponses: unknown[][] = [], insertResult?: unknown[]
   };
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   approvalChainSteps: {
     id: 'approvalChainSteps.id',

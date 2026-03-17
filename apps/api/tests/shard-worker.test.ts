@@ -28,7 +28,7 @@ vi.mock('../src/queue.js', () => ({
   QUEUE_NAME: 'capture',
 }));
 
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   processCaptureJob: mockProcessCaptureJob,
   processCaptureShardJob: mockProcessCaptureShardJob,
   loadConfig: mockLoadConfig,
@@ -44,14 +44,14 @@ vi.mock('@sentinel/capture', () => ({
   })),
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: mockCreateDb,
   captureRuns: { id: 'captureRuns.id', shardCount: 'captureRuns.shardCount', totalRoutes: 'captureRuns.totalRoutes', status: 'captureRuns.status', completedAt: 'captureRuns.completedAt' },
   breakpointPresets: { projectId: 'breakpointPresets.projectId' },
   projects: { id: 'projects.id', boundaryTestingEnabled: 'projects.boundaryTestingEnabled' },
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: mockCreateStorageClient,
 }));
 

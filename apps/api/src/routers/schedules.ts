@@ -7,7 +7,7 @@ import {
   captureSchedules,
   captureRuns,
   projects,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import { ScheduleManager } from '../services/schedule-manager.js';
 import { CronExpressionParser } from 'cron-parser';
 import cronstrue from 'cronstrue';

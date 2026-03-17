@@ -1,8 +1,8 @@
 import { eq, and, desc } from 'drizzle-orm';
-import { snapshots, captureRuns, environmentDiffs } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
-import { runDualDiff } from '@sentinel/capture';
-import type { DiffResult } from '@sentinel/capture';
+import { snapshots, captureRuns, environmentDiffs } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
+import { runDualDiff } from '@sentinel-vrt/capture';
+import type { DiffResult } from '@sentinel-vrt/capture';
 import { createHash } from 'node:crypto';
 
 /**

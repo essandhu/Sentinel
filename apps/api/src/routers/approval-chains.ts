@@ -9,7 +9,7 @@ import {
   snapshots,
   captureRuns,
   type Db,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 import {
   getChainForProject,
   getCurrentStep,

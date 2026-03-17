@@ -36,7 +36,7 @@ function buildMockDb(selectResponses: unknown[][] = [], insertResult?: unknown[]
   };
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   testSuites: {
     id: 'testSuites.id',

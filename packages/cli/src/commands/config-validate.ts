@@ -7,7 +7,7 @@ interface ValidateOptions {
 export async function configValidateCommand(options: ValidateOptions): Promise<void> {
   const configPath = options.config ?? 'sentinel.config.yml';
   try {
-    const { loadConfig } = await import('@sentinel/capture');
+    const { loadConfig } = await import('@sentinel-vrt/capture');
     const config = await loadConfig(configPath);
     console.log(chalk.green(`✓ ${configPath} is valid`));
     console.log(chalk.dim(`  ${config.capture.routes.length} route(s)`));

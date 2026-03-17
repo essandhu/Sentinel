@@ -1,7 +1,17 @@
 {
-  "name": "@sentinel/types",
+  "name": "@sentinel-vrt/types",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/types"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": ["dist"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -16,7 +26,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/node": "^25.3.3",
     "typescript": "catalog:",
     "zod": "^3.0.0"

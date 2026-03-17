@@ -1,6 +1,7 @@
 {
-  "name": "@sentinel/dashboard",
+  "name": "@sentinel-vrt/dashboard",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,9 +29,9 @@
     "recharts": "^3.7.0"
   },
   "devDependencies": {
-    "@sentinel/api": "workspace:*",
+    "@sentinel-vrt/api": "workspace:*",
     "@playwright/test": "^1.58.2",
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@tailwindcss/vite": "^4.0.0",
     "@tanstack/react-query-devtools": "^5.0.0",
     "@testing-library/jest-dom": "^6.0.0",

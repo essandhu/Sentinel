@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { components, type Db } from '@sentinel/db';
+import { components, type Db } from '@sentinel-vrt/db';
 
 /**
  * List all components for a project.

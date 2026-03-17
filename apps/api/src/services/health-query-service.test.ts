@@ -32,8 +32,8 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   };
 }
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => ({
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => ({})),
   healthScores: {
     id: 'healthScores.id',

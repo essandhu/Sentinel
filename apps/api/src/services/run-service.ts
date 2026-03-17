@@ -1,5 +1,5 @@
 import { desc, eq, and, count, inArray } from 'drizzle-orm';
-import { captureRuns, snapshots, diffReports, projects, type Db } from '@sentinel/db';
+import { captureRuns, snapshots, diffReports, projects, type Db } from '@sentinel-vrt/db';
 
 export interface ListRunsOptions {
   projectId?: string;

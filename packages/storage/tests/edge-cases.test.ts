@@ -25,7 +25,7 @@ async function isS3Available(): Promise<boolean> {
 let client: S3Client;
 const uploadedKeys: string[] = [];
 
-describe('@sentinel/storage edge cases', async () => {
+describe('@sentinel-vrt/storage edge cases', async () => {
   const available = await isS3Available();
   if (!available) {
     it.skip('S3/MinIO not available -- skipping edge-case tests', () => {});

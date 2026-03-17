@@ -3,7 +3,7 @@ import { eq, and } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { TRPCError } from '@trpc/server';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb, captureRuns, projects } from '@sentinel/db';
+import { createDb, captureRuns, projects } from '@sentinel-vrt/db';
 import { getCaptureQueue } from '../queue.js';
 
 export const capturesRouter = t.router({

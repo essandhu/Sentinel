@@ -26,7 +26,7 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   };
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => buildMockDb()),
   approvalDecisions: { id: 'approvalDecisions.id', diffReportId: 'approvalDecisions.diffReportId', action: 'approvalDecisions.action', createdAt: 'approvalDecisions.createdAt' },
   diffReports: { id: 'diffReports.id', snapshotId: 'diffReports.snapshotId', passed: 'diffReports.passed', createdAt: 'diffReports.createdAt' },

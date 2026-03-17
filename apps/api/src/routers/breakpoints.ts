@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { eq, and, asc } from 'drizzle-orm';
 import { t, workspaceProcedure } from '../trpc.js';
-import { createDb, breakpointPresets, projects } from '@sentinel/db';
-import { BREAKPOINT_TEMPLATES } from '@sentinel/capture';
+import { createDb, breakpointPresets, projects } from '@sentinel-vrt/db';
+import { BREAKPOINT_TEMPLATES } from '@sentinel-vrt/capture';
 
 const db = createDb();
 

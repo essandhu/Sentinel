@@ -1,5 +1,5 @@
 import { eq, and, desc, gte, isNull, isNotNull, ne } from 'drizzle-orm';
-import { healthScores, projects, components, type Db } from '@sentinel/db';
+import { healthScores, projects, components, type Db } from '@sentinel-vrt/db';
 
 /**
  * Get the latest pre-computed project-level health score.

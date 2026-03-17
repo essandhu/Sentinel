@@ -1,5 +1,5 @@
 import { eq, and } from 'drizzle-orm';
-import { diffReports, snapshots, captureRuns, projects, type Db } from '@sentinel/db';
+import { diffReports, snapshots, captureRuns, projects, type Db } from '@sentinel-vrt/db';
 
 /**
  * Get diff reports for a given run, joined with snapshot fields.

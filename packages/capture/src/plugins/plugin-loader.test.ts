@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { readdir } from 'node:fs/promises';
-import type { SentinelPlugin } from '@sentinel/types';
+import type { SentinelPlugin } from '@sentinel-vrt/types';
 
 vi.mock('node:fs/promises', () => ({
   readdir: vi.fn(),

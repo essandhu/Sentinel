@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { DesignSpec } from '@sentinel/types';
+import type { DesignSpec } from '@sentinel-vrt/types';
 import {
   dispatchAdapters,
   compareTokenSpec,
   specsToRoutes,
 } from './adapter-registry.js';
 
-// Mock @sentinel/adapters at module level
-vi.mock('@sentinel/adapters', () => ({
+// Mock @sentinel-vrt/adapters at module level
+vi.mock('@sentinel-vrt/adapters', () => ({
   ImageBaselineAdapter: vi.fn().mockImplementation(() => ({
     loadAll: vi.fn().mockResolvedValue([]),
   })),
@@ -72,7 +72,7 @@ describe('dispatchAdapters', () => {
   });
 
   it('calls StorybookAdapter.loadAll() and returns specs in result.storybook', async () => {
-    const { StorybookAdapter } = await import('@sentinel/adapters');
+    const { StorybookAdapter } = await import('@sentinel-vrt/adapters');
     const mockSpecs = [makeStorybookSpec('button--primary', 'Button')];
     const mockLoadAll = vi.fn().mockResolvedValue(mockSpecs);
     vi.mocked(StorybookAdapter).mockImplementation(
@@ -93,7 +93,7 @@ describe('dispatchAdapters', () => {
   });
 
   it('calls ImageBaselineAdapter.loadAll() and returns specs in result.image', async () => {
-    const { ImageBaselineAdapter } = await import('@sentinel/adapters');
+    const { ImageBaselineAdapter } = await import('@sentinel-vrt/adapters');
     const mockSpecs = [makeImageSpec('components/Button')];
     const mockLoadAll = vi.fn().mockResolvedValue(mockSpecs);
     vi.mocked(ImageBaselineAdapter).mockImplementation(
@@ -111,7 +111,7 @@ describe('dispatchAdapters', () => {
   });
 
   it('calls DesignTokenAdapter.loadAll() and returns specs in result.tokens', async () => {
-    const { DesignTokenAdapter } = await import('@sentinel/adapters');
+    const { DesignTokenAdapter } = await import('@sentinel-vrt/adapters');
     const mockSpecs = [makeTokenSpec()];
     const mockLoadAll = vi.fn().mockResolvedValue(mockSpecs);
     vi.mocked(DesignTokenAdapter).mockImplementation(
@@ -134,7 +134,7 @@ describe('dispatchAdapters', () => {
   });
 
   it('calls FigmaAdapter.loadAll() with db/s3 deps and returns specs in result.figma', async () => {
-    const { FigmaAdapter } = await import('@sentinel/adapters');
+    const { FigmaAdapter } = await import('@sentinel-vrt/adapters');
     const mockSpecs = [makeFigmaSpec('1:1')];
     const mockLoadAll = vi.fn().mockResolvedValue(mockSpecs);
     vi.mocked(FigmaAdapter).mockImplementation(
@@ -170,7 +170,7 @@ describe('specsToRoutes', () => {
   });
 
   it('converts storybook specs to routes using storybookStoryUrl()', async () => {
-    const { storybookStoryUrl } = await import('@sentinel/adapters');
+    const { storybookStoryUrl } = await import('@sentinel-vrt/adapters');
     vi.mocked(storybookStoryUrl).mockImplementation(
       (url, id) => `${url}/iframe.html?id=${id}&viewMode=story`,
     );

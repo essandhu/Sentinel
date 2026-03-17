@@ -24,7 +24,7 @@ vi.mock('../services/jira-service.js', () => ({
 }));
 
 // Mock storage
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
   downloadBuffer: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
 }));
@@ -34,8 +34,8 @@ vi.mock('../services/slack-notifier.js', () => ({
   sendDriftNotification: vi.fn().mockResolvedValue(undefined),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -87,7 +87,7 @@ describe('notification-preferences router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

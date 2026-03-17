@@ -6,7 +6,7 @@ import {
   components,
   diffReports,
   type Db,
-} from '@sentinel/db';
+} from '@sentinel-vrt/db';
 
 export interface SearchResults {
   routes: Array<{ url: string; runId: string }>;

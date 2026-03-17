@@ -17,8 +17,8 @@ vi.mock('@clerk/backend', () => ({
   })),
 }));
 
-// Mock @sentinel/db
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = { select: vi.fn() };
   return {
     createDb: vi.fn(() => mockDb),

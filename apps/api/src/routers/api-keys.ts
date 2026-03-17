@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { eq, and } from 'drizzle-orm';
 import { t, adminProcedure, workspaceProcedure } from '../trpc.js';
 import { generateApiKey } from '../services/api-key-service.js';
-import { createDb, apiKeys } from '@sentinel/db';
+import { createDb, apiKeys } from '@sentinel-vrt/db';
 
 const db = createDb();
 

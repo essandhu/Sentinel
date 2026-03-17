@@ -5,12 +5,12 @@ sidebar:
   order: 2
 ---
 
-The Sentinel CLI (`@sentinel/cli`) provides commands for capturing screenshots, managing visual regression tests, and reviewing diffs from the command line.
+The Sentinel CLI (`@sentinel-vrt/cli`) provides commands for capturing screenshots, managing visual regression tests, and reviewing diffs from the command line.
 
 ## Installation
 
 ```bash
-pnpm add -D @sentinel/cli
+pnpm add -D @sentinel-vrt/cli
 ```
 
 ## Commands
@@ -245,8 +245,8 @@ Stores credentials locally for use with `sentinel capture --remote`.
 The CLI exports a programmatic API for use in custom scripts or the GitHub Action:
 
 ```typescript
-import { runCapture } from '@sentinel/cli';
-import type { DiffSummary, CaptureOptions } from '@sentinel/cli';
+import { runCapture } from '@sentinel-vrt/cli';
+import type { DiffSummary, CaptureOptions } from '@sentinel-vrt/cli';
 
 const options: CaptureOptions = {
   config: 'sentinel.config.yml',

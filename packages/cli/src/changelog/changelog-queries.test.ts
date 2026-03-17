@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { createSqliteDb } from '@sentinel/db';
+import { createSqliteDb } from '@sentinel-vrt/db';
 import { queryChangelogByRoute, queryChangelogByCommit } from './changelog-queries.js';
 
 let dbPath: string;

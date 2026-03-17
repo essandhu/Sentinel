@@ -12,7 +12,7 @@ vi.mock('drizzle-orm', () => ({
   and: (...args: any[]) => ({ op: 'and', args }),
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   environments: {
     projectId: 'environments.projectId',
     isReference: 'environments.isReference',

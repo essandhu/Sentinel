@@ -1,5 +1,5 @@
-import { runCapture } from '@sentinel/cli';
-import type { DiffSummary } from '@sentinel/cli';
+import { runCapture } from '@sentinel-vrt/cli';
+import type { DiffSummary } from '@sentinel-vrt/cli';
 
 /**
  * Thin wrapper around the CLI's runCapture function.

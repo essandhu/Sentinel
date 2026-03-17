@@ -1,5 +1,5 @@
 import { formatComment } from './format-comment.js';
-import type { DiffSummary } from '@sentinel/cli';
+import type { DiffSummary } from '@sentinel-vrt/cli';
 
 export const MARKER = '<!-- sentinel-visual-diff -->';
 

@@ -1,6 +1,6 @@
 import { Queue, Worker } from 'bullmq';
-import { createDb } from '@sentinel/db';
-import { createStorageClient } from '@sentinel/storage';
+import { createDb } from '@sentinel-vrt/db';
+import { createStorageClient } from '@sentinel-vrt/storage';
 import { computeAllHealthScores } from './health-score-service.js';
 
 const QUEUE_NAME = 'health-scores';

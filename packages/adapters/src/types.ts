@@ -1,4 +1,4 @@
-import type { AdapterConfig } from '@sentinel/types';
+import type { AdapterConfig } from '@sentinel-vrt/types';
 
 export interface ImageAdapterConfig extends AdapterConfig {
   directory: string;

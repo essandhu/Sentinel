@@ -4,8 +4,8 @@ import {
   DesignTokenAdapter,
   FigmaAdapter,
   storybookStoryUrl,
-} from '@sentinel/adapters';
-import type { DesignSpec } from '@sentinel/types';
+} from '@sentinel-vrt/adapters';
+import type { DesignSpec } from '@sentinel-vrt/types';
 import type { SentinelConfigParsed } from '../config/config-schema.js';
 import type { Page } from 'playwright';
 

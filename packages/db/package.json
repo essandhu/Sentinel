@@ -1,7 +1,17 @@
 {
-  "name": "@sentinel/db",
+  "name": "@sentinel-vrt/db",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/essandhu/Sentinel.git",
+    "directory": "packages/db"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": ["dist"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -18,13 +28,13 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@sentinel/types": "workspace:*",
+    "@sentinel-vrt/types": "workspace:*",
     "better-sqlite3": "^12.6.2",
     "drizzle-orm": "^0.45.0",
     "postgres": "^3.0.0"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.3.3",
     "dotenv": "^16.0.0",

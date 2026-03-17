@@ -1,7 +1,7 @@
 import type { S3Client } from '@aws-sdk/client-s3';
-import { classificationOverrides, diffReports, diffRegions } from '@sentinel/db';
-import type { Db } from '@sentinel/db';
-import { downloadBuffer } from '@sentinel/storage';
+import { classificationOverrides, diffReports, diffRegions } from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
+import { downloadBuffer } from '@sentinel-vrt/storage';
 import sharp from 'sharp';
 import { eq } from 'drizzle-orm';
 import { findConnectedComponents } from '../src/classify/connected-components.js';
@@ -262,8 +262,8 @@ function parseArgs(argv: string[]): {
 }
 
 async function main() {
-  const { createDb } = await import('@sentinel/db');
-  const { createStorageClient } = await import('@sentinel/storage');
+  const { createDb } = await import('@sentinel-vrt/db');
+  const { createStorageClient } = await import('@sentinel-vrt/storage');
 
   const { outputPath, perRegion, format } = parseArgs(process.argv);
   const db = createDb();

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 // Mock all external dependencies that routers import at module level
 
-vi.mock('@sentinel/db', () => {
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -53,13 +53,13 @@ vi.mock('@clerk/backend', () => ({
   })),
 }));
 
-vi.mock('@sentinel/storage', () => ({
+vi.mock('@sentinel-vrt/storage', () => ({
   createStorageClient: vi.fn(() => ({})),
   downloadBuffer: vi.fn(),
   uploadBuffer: vi.fn(),
 }));
 
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   BREAKPOINT_TEMPLATES: { tailwind: [], bootstrap: [] },
   runDualDiff: vi.fn(),
   loadAllPlugins: vi.fn().mockResolvedValue([]),

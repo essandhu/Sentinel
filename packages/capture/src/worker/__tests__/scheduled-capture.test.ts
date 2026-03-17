@@ -14,8 +14,8 @@ vi.mock('../../config/config-loader.js', () => ({
   loadConfig: vi.fn(),
   resolveThresholds: vi.fn(),
 }));
-vi.mock('@sentinel/storage', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@sentinel/storage')>();
+vi.mock('@sentinel-vrt/storage', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@sentinel-vrt/storage')>();
   return {
     ...actual,
     uploadBuffer: vi.fn(),
@@ -55,7 +55,7 @@ vi.mock('playwright', () => ({
 import { processCaptureJob } from '../capture-worker.js';
 import { CaptureEngine } from '../../capture/capture-engine.js';
 import { loadConfig, resolveThresholds } from '../../config/config-loader.js';
-import { uploadBuffer } from '@sentinel/storage';
+import { uploadBuffer } from '@sentinel-vrt/storage';
 import { dispatchAdapters, specsToRoutes } from '../../adapters/adapter-registry.js';
 
 const mockLoadConfig = vi.mocked(loadConfig);

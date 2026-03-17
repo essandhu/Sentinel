@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { notificationPreferences, type Db } from '@sentinel/db';
+import { notificationPreferences, type Db } from '@sentinel-vrt/db';
 
 export type EventType =
   | 'drift_detected'

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { postFlakyStatus } from '../post-status.js';
 import { formatComment } from '../format-comment.js';
-import type { DiffSummary } from '@sentinel/cli';
+import type { DiffSummary } from '@sentinel-vrt/cli';
 
 describe('postFlakyStatus', () => {
   let octokit: any;

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { filterRoutesBySuite } from '../commands/capture-remote.js';
-import type { SentinelConfigParsed } from '@sentinel/capture';
+import type { SentinelConfigParsed } from '@sentinel-vrt/capture';
 
 function makeConfig(overrides: Partial<SentinelConfigParsed> = {}): SentinelConfigParsed {
   return {

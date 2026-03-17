@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createSqliteDb: vi.fn(() => ({})),
   sqliteSchema: {
     projects: { id: 'projects.id', name: 'projects.name' },
@@ -48,7 +48,7 @@ beforeEach(() => {
 });
 
 import { executeTestPlan } from '../commands/capture-local.js';
-import type { SentinelConfigParsed } from '@sentinel/capture';
+import type { SentinelConfigParsed } from '@sentinel-vrt/capture';
 import type { DiffSummary } from '../commands/capture.js';
 
 const makeConfig = (

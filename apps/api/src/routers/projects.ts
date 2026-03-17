@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { workspaceProcedure } from '../trpc.js';
 import { t } from '../trpc.js';
 import { listProjects } from '../services/project-service.js';
-import { createDb, projects } from '@sentinel/db';
+import { createDb, projects } from '@sentinel-vrt/db';
 
 const db = createDb(process.env.DATABASE_URL!);
 

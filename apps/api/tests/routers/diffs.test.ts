@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing routers
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing routers
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
   };
@@ -29,7 +29,7 @@ describe('diffs router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 
@@ -57,7 +57,7 @@ describe('diffs router', () => {
     const mockFrom = vi.fn().mockReturnValue({ innerJoin: mockInnerJoin1 });
     mockDb.select.mockReturnValue({ from: mockFrom });
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../../src/routers/index.js');
@@ -84,7 +84,7 @@ describe('diffs router', () => {
     const mockFrom = vi.fn().mockReturnValue({ innerJoin: mockInnerJoin1 });
     mockDb.select.mockReturnValue({ from: mockFrom });
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../../src/routers/index.js');
@@ -104,7 +104,7 @@ describe('diffs router', () => {
     const mockFrom = vi.fn().mockReturnValue({ innerJoin: mockInnerJoin1 });
     mockDb.select.mockReturnValue({ from: mockFrom });
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../../src/routers/index.js');
@@ -141,7 +141,7 @@ describe('diffs router', () => {
     const mockFrom = vi.fn().mockReturnValue({ innerJoin: mockInnerJoin1 });
     mockDb.select.mockReturnValue({ from: mockFrom });
 
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     (createDb as ReturnType<typeof vi.fn>).mockReturnValue(mockDb);
 
     const { appRouter } = await import('../../src/routers/index.js');

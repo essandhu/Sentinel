@@ -1,5 +1,5 @@
 import { eq, and } from 'drizzle-orm';
-import { projects, type Db } from '@sentinel/db';
+import { projects, type Db } from '@sentinel-vrt/db';
 
 /**
  * List all projects for a workspace.

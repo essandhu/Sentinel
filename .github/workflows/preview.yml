@@ -37,7 +37,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build dashboard (local mode)
-        run: pnpm --filter @sentinel/dashboard run build:local
+        run: pnpm --filter @sentinel-vrt/dashboard run build:local
 
       - name: Create Cloudflare Pages project (if needed)
         run: npx wrangler@3 pages project create sentinel-preview --production-branch=main 2>/dev/null || true

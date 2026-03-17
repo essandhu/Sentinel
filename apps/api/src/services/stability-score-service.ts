@@ -3,8 +3,8 @@ import {
   diffReports,
   snapshots,
   captureRuns,
-} from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+} from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 
 /**
  * Count the number of times a route's pass/fail status flips

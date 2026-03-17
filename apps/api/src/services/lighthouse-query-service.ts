@@ -1,5 +1,5 @@
 import { eq, and, desc, lt } from 'drizzle-orm';
-import { lighthouseScores, captureRuns, performanceBudgets, type Db } from '@sentinel/db';
+import { lighthouseScores, captureRuns, performanceBudgets, type Db } from '@sentinel-vrt/db';
 
 // ---------------------------------------------------------------------------
 // Types

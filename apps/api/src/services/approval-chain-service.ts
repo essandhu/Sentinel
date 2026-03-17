@@ -3,8 +3,8 @@ import {
   approvalChainSteps,
   approvalChainProgress,
   baselines,
-} from '@sentinel/db';
-import type { Db } from '@sentinel/db';
+} from '@sentinel-vrt/db';
+import type { Db } from '@sentinel-vrt/db';
 
 /**
  * Info needed to insert a baseline when chain completes.

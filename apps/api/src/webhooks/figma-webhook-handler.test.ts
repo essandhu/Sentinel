@@ -5,11 +5,11 @@ const mockCreateDb = vi.hoisted(() => vi.fn());
 const mockDecrypt = vi.hoisted(() => vi.fn());
 const mockGetCaptureQueue = vi.hoisted(() => vi.fn());
 
-vi.mock('@sentinel/adapters', () => ({
+vi.mock('@sentinel-vrt/adapters', () => ({
   verifyFigmaWebhook: mockVerifyFigmaWebhook,
 }));
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: mockCreateDb,
   workspaceSettings: {
     figmaFileKey: 'workspaceSettings.figmaFileKey',

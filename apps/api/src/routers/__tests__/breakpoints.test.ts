@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock @sentinel/db before importing router
-vi.mock('@sentinel/db', () => {
+// Mock @sentinel-vrt/db before importing router
+vi.mock('@sentinel-vrt/db', () => {
   const mockDb = {
     select: vi.fn(),
     insert: vi.fn(),
@@ -26,7 +26,7 @@ vi.mock('@sentinel/db', () => {
   };
 });
 
-vi.mock('@sentinel/capture', () => ({
+vi.mock('@sentinel-vrt/capture', () => ({
   BREAKPOINT_TEMPLATES: {
     tailwind: [
       { name: 'sm', width: 640, height: 480 },
@@ -63,7 +63,7 @@ describe('breakpoints router', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { createDb } = await import('@sentinel/db');
+    const { createDb } = await import('@sentinel-vrt/db');
     mockDb = (createDb as ReturnType<typeof vi.fn>)();
   });
 

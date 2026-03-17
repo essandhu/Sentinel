@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
-import { verifyFigmaWebhook } from '@sentinel/adapters';
-import { createDb, workspaceSettings } from '@sentinel/db';
+import { verifyFigmaWebhook } from '@sentinel-vrt/adapters';
+import { createDb, workspaceSettings } from '@sentinel-vrt/db';
 import { eq } from 'drizzle-orm';
 import { decrypt } from '../services/crypto.js';
 import { getCaptureQueue } from '../queue.js';

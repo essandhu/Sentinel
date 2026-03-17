@@ -76,7 +76,7 @@ export async function captureCommand(options: CaptureOptions): Promise<void> {
 // ── Local capture (default) ──────────────────────────────────────────────────
 
 async function runLocalCapture(options: CaptureOptions): Promise<void> {
-  const { loadConfig } = await import('@sentinel/capture');
+  const { loadConfig } = await import('@sentinel-vrt/capture');
   const { initLocalRuntime } = await import('../local-runtime.js');
   const { ensureBrowserInstalled } = await import('../browser-install.js');
 
@@ -138,7 +138,7 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
     });
 
     if (!project) {
-      const { sqliteSchema } = await import('@sentinel/db');
+      const { sqliteSchema } = await import('@sentinel-vrt/db');
       const id = randomUUID();
       runtime.db.insert(sqliteSchema.projects).values({
         id,
@@ -164,7 +164,7 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
     // Create capture run
     const runId = randomUUID();
     {
-      const { sqliteSchema } = await import('@sentinel/db');
+      const { sqliteSchema } = await import('@sentinel-vrt/db');
       runtime.db.insert(sqliteSchema.captureRuns).values({
         id: runId,
         projectId: project.id,
@@ -183,7 +183,7 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
 
     // Run capture in-process using the local adapter
     // Import from the worker module which exports processCaptureLocal
-    const { processCaptureLocal } = await import('@sentinel/capture');
+    const { processCaptureLocal } = await import('@sentinel-vrt/capture');
 
     const progressCallbacks = options.ci
       ? undefined
@@ -409,8 +409,8 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
     // ── Design drift detection ───────────────────────────────────────────
     const driftConfig = (config as any).designDrift;
     if (driftConfig?.enabled) {
-      const { discoverDesignImages } = await import('@sentinel/capture');
-      const { buildDriftComparisons } = await import('@sentinel/capture');
+      const { discoverDesignImages } = await import('@sentinel-vrt/capture');
+      const { buildDriftComparisons } = await import('@sentinel-vrt/capture');
       const { readFile: readDesignFile } = await import('node:fs/promises');
       const pathMod = await import('node:path');
 
@@ -452,7 +452,7 @@ async function runLocalCapture(options: CaptureOptions): Promise<void> {
         const driftPairs = buildDriftComparisons(capturesForDrift, designImages);
 
         if (driftPairs.length > 0) {
-          const { runDualDiff } = await import('@sentinel/capture');
+          const { runDualDiff } = await import('@sentinel-vrt/capture');
 
           const driftResults: Array<{ url: string; viewport: string; diffPercent: number; designFile: string }> = [];
 
@@ -616,7 +616,7 @@ async function executeTestPlan(
     // Re-enter runLocalCapture for this suite step, but we need to check the result.
     // We call runLocalCapture internally and check exit code, but that's not clean.
     // Instead, run a mini-capture and check the DB for results.
-    const { loadConfig: loadCfg, processCaptureLocal } = await import('@sentinel/capture');
+    const { loadConfig: loadCfg, processCaptureLocal } = await import('@sentinel-vrt/capture');
     const { filterRoutesBySuite } = await import('./capture-remote.js');
 
     const suiteConfig = await loadCfg(options.config);
@@ -628,7 +628,7 @@ async function executeTestPlan(
     writeFileSync(tmpConfigPath, yamlStringify(filteredConfig), 'utf-8');
 
     const suiteRunId = randomUUID();
-    const { sqliteSchema } = await import('@sentinel/db');
+    const { sqliteSchema } = await import('@sentinel-vrt/db');
     runtime.db.insert(sqliteSchema.captureRuns).values({
       id: suiteRunId,
       projectId: projectRow.id,

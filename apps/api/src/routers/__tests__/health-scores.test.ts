@@ -53,7 +53,7 @@ function buildMockDb(selectResponses: unknown[][] = []) {
   return db;
 }
 
-vi.mock('@sentinel/db', () => ({
+vi.mock('@sentinel-vrt/db', () => ({
   createDb: vi.fn(() => mockDbState.current),
   projects: { id: 'projects.id', workspaceId: 'projects.workspaceId' },
   healthScores: {

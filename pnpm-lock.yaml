@@ -47,11 +47,11 @@ importers:
       '@actions/github':
         specifier: ^6.0.0
         version: 6.0.1
-      '@sentinel/cli':
+      '@sentinel-vrt/cli':
         specifier: workspace:*
         version: link:../../packages/cli
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@types/node':
@@ -99,19 +99,19 @@ importers:
       '@fastify/websocket':
         specifier: ^11.2.0
         version: 11.2.0
-      '@sentinel/adapters':
+      '@sentinel-vrt/adapters':
         specifier: workspace:*
         version: link:../../packages/adapters
-      '@sentinel/capture':
+      '@sentinel-vrt/capture':
         specifier: workspace:*
         version: link:../../packages/capture
-      '@sentinel/db':
+      '@sentinel-vrt/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@sentinel/storage':
+      '@sentinel-vrt/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@sentinel/types':
+      '@sentinel-vrt/types':
         specifier: workspace:*
         version: link:../../packages/types
       '@slack/webhook':
@@ -154,7 +154,7 @@ importers:
         specifier: ^3.0.0
         version: 3.25.76
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@types/node':
@@ -224,10 +224,10 @@ importers:
       '@playwright/test':
         specifier: ^1.58.2
         version: 1.58.2
-      '@sentinel/api':
+      '@sentinel-vrt/api':
         specifier: workspace:*
         version: link:../api
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@tailwindcss/vite':
@@ -305,13 +305,13 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.0.0
         version: 3.1001.0
-      '@sentinel/db':
+      '@sentinel-vrt/db':
         specifier: workspace:*
         version: link:../db
-      '@sentinel/storage':
+      '@sentinel-vrt/storage':
         specifier: workspace:*
         version: link:../storage
-      '@sentinel/types':
+      '@sentinel-vrt/types':
         specifier: workspace:*
         version: link:../types
       '@types/adm-zip':
@@ -342,7 +342,7 @@ importers:
         specifier: ^2.7.0
         version: 2.8.2
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -363,16 +363,16 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.11.1
         version: 4.11.1(playwright-core@1.58.2)
-      '@sentinel/adapters':
+      '@sentinel-vrt/adapters':
         specifier: workspace:*
         version: link:../adapters
-      '@sentinel/db':
+      '@sentinel-vrt/db':
         specifier: workspace:*
         version: link:../db
-      '@sentinel/storage':
+      '@sentinel-vrt/storage':
         specifier: workspace:*
         version: link:../storage
-      '@sentinel/types':
+      '@sentinel-vrt/types':
         specifier: workspace:*
         version: link:../types
       drizzle-orm:
@@ -409,7 +409,7 @@ importers:
         specifier: ^3.0.0
         version: 3.25.76
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -433,13 +433,13 @@ importers:
       '@inquirer/prompts':
         specifier: ^8.3.0
         version: 8.3.0(@types/node@25.3.3)
-      '@sentinel/capture':
+      '@sentinel-vrt/capture':
         specifier: workspace:*
         version: link:../capture
-      '@sentinel/db':
+      '@sentinel-vrt/db':
         specifier: workspace:*
         version: link:../db
-      '@sentinel/storage':
+      '@sentinel-vrt/storage':
         specifier: workspace:*
         version: link:../storage
       '@trpc/server':
@@ -473,7 +473,7 @@ importers:
         specifier: ^3.0.0
         version: 3.25.76
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/better-sqlite3':
@@ -499,7 +499,7 @@ importers:
 
   packages/db:
     dependencies:
-      '@sentinel/types':
+      '@sentinel-vrt/types':
         specifier: workspace:*
         version: link:../types
       better-sqlite3:
@@ -512,7 +512,7 @@ importers:
         specifier: ^3.0.0
         version: 3.4.8
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/better-sqlite3':
@@ -539,11 +539,11 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.0.0
         version: 3.1001.0
-      '@sentinel/types':
+      '@sentinel-vrt/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -561,7 +561,7 @@ importers:
 
   packages/types:
     devDependencies:
-      '@sentinel/config':
+      '@sentinel-vrt/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
@@ -579,10 +579,10 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.600.0
         version: 3.1001.0
-      '@sentinel/db':
+      '@sentinel-vrt/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@sentinel/storage':
+      '@sentinel-vrt/storage':
         specifier: workspace:*
         version: link:../../packages/storage
       drizzle-orm:

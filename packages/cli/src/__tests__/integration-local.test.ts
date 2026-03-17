@@ -19,7 +19,7 @@ describe('Local mode integration', () => {
   it('initializes runtime with empty database', async () => {
     const runtime = await initLocalRuntime(tempDir);
     try {
-      const { projects } = await import('@sentinel/db').then(m => m.sqliteSchema);
+      const { projects } = await import('@sentinel-vrt/db').then(m => m.sqliteSchema);
       const result = runtime.db.select().from(projects).all();
       expect(result).toHaveLength(0);
     } finally {
@@ -30,7 +30,7 @@ describe('Local mode integration', () => {
   it('can create a project and capture run', async () => {
     const runtime = await initLocalRuntime(tempDir);
     try {
-      const { projects, captureRuns } = await import('@sentinel/db').then(m => m.sqliteSchema);
+      const { projects, captureRuns } = await import('@sentinel-vrt/db').then(m => m.sqliteSchema);
 
       runtime.db.insert(projects).values({
         id: 'test-project',
@@ -74,7 +74,7 @@ describe('Local mode integration', () => {
   });
 
   it('database is persistent across runtime instances', async () => {
-    const { projects } = await import('@sentinel/db').then(m => m.sqliteSchema);
+    const { projects } = await import('@sentinel-vrt/db').then(m => m.sqliteSchema);
 
     // First runtime - create data
     const r1 = await initLocalRuntime(tempDir);

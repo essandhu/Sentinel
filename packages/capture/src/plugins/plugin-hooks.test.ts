@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { PluginHookRunner, setPluginsForRun, getPluginsForRun, clearPluginsForRun } from './plugin-hooks.js';
 import type { LoadedPlugin } from './plugin-loader.js';
-import type { SentinelPlugin, BeforeCaptureContext, AfterDiffContext, OnApprovalContext } from '@sentinel/types';
+import type { SentinelPlugin, BeforeCaptureContext, AfterDiffContext, OnApprovalContext } from '@sentinel-vrt/types';
 
 function createMockPlugin(overrides: Partial<SentinelPlugin> = {}): LoadedPlugin {
   return {
