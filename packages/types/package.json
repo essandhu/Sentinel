@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel/types",
+  "name": "@sentinel-vrt/types",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/node": "^25.3.3",
     "typescript": "catalog:",
     "zod": "^3.0.0"

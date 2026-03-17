@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel/storage",
+  "name": "@sentinel-vrt/storage",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
-    "@sentinel/types": "workspace:*"
+    "@sentinel-vrt/types": "workspace:*"
   },
   "devDependencies": {
-    "@sentinel/config": "workspace:*",
+    "@sentinel-vrt/config": "workspace:*",
     "@types/node": "^25.3.3",
     "dotenv": "^16.0.0",
     "typescript": "catalog:",
