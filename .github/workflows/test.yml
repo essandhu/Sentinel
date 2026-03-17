@@ -41,10 +41,10 @@ jobs:
         run: pnpm test
 
       - name: Install Playwright browsers
-        run: pnpm --filter @sentinel/dashboard exec playwright install --with-deps chromium
+        run: pnpm --filter @sentinel-vrt/dashboard exec playwright install --with-deps chromium
 
       - name: Run Playwright E2E tests
-        run: pnpm --filter @sentinel/dashboard test:e2e
+        run: pnpm --filter @sentinel-vrt/dashboard test:e2e
         env:
           CI: true
 
