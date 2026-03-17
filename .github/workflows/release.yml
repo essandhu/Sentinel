@@ -44,14 +44,24 @@ jobs:
       - name: Patch package versions
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          # Update root
-          pnpm --silent pkg set version="$VERSION"
-          # Update all workspace packages
-          for pkg in packages/types packages/db packages/storage packages/adapters packages/capture packages/cli; do
-            pushd "$pkg" > /dev/null
-            pnpm --silent pkg set version="$VERSION"
-            popd > /dev/null
-          done
+          node -e "
+            const fs = require('fs');
+            const pkgs = [
+              'package.json',
+              'packages/types/package.json',
+              'packages/db/package.json',
+              'packages/storage/package.json',
+              'packages/adapters/package.json',
+              'packages/capture/package.json',
+              'packages/cli/package.json',
+            ];
+            for (const p of pkgs) {
+              const json = JSON.parse(fs.readFileSync(p, 'utf8'));
+              json.version = '${VERSION}';
+              fs.writeFileSync(p, JSON.stringify(json, null, 2) + '\n');
+              console.log('Patched', p, 'to', '${VERSION}');
+            }
+          "
 
       - name: Build
         run: pnpm build
