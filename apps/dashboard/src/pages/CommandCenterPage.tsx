@@ -80,7 +80,7 @@ export function CommandCenterPage() {
       </div>
 
       {/* Row 2: AttentionQueue + ActivityFeed */}
-      <div className="mt-8 grid grid-cols-5 gap-6">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="col-span-3">
           <h2 className="s-section-label mb-3">Needs Attention</h2>
           <AttentionQueue items={attentionItems} onItemClick={handleAttentionClick} />

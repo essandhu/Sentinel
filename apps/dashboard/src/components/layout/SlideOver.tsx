@@ -22,11 +22,8 @@ export function SlideOver() {
   return (
     <div
       data-testid="slide-over-panel"
-      className="s-slide-over-enter flex flex-col h-full"
+      className="s-slide-over-enter flex flex-col h-full w-full lg:w-[55%] lg:min-w-[400px] lg:max-w-[800px]"
       style={{
-        width: '55%',
-        minWidth: 400,
-        maxWidth: 800,
         background: 'var(--s-bg-base)',
         borderLeft: '1px solid var(--s-border)',
       }}

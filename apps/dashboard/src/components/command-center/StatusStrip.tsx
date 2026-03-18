@@ -31,7 +31,7 @@ export const StatusStrip = ({ data }: StatusStripProps) => {
   const regTrend = trendDisplay(data.regressionTrend);
 
   return (
-    <div className="flex gap-3 s-stagger flex-wrap">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 s-stagger">
       {/* Health */}
       <div className="s-card-elevated">
         <span className="s-section-label">Health</span>
