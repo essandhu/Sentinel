@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DashboardLayout } from './components/layout/DashboardLayout';
+import { CommandCenterPage } from './pages/CommandCenterPage';
 import { RunsPage } from './pages/RunsPage';
 import { DiffPage } from './pages/DiffPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -17,6 +18,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <CommandCenterPage />,
+        handle: { crumb: 'Command Center' },
+      },
+      {
+        path: '/runs',
         element: <RunsPage />,
         handle: { crumb: 'Runs' },
       },
