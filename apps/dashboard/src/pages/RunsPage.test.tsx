@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { RunsPage } from './RunsPage';
 
@@ -149,5 +150,67 @@ describe('RunsPage', () => {
     renderPage();
     // The commit column renders "-" for null commitSha
     expect(screen.getByText('-')).toBeInTheDocument();
+  });
+
+  describe('swim lane filter tabs', () => {
+    const laneRuns = [
+      {
+        id: 'run-1',
+        projectId: 'proj-1',
+        branchName: 'main',
+        commitSha: 'aaa1111',
+        status: 'completed',
+        createdAt: new Date('2024-01-15T10:00:00Z'),
+        completedAt: new Date('2024-01-15T10:05:00Z'),
+        totalDiffs: 3,
+        suiteName: null,
+      },
+      {
+        id: 'run-2',
+        projectId: 'proj-1',
+        branchName: 'feature/ok',
+        commitSha: 'bbb2222',
+        status: 'completed',
+        createdAt: new Date('2024-01-14T09:00:00Z'),
+        completedAt: new Date('2024-01-14T09:05:00Z'),
+        totalDiffs: 0,
+        suiteName: null,
+      },
+      {
+        id: 'run-3',
+        projectId: 'proj-1',
+        branchName: 'feature/broken',
+        commitSha: 'ccc3333',
+        status: 'failed',
+        createdAt: new Date('2024-01-13T09:00:00Z'),
+        completedAt: null,
+        totalDiffs: 0,
+        suiteName: null,
+      },
+    ];
+
+    it('renders swim lane tabs', () => {
+      mockQueries(laneRuns);
+      renderPage();
+      expect(screen.getByText('All')).toBeInTheDocument();
+      expect(screen.getByText(/Needs Review/)).toBeInTheDocument();
+      expect(screen.getByText(/Approved/)).toBeInTheDocument();
+      expect(screen.getByText(/Rejected/)).toBeInTheDocument();
+    });
+
+    it('filters runs when lane clicked', async () => {
+      const user = userEvent.setup();
+      mockQueries(laneRuns);
+      renderPage();
+
+      // Click "Rejected" tab
+      const rejectedTab = screen.getByText(/Rejected/);
+      await user.click(rejectedTab);
+
+      // Only the failed run should be visible
+      expect(screen.getByText('feature/broken')).toBeInTheDocument();
+      expect(screen.queryByText('main')).not.toBeInTheDocument();
+      expect(screen.queryByText('feature/ok')).not.toBeInTheDocument();
+    });
   });
 });
