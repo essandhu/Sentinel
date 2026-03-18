@@ -120,6 +120,48 @@ body::before {
   border-radius: 12px;
 }
 
+/* Card weight tiers */
+.s-card-elevated {
+  background: var(--s-bg-raised);
+  border: 1px solid var(--s-border-strong);
+  border-radius: 12px;
+  transition: transform 200ms var(--ease-out-expo), box-shadow 200ms var(--ease-out-expo), border-color 200ms var(--ease-out-expo);
+}
+
+.s-card-elevated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(212, 160, 83, 0.08), 0 0 60px rgba(212, 160, 83, 0.04);
+  border-color: var(--s-border-accent);
+}
+
+.s-card-default {
+  background: var(--s-bg-surface);
+  border: 1px solid var(--s-border);
+  border-radius: 12px;
+}
+
+.s-card-recessed {
+  background: var(--s-bg-base);
+  border-radius: 12px;
+}
+
+/* Priority borders */
+.s-priority-critical {
+  border-left: 3px solid var(--s-danger);
+}
+
+.s-priority-warning {
+  border-left: 3px solid var(--s-warning);
+}
+
+.s-priority-info {
+  border-left: 3px solid var(--s-border);
+}
+
+.s-priority-success {
+  border-left: 3px solid var(--s-success);
+}
+
 /* Glow accents */
 .s-glow-amber {
   box-shadow: 0 0 20px rgba(212, 160, 83, 0.08), 0 0 60px rgba(212, 160, 83, 0.04);
@@ -384,6 +426,26 @@ body::before {
 .s-stagger > *:nth-child(7) { animation-delay: 300ms; }
 .s-stagger > *:nth-child(8) { animation-delay: 350ms; }
 
+/* Pulse dot animation */
+@keyframes s-pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(240, 102, 92, 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 12px rgba(240, 102, 92, 0.8); }
+}
+
+.s-dot-danger-pulse {
+  animation: s-pulse-dot 2s ease-in-out infinite;
+}
+
+/* Slide-over entrance */
+@keyframes s-slide-in-from-right {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.s-slide-over-enter {
+  animation: s-slide-in-from-right 300ms var(--ease-out-expo) both;
+}
+
 /* Loading shimmer */
 .s-shimmer {
   background: linear-gradient(
@@ -394,6 +456,25 @@ body::before {
   );
   background-size: 200% 100%;
   animation: s-shimmer 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   Dashboard Utilities
+   ============================================ */
+
+.s-metric-number {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.s-section-divider {
+  border: none;
+  border-top: 1px solid var(--s-border);
+  margin-top: 24px;
+  margin-bottom: 16px;
 }
 
 /* ============================================
