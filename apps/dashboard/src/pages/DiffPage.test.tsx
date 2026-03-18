@@ -439,45 +439,27 @@ describe('DiffPage', () => {
     expect(screen.getByText('webkit')).toBeInTheDocument();
   });
 
-  it('renders Accessibility tab button alongside Diffs', () => {
+  it('renders MetadataDrawer with audit log and details label', () => {
     setupQueries({ data: sampleDiffs, isLoading: false, isError: false });
 
     renderPage();
-    const pageTabs = screen.getByTestId('page-tabs');
-    const withinPageTabs = within(pageTabs);
-    expect(withinPageTabs.getByRole('button', { name: /^diffs$/i })).toBeInTheDocument();
-    expect(withinPageTabs.getByRole('button', { name: /^accessibility$/i })).toBeInTheDocument();
-    expect(withinPageTabs.getByRole('button', { name: /audit log/i })).toBeInTheDocument();
+    expect(screen.getByTestId('metadata-drawer')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /audit log & details/i })).toBeInTheDocument();
   });
 
-  it('clicking Accessibility tab renders A11yTab component', async () => {
+  it('renders DiffActionBar at the bottom of the viewer', () => {
     setupQueries({ data: sampleDiffs, isLoading: false, isError: false });
 
     renderPage();
-
-    const a11yButton = screen.getByRole('button', { name: /^accessibility$/i });
-    await userEvent.click(a11yButton);
-
-    expect(screen.getByTestId('a11y-tab')).toBeInTheDocument();
-    expect(screen.getByText('Accessibility content')).toBeInTheDocument();
-    // Diff viewer content should be hidden
-    expect(screen.queryByText(/select a diff to view/i)).not.toBeInTheDocument();
+    expect(screen.getByTestId('diff-action-bar')).toBeInTheDocument();
   });
 
-  it('switching back to Diffs tab from Accessibility shows diff content', async () => {
+  it('expands MetadataDrawer to show audit and a11y content', async () => {
     setupQueries({ data: sampleDiffs, isLoading: false, isError: false });
 
     renderPage();
-
-    // Go to Accessibility
-    const a11yButton = screen.getByRole('button', { name: /^accessibility$/i });
-    await userEvent.click(a11yButton);
+    const drawerToggle = screen.getByRole('button', { name: /audit log & details/i });
+    await userEvent.click(drawerToggle);
     expect(screen.getByTestId('a11y-tab')).toBeInTheDocument();
-
-    // Go back to Diffs
-    const diffsButton = screen.getByRole('button', { name: /^diffs$/i });
-    await userEvent.click(diffsButton);
-    expect(screen.queryByTestId('a11y-tab')).not.toBeInTheDocument();
-    expect(screen.getByText(/select a diff to view/i)).toBeInTheDocument();
   });
 });

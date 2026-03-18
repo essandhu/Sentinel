@@ -6,11 +6,11 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { SideBySide } from '../components/SideBySide';
 import { OverlaySlider } from '../components/OverlaySlider';
 import { Heatmap } from '../components/Heatmap';
-import { ApprovalButtons } from '../components/ApprovalButtons';
 import { BulkApproveBar } from '../components/BulkApproveBar';
-import { AuditTimeline } from '../components/AuditTimeline';
 import { AuditLog } from '../components/AuditLog';
 import { A11yTab } from '../components/A11yTab';
+import { DiffActionBar } from '../components/DiffActionBar';
+import { MetadataDrawer } from '../components/MetadataDrawer';
 import { ClassificationBadge } from '../components/ClassificationBadge';
 import { ClassificationOverride } from '../components/ClassificationOverride';
 import { RegionOverlay, type Region } from '../components/RegionOverlay';
@@ -59,7 +59,6 @@ export function DiffPage() {
   const { runId } = useParams<{ runId: string }>();
   const [selectedDiffId, setSelectedDiffId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('side-by-side');
-  const [activeTab, setActiveTab] = useState<'diffs' | 'audit-log' | 'accessibility'>('diffs');
   const [browserFilter, setBrowserFilter] = useState<string | null>(null);
   const [breakpointFilter, setBreakpointFilter] = useState<string | null>(null);
   const [parameterFilter, setParameterFilter] = useState<string | null>(null);
@@ -156,7 +155,7 @@ export function DiffPage() {
       }),
       [flatDiffs.length, handleApprovalAction],
     ),
-    activeTab === 'diffs' && !!diffs && diffs.length > 0,
+    !!diffs && diffs.length > 0,
   );
 
   const selectedDiff = diffList.find((d) => d.id === selectedDiffId) ?? null;
@@ -187,12 +186,6 @@ export function DiffPage() {
   const beforeUrl = selectedDiff ? `/images/${selectedDiff.baselineS3Key}` : '';
   const afterUrl = selectedDiff ? `/images/${selectedDiff.snapshotS3Key}` : '';
   const diffUrl = selectedDiff ? `/images/${selectedDiff.diffS3Key}` : '';
-
-  const tabItems = [
-    { id: 'diffs' as const, label: 'Diffs' },
-    { id: 'accessibility' as const, label: 'Accessibility' },
-    { id: 'audit-log' as const, label: 'Audit Log' },
-  ];
 
   const viewModes = [
     { id: 'side-by-side' as const, label: 'Side by Side' },
@@ -238,26 +231,6 @@ export function DiffPage() {
             <BulkApproveBar runId={runId} failedCount={failedDiffCount} />
           )}
 
-          {/* Tab bar */}
-          <div className="mb-5 flex gap-1" data-testid="page-tabs">
-            {tabItems.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 's-pill s-pill-active' : 's-pill s-pill-inactive'}
-                style={{ fontSize: 12, padding: '5px 14px' }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {activeTab === 'audit-log' && runId ? (
-            <AuditLog runId={runId} />
-          ) : activeTab === 'accessibility' && runId ? (
-            <A11yTab runId={runId} />
-          ) : (
-        <>
           {/* Browser filter */}
           {availableBrowsers.length > 1 && (
             <div className="mb-4 flex gap-1.5" data-testid="browser-filter-tabs">
@@ -412,11 +385,9 @@ export function DiffPage() {
                               />
                             </div>
                           )}
-                          {canApprove && <ApprovalButtons diffId={diff.id} />}
                           {run && (run as any).projectId && (
                             <ApprovalChainProgress diffId={diff.id} projectId={(run as any).projectId} />
                           )}
-                          <AuditTimeline diffId={diff.id} />
                         </div>,
                       );
                     }
@@ -429,7 +400,7 @@ export function DiffPage() {
           </div>
 
           {/* Viewer area */}
-          <div className="min-w-0 flex-1">
+          <div className="relative min-w-0 flex-1 min-h-0 overflow-hidden flex flex-col">
             {/* Mode tabs */}
             <div className="mb-4 flex gap-1.5">
               {viewModes.map((mode) => (
@@ -518,10 +489,29 @@ export function DiffPage() {
                 )}
               </div>
             )}
+
+            {/* Pinned action bar */}
+            <DiffActionBar
+              onApprove={() => handleApprovalAction('approve')}
+              onReject={() => handleApprovalAction('reject')}
+              current={focusedIndex >= 0 ? focusedIndex + 1 : undefined}
+              total={flatDiffs.length > 0 ? flatDiffs.length : undefined}
+              onPrev={() => setFocusedIndex((i) => Math.max(i - 1, 0))}
+              onNext={() => setFocusedIndex((i) => Math.min(i + 1, flatDiffs.length - 1))}
+              canApprove={canApprove}
+            />
           </div>
         </div>
-        </>
-          )}
+
+          {/* Metadata drawer */}
+          <MetadataDrawer label="Audit Log & Details">
+            {() => (
+              <>
+                {runId && <AuditLog runId={runId} />}
+                {runId && <A11yTab runId={runId} />}
+              </>
+            )}
+          </MetadataDrawer>
         </div>
       )}
     </div>
