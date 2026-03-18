@@ -153,4 +153,24 @@ describe('AnalyticsPage', () => {
     expect(screen.getByTestId('regression-trend-chart')).toBeInTheDocument();
     expect(screen.getByTestId('team-metrics-card')).toBeInTheDocument();
   });
+
+  it('renders 7d date range button', () => {
+    mockUseQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+    } as ReturnType<typeof useQuery>);
+
+    renderPage();
+    expect(screen.getByText('7d')).toBeInTheDocument();
+  });
+
+  it('renders export bar', () => {
+    mockUseQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+    } as ReturnType<typeof useQuery>);
+
+    renderPage();
+    expect(screen.getByTestId('export-bar')).toBeInTheDocument();
+  });
 });

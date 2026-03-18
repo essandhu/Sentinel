@@ -19,26 +19,28 @@ function formatDate(date: Date | string | number): string {
 export function AnalyticsPage() {
   const { projectId } = useParams<{ projectId: string }>();
   const safeProjectId = projectId ?? '';
-  const [windowDays, setWindowDays] = useState<'30' | '60' | '90'>('30');
+  const [windowDays, setWindowDays] = useState<'7' | '30' | '60' | '90'>('30');
 
   const { data: healthTrendData, isLoading: loadingHealth } = useQuery(
     trpc.healthScores.trend.queryOptions({
       projectId: safeProjectId,
-      windowDays: windowDays === '60' ? '90' : windowDays,
+      windowDays,
     }),
   );
+
+  const analyticsWindowDays = windowDays === '7' ? '30' : windowDays;
 
   const { data: regressionTrendData, isLoading: loadingRegression } = useQuery(
     trpc.analytics.regressionTrend.queryOptions({
       projectId: safeProjectId,
-      windowDays,
+      windowDays: analyticsWindowDays,
     }),
   );
 
   const { data: teamMetricsData, isLoading: loadingMetrics } = useQuery(
     trpc.analytics.teamMetrics.queryOptions({
       projectId: safeProjectId,
-      windowDays,
+      windowDays: analyticsWindowDays,
     }),
   );
 
@@ -59,7 +61,7 @@ export function AnalyticsPage() {
   const { data: diffExportData } = useQuery(
     trpc.analytics.diffExport.queryOptions({
       projectId: safeProjectId,
-      windowDays,
+      windowDays: analyticsWindowDays,
     }),
   );
 
@@ -106,14 +108,11 @@ export function AnalyticsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8 s-animate-in">
-      <div className="flex items-center justify-between">
-        <PageHeader title="Analytics" />
-        <ExportButton onExportPdf={handleExportPdf} onExportCsv={handleExportCsv} />
-      </div>
+      <PageHeader title="Analytics" />
 
       {/* Time range selector */}
       <div className="mb-6 mt-5 flex gap-1.5">
-        {(['30', '60', '90'] as const).map((range) => (
+        {(['7', '30', '60', '90'] as const).map((range) => (
           <button
             key={range}
             onClick={() => setWindowDays(range)}
@@ -126,7 +125,7 @@ export function AnalyticsPage() {
 
       {/* Charts */}
       <div className="mb-8 grid gap-6 lg:grid-cols-2 s-stagger">
-        <div className="s-glass p-5">
+        <div className="s-card-elevated p-5">
           <h2
             className="mb-3 text-sm font-semibold"
             style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
@@ -136,7 +135,7 @@ export function AnalyticsPage() {
           <HealthTrendChart data={healthChartData} />
         </div>
 
-        <div className="s-glass p-5">
+        <div className="s-card-elevated p-5">
           <h2
             className="mb-3 text-sm font-semibold"
             style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
@@ -148,7 +147,7 @@ export function AnalyticsPage() {
       </div>
 
       {/* Team Metrics */}
-      <section>
+      <section className="s-card-elevated p-5">
         <h2
           className="mb-3 text-sm font-semibold"
           style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
@@ -162,6 +161,15 @@ export function AnalyticsPage() {
           windowDays={parseInt(windowDays, 10)}
         />
       </section>
+
+      {/* Sticky export bar */}
+      <div
+        data-testid="export-bar"
+        className="sticky bottom-0 flex items-center justify-end gap-3 px-6 py-3"
+        style={{ background: 'var(--s-bg-surface)', borderTop: '1px solid var(--s-border)' }}
+      >
+        <ExportButton onExportPdf={handleExportPdf} onExportCsv={handleExportCsv} />
+      </div>
     </div>
   );
 }
