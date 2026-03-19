@@ -14,6 +14,12 @@ describe('PageHeader', () => {
     expect(screen.getByRole('button', { name: 'New' })).toBeInTheDocument();
   });
 
+  it('has gap-3 between title and actions', () => {
+    const { container } = render(<PageHeader title="Test" actions={<button>Act</button>} />);
+    const wrapper = container.firstElementChild!;
+    expect(wrapper.className).toContain('gap-3');
+  });
+
   it('does not render actions container when no actions', () => {
     const { container } = render(<PageHeader title="Dashboard" />);
     // Should just have the heading
