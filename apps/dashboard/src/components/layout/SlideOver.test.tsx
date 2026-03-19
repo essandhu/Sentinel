@@ -11,7 +11,7 @@ function renderWithProvider(ui: ReactNode) {
 }
 
 // Helper component that opens the slide-over on mount
-function SlideOverOpener({ title, children }: { title: string; children: ReactNode }) {
+function SlideOverOpener({ title, children }: { title: string; children?: ReactNode }) {
   const { open } = useSlideOver();
   return createElement('button', {
     onClick: () => open(children, { title }),

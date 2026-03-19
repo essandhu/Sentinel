@@ -21,10 +21,12 @@ export function AnalyticsPage() {
   const safeProjectId = projectId ?? '';
   const [windowDays, setWindowDays] = useState<'7' | '30' | '60' | '90'>('30');
 
+  const healthWindowDays = windowDays === '60' ? '90' : windowDays;
+
   const { data: healthTrendData, isLoading: loadingHealth } = useQuery(
     trpc.healthScores.trend.queryOptions({
       projectId: safeProjectId,
-      windowDays,
+      windowDays: healthWindowDays,
     }),
   );
 
