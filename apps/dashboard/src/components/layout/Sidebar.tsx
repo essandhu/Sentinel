@@ -125,7 +125,7 @@ export function Sidebar() {
   const navContent = (
     <nav role="navigation" className="flex h-full flex-col">
       {/* Branding */}
-      <div className="flex items-center gap-3 px-5 py-5">
+      <div className="flex h-[65px] items-center gap-3 px-5">
         <SentinelLogo />
         <span
           className="text-base font-bold tracking-tight"
@@ -136,7 +136,7 @@ export function Sidebar() {
       </div>
 
       {/* Divider */}
-      <div className="mx-4 mb-2" style={{ height: 1, background: 'var(--s-border)' }} />
+      <div className="mx-4" style={{ height: 1, background: 'var(--s-border)' }} />
 
       {/* Global Navigation */}
       <div className="flex-1 space-y-0.5 px-3 py-2">

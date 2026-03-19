@@ -72,10 +72,10 @@ describe('DashboardLayout', () => {
     expect(screen.getByTestId('slide-over-provider')).toBeInTheDocument();
   });
 
-  it('header uses px-5 padding to align with sidebar', () => {
+  it('header has explicit h-[65px] height and px-6 padding to align with sidebar', () => {
     renderLayout();
     const header = screen.getByTestId('breadcrumbs').closest('header')!;
-    expect(header.className).toContain('px-5');
-    expect(header.className).not.toContain('px-6');
+    expect(header.className).toContain('h-[65px]');
+    expect(header.className).toContain('px-6');
   });
 });
