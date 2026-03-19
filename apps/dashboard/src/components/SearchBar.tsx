@@ -210,8 +210,22 @@ export function SearchBar() {
                         setInputValue('');
                       }}
                     >
-                      <span>{run.suiteName || run.branchName || run.projectName}</span>
-                      <span className="ml-auto flex items-center gap-1.5">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="truncate font-medium" style={{ color: 'var(--s-text-primary)' }}>
+                            {run.branchName || run.suiteName || run.id.slice(0, 8)}
+                          </span>
+                          {run.suiteName && run.branchName && (
+                            <span className="s-pill text-[10px]" style={{ background: 'var(--s-bg-raised)', color: 'var(--s-text-tertiary)', padding: '1px 6px' }}>
+                              {run.suiteName}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[11px] mt-0.5" style={{ color: 'var(--s-text-tertiary)' }}>
+                          {run.projectName} · {new Date(run.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <span className="flex items-center gap-1.5 flex-shrink-0">
                         <span className={`s-dot ${run.status === 'completed' ? 's-dot-success' : 's-dot-warning'}`} />
                         <span className="text-[11px]" style={{ color: 'var(--s-text-tertiary)' }}>{run.status}</span>
                       </span>
