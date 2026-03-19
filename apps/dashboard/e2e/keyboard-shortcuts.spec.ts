@@ -96,7 +96,7 @@ test.describe('Keyboard interactions', () => {
     await page.keyboard.press('Enter');
     await page.waitForLoadState('networkidle');
 
-    await expect(page).toHaveURL(/\/$/);
+    await expect(page).toHaveURL(/\/runs$/);
   });
 
   test('Arrow keys navigate within command palette list', async ({ page }) => {
