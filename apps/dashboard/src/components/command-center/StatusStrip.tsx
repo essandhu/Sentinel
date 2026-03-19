@@ -33,7 +33,7 @@ export const StatusStrip = ({ data }: StatusStripProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 s-stagger">
       {/* Health */}
-      <div className="s-card-elevated">
+      <div className="s-card-elevated p-4 flex flex-col gap-1">
         <span className="s-section-label">Health</span>
         <span className="s-metric-number" style={{ color: healthColor(data.healthScore) }}>
           {data.healthScore}
@@ -44,7 +44,7 @@ export const StatusStrip = ({ data }: StatusStripProps) => {
       </div>
 
       {/* Pending */}
-      <div className="s-card-elevated">
+      <div className="s-card-elevated p-4 flex flex-col gap-1">
         <span className="s-section-label">Pending</span>
         <span
           className="s-metric-number"
@@ -55,7 +55,7 @@ export const StatusStrip = ({ data }: StatusStripProps) => {
       </div>
 
       {/* Last Run */}
-      <div className="s-card-elevated">
+      <div className="s-card-elevated p-4 flex flex-col gap-1">
         <span className="s-section-label">Last Run</span>
         <span
           className="s-metric-number"
@@ -66,7 +66,7 @@ export const StatusStrip = ({ data }: StatusStripProps) => {
       </div>
 
       {/* Regressions */}
-      <div className="s-card-elevated">
+      <div className="s-card-elevated p-4 flex flex-col gap-1">
         <span className="s-section-label">Regressions</span>
         <span
           className="s-metric-number"

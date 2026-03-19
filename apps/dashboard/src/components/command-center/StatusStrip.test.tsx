@@ -42,4 +42,13 @@ describe('StatusStrip', () => {
     const trend = screen.getByTestId('regression-trend');
     expect(trend).toHaveTextContent('-1');
   });
+
+  it('renders each card with proper padding via s-card-elevated class and p-4', () => {
+    const { container } = render(<StatusStrip data={defaultData} />);
+    const cards = container.querySelectorAll('.s-card-elevated');
+    expect(cards).toHaveLength(4);
+    cards.forEach((card) => {
+      expect(card.className).toContain('p-4');
+    });
+  });
 });
