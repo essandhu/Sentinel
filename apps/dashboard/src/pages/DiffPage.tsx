@@ -208,7 +208,7 @@ export function DiffPage() {
           Back
         </Link>
         <PageHeader
-          title={`Run: ${runId ?? ''}`}
+          title={run ? ((run as any).branchName || (run as any).suiteName || (runId ?? '').slice(0, 8)) : (runId ?? '').slice(0, 8)}
           actions={
             run && (run as any).suiteName ? (
               <span className="s-pill s-pill-active">

@@ -284,12 +284,37 @@ describe('DiffPage', () => {
     mockUseTRPC.mockReturnValue({} as ReturnType<typeof useTRPC>);
   });
 
-  it('renders "Run:" heading with runId', () => {
+  it('shows truncated run ID in heading when no branch name available', () => {
     setupQueries({ data: sampleDiffs, isLoading: false, isError: false });
 
     renderPage('run-uuid-1');
-    expect(screen.getByText(/run:/i)).toBeInTheDocument();
-    expect(screen.getByText(/run-uuid-1/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('run-uuid');
+  });
+
+  it('shows branch name in heading instead of raw UUID', () => {
+    mockUseQuery.mockImplementation((opts: unknown) => {
+      const o = opts as { queryKey?: string[] };
+      if (o.queryKey && o.queryKey[0] === 'runs') {
+        return {
+          data: { id: 'run-uuid-1', projectId: 'proj-1', branchName: 'feat/login', suiteName: 'critical' },
+          isLoading: false,
+          isError: false,
+        } as ReturnType<typeof useQuery>;
+      }
+      if (o.queryKey && o.queryKey[0] === 'classifications' && o.queryKey[1] === 'layoutShifts') {
+        return { data: [], isLoading: false, isError: false } as ReturnType<typeof useQuery>;
+      }
+      if (o.queryKey && o.queryKey[0] === 'classifications') {
+        return { data: undefined, isLoading: false, isError: false } as ReturnType<typeof useQuery>;
+      }
+      if (o.queryKey && o.queryKey[0] === 'approvalChains') {
+        return { data: { chain: [], completed: [], currentStep: null, isComplete: true }, isLoading: false, isError: false } as ReturnType<typeof useQuery>;
+      }
+      return { data: sampleDiffs, isLoading: false, isError: false } as ReturnType<typeof useQuery>;
+    });
+
+    renderPage('run-uuid-1');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('feat/login');
   });
 
   it('shows loading state while query is pending', () => {
