@@ -7,7 +7,7 @@ export interface PageHeaderProps {
 
 export function PageHeader({ title, actions }: PageHeaderProps) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex flex-1 items-center justify-between gap-3">
       <h1
         className="text-xl font-bold tracking-tight"
         style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
