@@ -125,6 +125,7 @@ export function RunsPage() {
     ...baseColumns,
   ];
   const [selectedSuite, setSelectedSuite] = useState<string | null>(null);
+  const [activeLane, setActiveLane] = useState<'all' | 'needs-review' | 'approved' | 'rejected'>('all');
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const navigate = useNavigate();
 
@@ -132,7 +133,22 @@ export function RunsPage() {
     ? (runs as RunListItem[] | undefined)?.filter((r) => r.suiteName === selectedSuite)
     : (runs as RunListItem[] | undefined);
 
-  const runList = (filteredRuns as RunListItem[]) ?? [];
+  const allRuns = (filteredRuns as RunListItem[]) ?? [];
+
+  // Swim lane counts
+  const needsReviewCount = allRuns.filter((r) => r.status === 'completed' && r.totalDiffs > 0).length;
+  const approvedCount = allRuns.filter((r) => r.status === 'completed' && r.totalDiffs === 0).length;
+  const rejectedCount = allRuns.filter((r) => r.status === 'failed').length;
+
+  const laneFiltered = activeLane === 'all'
+    ? allRuns
+    : activeLane === 'needs-review'
+      ? allRuns.filter((r) => r.status === 'completed' && r.totalDiffs > 0)
+      : activeLane === 'approved'
+        ? allRuns.filter((r) => r.status === 'completed' && r.totalDiffs === 0)
+        : allRuns.filter((r) => r.status === 'failed');
+
+  const runList = laneFiltered;
 
   const navigateToFocused = useCallback(() => {
     if (focusedIndex >= 0 && focusedIndex < runList.length) {
@@ -167,14 +183,30 @@ export function RunsPage() {
 
       {!isLoading && runs && runs.length > 0 && (
         <>
-          <div className="mt-6">
+          <div className="flex gap-1.5 mb-4 mt-6">
+            {([
+              { key: 'all' as const, label: 'All' },
+              { key: 'needs-review' as const, label: `Needs Review (${needsReviewCount})` },
+              { key: 'approved' as const, label: `Approved (${approvedCount})` },
+              { key: 'rejected' as const, label: `Rejected (${rejectedCount})` },
+            ] as const).map((lane) => (
+              <button
+                key={lane.key}
+                className={`s-pill ${activeLane === lane.key ? 's-pill-active' : 's-pill-inactive'}`}
+                onClick={() => setActiveLane(lane.key)}
+              >
+                {lane.label}
+              </button>
+            ))}
+          </div>
+          <div>
             <SuiteFilter
               runs={runs as RunListItem[]}
               selected={selectedSuite}
               onChange={setSelectedSuite}
             />
           </div>
-          <div className="mt-4 s-glass overflow-hidden">
+          <div className="mt-4 s-card-default overflow-hidden">
             <DataTable<RunListItem>
               data={runList}
               columns={columns}

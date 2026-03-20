@@ -33,10 +33,19 @@ function SentinelLogo() {
   );
 }
 
-function NavIcon({ type }: { type: 'runs' | 'settings' | 'health' | 'components' | 'schedules' | 'analytics' | 'environments' }) {
+function NavIcon({ type }: { type: 'command-center' | 'runs' | 'settings' | 'health' | 'components' | 'schedules' | 'analytics' | 'environments' }) {
   const iconStyle = { width: 16, height: 16, strokeWidth: 1.5, fill: 'none', stroke: 'currentColor' };
 
   switch (type) {
+    case 'command-center':
+      return (
+        <svg {...iconStyle} viewBox="0 0 24 24">
+          <rect x="3" y="3" width="8" height="8" rx="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="13" y="3" width="8" height="8" rx="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="3" y="13" width="8" height="8" rx="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="13" y="13" width="8" height="8" rx="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
     case 'runs':
       return (
         <svg {...iconStyle} viewBox="0 0 24 24">
@@ -116,7 +125,7 @@ export function Sidebar() {
   const navContent = (
     <nav role="navigation" className="flex h-full flex-col">
       {/* Branding */}
-      <div className="flex items-center gap-3 px-5 py-5">
+      <div className="flex h-[65px] items-center gap-3 px-5">
         <SentinelLogo />
         <span
           className="text-base font-bold tracking-tight"
@@ -127,11 +136,15 @@ export function Sidebar() {
       </div>
 
       {/* Divider */}
-      <div className="mx-4 mb-2" style={{ height: 1, background: 'var(--s-border)' }} />
+      <div className="mx-4" style={{ height: 1, background: 'var(--s-border)' }} />
 
       {/* Global Navigation */}
       <div className="flex-1 space-y-0.5 px-3 py-2">
         <NavLink to="/" end className={navLinkClass}>
+          <NavIcon type="command-center" />
+          Command Center
+        </NavLink>
+        <NavLink to="/runs" className={navLinkClass}>
           <NavIcon type="runs" />
           Runs
         </NavLink>

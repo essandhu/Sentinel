@@ -129,6 +129,26 @@ vi.mock('../components/FlipHistoryChart', () => ({
   ),
 }));
 
+vi.mock('../components/HealthHeroSection', () => ({
+  HealthHeroSection: ({ score }: { score: number }) => (
+    <section data-testid="hero-health-section">
+      <div data-testid="health-gauge">{score}</div>
+      <h2>Overall Health</h2>
+    </section>
+  ),
+}));
+
+vi.mock('../components/HealthMetricGrid', () => ({
+  HealthMetricGrid: ({ visualScore, a11yScore }: { visualScore: number; a11yScore: number }) => (
+    <div data-testid="metric-grid">
+      <div data-testid="metric-card"><h3>Visual Consistency</h3><p>{visualScore}</p></div>
+      <div data-testid="metric-card"><h3>Accessibility</h3><p>{a11yScore}</p></div>
+      <div data-testid="metric-card"><h3>Performance Scores</h3></div>
+      <div data-testid="metric-card"><h3>Route Stability</h3></div>
+    </div>
+  ),
+}));
+
 import { useQuery, useQueries } from '@tanstack/react-query';
 import { HealthPage } from './HealthPage';
 
@@ -298,7 +318,7 @@ describe('HealthPage', () => {
     expect(screen.getByText('Project Health')).toBeInTheDocument();
   });
 
-  it('renders stability section with scores when stability data is available', () => {
+  it('renders stability section in metric grid', () => {
     setupQueries({
       projectScore: { score: 80, computedAt: new Date() },
       stabilityScores: [
@@ -311,31 +331,46 @@ describe('HealthPage', () => {
           flipCount: 6,
           totalRuns: 20,
         },
-        {
-          url: 'https://example.com/about',
-          viewport: '375x812',
-          browser: 'chromium',
-          parameterName: '',
-          stabilityScore: 70,
-          flipCount: 3,
-          totalRuns: 15,
-        },
       ],
     });
     renderPage();
     expect(screen.getByText('Route Stability')).toBeInTheDocument();
-    expect(screen.getByTestId('stability-score-list')).toBeInTheDocument();
-    const rows = screen.getAllByTestId('stability-row');
-    expect(rows).toHaveLength(2);
+    expect(screen.getByTestId('metric-grid')).toBeInTheDocument();
   });
 
-  it('shows empty state when no unstable routes', () => {
+  it('renders route stability card even when no unstable routes', () => {
     setupQueries({
       projectScore: { score: 95, computedAt: new Date() },
       stabilityScores: [],
     });
     renderPage();
     expect(screen.getByText('Route Stability')).toBeInTheDocument();
-    expect(screen.getByText('No unstable routes detected')).toBeInTheDocument();
+  });
+
+  it('renders hero gauge section with data-testid', () => {
+    setupQueries({
+      projectScore: { score: 88, computedAt: new Date() },
+    });
+    renderPage();
+    expect(screen.getByTestId('hero-health-section')).toBeInTheDocument();
+  });
+
+  it('renders metric grid with 4 cards', () => {
+    setupQueries({
+      projectScore: { score: 88, computedAt: new Date() },
+    });
+    renderPage();
+    const grid = screen.getByTestId('metric-grid');
+    const cards = grid.querySelectorAll('[data-testid="metric-card"]');
+    expect(cards).toHaveLength(4);
+  });
+
+  it('renders Visual Consistency and Accessibility labels', () => {
+    setupQueries({
+      projectScore: { score: 88, computedAt: new Date() },
+    });
+    renderPage();
+    expect(screen.getByText('Visual Consistency')).toBeInTheDocument();
+    expect(screen.getByText('Accessibility')).toBeInTheDocument();
   });
 });

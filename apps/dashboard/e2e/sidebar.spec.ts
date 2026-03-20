@@ -17,22 +17,23 @@ test.describe('Sidebar navigation', () => {
     await expect(sidebar.getByRole('link', { name: 'Runs' })).toBeVisible();
   });
 
-  test('clicking Runs link navigates to home', async ({ page }) => {
-    // Start on a project page so we can navigate back
+  test('clicking Runs link navigates to runs page', async ({ page }) => {
+    // Start on a project page so we can navigate away
     await navigateTo(page, `/projects/${DUMMY_PROJECT_ID}/health`);
 
     const sidebar = page.locator('aside');
     await sidebar.getByRole('link', { name: 'Runs' }).click();
     await page.waitForLoadState('networkidle');
 
-    await expect(page).toHaveURL(/\/$/);
+    await expect(page).toHaveURL(/\/runs$/);
   });
 
   test('active route link has distinct styling', async ({ page }) => {
+    await navigateTo(page, '/runs');
     const sidebar = page.locator('aside');
     const runsLink = sidebar.getByRole('link', { name: 'Runs' });
 
-    // On home page, Runs link should have the active class (bg-gray-100 or dark variant)
+    // On runs page, Runs link should have the active accent color
     const runsClass = await runsLink.getAttribute('class');
     expect(runsClass).toContain('s-accent');
   });
@@ -65,6 +66,6 @@ test.describe('Sidebar navigation', () => {
 
   test('sidebar shows branding text', async ({ page }) => {
     const sidebar = page.locator('aside');
-    await expect(sidebar.getByText('Sentinel')).toBeVisible();
+    await expect(sidebar.getByText('Sentinel', { exact: true })).toBeVisible();
   });
 });

@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery, useQueries } from '@tanstack/react-query';
 import { trpc } from '../trpc';
-import { HealthGauge } from '../components/HealthGauge';
+import { HealthHeroSection } from '../components/HealthHeroSection';
 import { HealthTrendChart } from '../components/HealthTrendChart';
+import { HealthMetricGrid } from '../components/HealthMetricGrid';
 import { ComponentScoreList } from '../components/ComponentScoreList';
 import { NeedsAttention } from '../components/NeedsAttention';
-import { PerformanceScoreChart } from '../components/PerformanceScoreChart';
-import { StabilityScoreList } from '../components/StabilityScoreList';
 import { FlipHistoryChart } from '../components/FlipHistoryChart';
 import { LoadingState } from '../components/ui/LoadingState';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 
-function formatDate(date: Date | string | number): string {
-  const d = date instanceof Date ? date : new Date(date);
-  return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}`;
+function formatDate(d: Date | string | number): string {
+  const dt = d instanceof Date ? d : new Date(d);
+  return `${(dt.getMonth() + 1).toString().padStart(2, '0')}/${dt.getDate().toString().padStart(2, '0')}`;
 }
 
 export function HealthPage() {
@@ -91,6 +90,18 @@ export function HealthPage() {
     type: 'component' as const,
   }));
 
+  const a11yScore = a11yData && a11yData.totalViolations > 0
+    ? Math.round(((a11yData.totalViolations - a11yData.newCount) / a11yData.totalViolations) * 100)
+    : 100;
+  const breakdown = a11yData?.latestRunId
+    ? { visual: projectScore?.score ?? 0, accessibility: a11yScore }
+    : undefined;
+  const trendSummary = formattedTrend.length >= 2
+    ? formattedTrend[0].score === formattedTrend[formattedTrend.length - 1].score
+      ? `Stable over the last ${timeRange} days`
+      : `Changed over the last ${timeRange} days`
+    : `Tracking over the last ${timeRange} days`;
+
   const isLoading = loadingScore || loadingComponents || loadingTrend;
 
   if (isLoading) {
@@ -120,103 +131,62 @@ export function HealthPage() {
     <div className="mx-auto max-w-5xl px-6 py-8 s-animate-in">
       <PageHeader title="Project Health" />
 
-      {/* Top section: Gauge + Trend Chart */}
-      <div className="mb-8 mt-6 flex flex-col gap-8 md:flex-row md:items-start s-stagger">
-        <div className="flex flex-col items-center">
-          <HealthGauge
-            score={projectScore.score}
-            breakdown={a11yData && a11yData.latestRunId ? {
-              visual: projectScore.score,
-              accessibility: a11yData.totalViolations > 0
-                ? Math.round(((a11yData.totalViolations - a11yData.newCount) / a11yData.totalViolations) * 100)
-                : 100,
-            } : undefined}
-          />
-          <p className="mt-2 text-[12px]" style={{ color: 'var(--s-text-tertiary)' }}>Overall Score</p>
-        </div>
-        <div className="flex-1 s-glass p-5">
-          <div className="mb-3 flex items-center justify-between">
-            <h2
-              className="text-sm font-semibold"
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
-            >
-              Score Trend
-            </h2>
-            <div className="flex gap-1.5">
-              {(['7', '30', '90'] as const).map((range) => (
-                <button
-                  key={range}
-                  onClick={() => setTimeRange(range)}
-                  className={timeRange === range ? 's-pill s-pill-active' : 's-pill s-pill-inactive'}
-                >
-                  {range}d
-                </button>
-              ))}
-            </div>
-          </div>
-          <HealthTrendChart data={formattedTrend} />
-        </div>
+      {/* Hero Section */}
+      <div className="mb-8 mt-6 s-stagger">
+        <HealthHeroSection
+          score={projectScore.score}
+          breakdown={breakdown}
+          trendSummary={trendSummary}
+        />
       </div>
 
-      {/* Needs Attention section */}
+      {/* Score Trend */}
+      <section className="mb-8 s-card-default p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-sm font-semibold" style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}>
+            Score Trend
+          </h2>
+          <div className="flex gap-1.5">
+            {(['7', '30', '90'] as const).map((range) => (
+              <button key={range} onClick={() => setTimeRange(range)}
+                className={timeRange === range ? 's-pill s-pill-active' : 's-pill s-pill-inactive'}>
+                {range}d
+              </button>
+            ))}
+          </div>
+        </div>
+        <HealthTrendChart data={formattedTrend} />
+      </section>
+
+      {/* 2x2 Metric Grid */}
+      <section className="mb-8">
+        <HealthMetricGrid visualScore={projectScore.score} a11yScore={a11yScore}
+          a11yViolationCount={a11yData?.totalViolations ?? 0} projectId={safeProjectId}
+          routeUrls={(routeUrls ?? []).map((r: { url: string }) => r.url)}
+          stabilityScores={stabilityScores ?? []} onSelectRoute={setSelectedRoute} />
+      </section>
+
+      {/* Flip History (when route selected) */}
+      {selectedRoute && flipHistory && flipHistory.length > 0 && (
+        <section className="mb-8 s-card-default p-5">
+          <FlipHistoryChart routeLabel={`${selectedRoute.url} / ${selectedRoute.viewport}`}
+            data={flipHistory.map((d) => ({ passed: String(d.passed) === 'true', createdAt: String(d.createdAt) }))} />
+        </section>
+      )}
+
+      {/* Needs Attention */}
       {attentionItems.length > 0 && (
-        <section className="mb-8">
-          <h2
-            className="mb-3 text-sm font-semibold"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
-          >
+        <section className="mb-8 s-card-default p-5">
+          <h2 className="mb-3 text-sm font-semibold" style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}>
             Needs Attention
           </h2>
           <NeedsAttention items={attentionItems} />
         </section>
       )}
 
-      {/* Performance Scores section */}
-      {routeUrls && routeUrls.length > 0 && (
-        <section className="mb-8">
-          <h2
-            className="mb-3 text-sm font-semibold"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
-          >
-            Performance Scores
-          </h2>
-          <div className="s-glass p-5">
-            <PerformanceScoreChart
-              projectId={safeProjectId}
-              routeUrls={routeUrls.map((r: { url: string }) => r.url)}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Route Stability section */}
-      <section className="mb-8">
-        <h2
-          className="mb-3 text-sm font-semibold"
-          style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
-        >
-          Route Stability
-        </h2>
-        <StabilityScoreList
-          scores={stabilityScores ?? []}
-          onSelectRoute={(route) => setSelectedRoute(route)}
-        />
-        {selectedRoute && flipHistory && flipHistory.length > 0 && (
-          <div className="mt-4 s-glass p-5">
-            <FlipHistoryChart
-              data={flipHistory.map((d) => ({ passed: String(d.passed) === 'true', createdAt: String(d.createdAt) }))}
-              routeLabel={`${selectedRoute.url} / ${selectedRoute.viewport}`}
-            />
-          </div>
-        )}
-      </section>
-
-      {/* Component Health section */}
+      {/* Component Health */}
       <section>
-        <h2
-          className="mb-3 text-sm font-semibold"
-          style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}
-        >
+        <h2 className="mb-3 text-sm font-semibold" style={{ fontFamily: 'var(--font-display)', color: 'var(--s-text-primary)' }}>
           Component Health
         </h2>
         <ComponentScoreList components={enrichedComponents} />
